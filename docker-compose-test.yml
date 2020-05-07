@@ -1,0 +1,8 @@
+version: '3'
+services:
+
+  frontend:
+    container_name: "public-ec-cms-frontend"
+    build: .
+    ports:
+      - "40:80"

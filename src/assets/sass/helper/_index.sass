@@ -1,0 +1,51 @@
+@import "mixin"
+.test
+  +test
+
+.test-w
+  +test(white)
+
+.test-full
+  *
+    +test()
+
+.to-flex-col
+  +to-flex(column)
+
+.white-bg
+  background-color: white
+
+
+.fill-width
+  width: 100%
+
+.fill-height
+  height: 100%
+
+.relative
+  position: relative
+
+.pointer
+  cursor: pointer
+
+.h100vh
+  height: 100vh !important
+
+
+// font weight
+@for $i from 1 through 9
+  .fw-#{$i}
+    font-weight: #{$i*100}
+
+
+// opacity
+@for $i from 1 through 99
+  @if $i < 10
+    .o-0#{$i}
+      opacity: #{$i/100}
+  @else if $i%10==0
+    .o-#{$i/10}
+      opacity: #{$i/100}
+  @else
+    .o-#{$i}
+      opacity: #{$i/100}
