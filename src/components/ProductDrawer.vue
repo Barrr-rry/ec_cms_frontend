@@ -8,77 +8,71 @@
     <a-form :form="form" @submit="submitHandler">
       <c-form-item label="商品名稱">
         <a-input
-          v-decorator="['name', { rules: [
+                v-decorator="['name', { rules: [
             { required: true, message: '請輸入資料' },
             ]}]"
-          placeholder="商品名稱"
-          :disabled="!editPermissioncheck()"
+                placeholder="商品名稱"
+                :disabled="!editPermissioncheck()"
         />
       </c-form-item>
       <c-form-item label="選擇品牌">
         <a-select
-          v-decorator="['brand', {
+                v-decorator="['brand', {
           initialValue:brands.length?brands[0].id:null,
           rules: [
             { required: true, message: '請選擇品牌' },
             ] }]"
-          placeholder="請新增品牌"
-          :disabled="!editPermissioncheck()"
+                placeholder="請新增品牌"
+                :disabled="!editPermissioncheck()"
         >
           <a-select-option :value="brand.id" :key="brand.id" v-for="brand of brands">
             {{brand.en_name}}
           </a-select-option>
         </a-select>
       </c-form-item>
-      <c-form-item label="庫存狀況 ">
-        <a-radio-group v-decorator="['inventory_status',{rules:[],initialValue:1}]"
-                       :disabled="!editPermissioncheck()"
-        >
-          <a-radio :value="1">
-            有庫存
-          </a-radio>
-          <a-radio :value="2">
-            無庫存
-          </a-radio>
-          <a-radio :value="3">
-            預購品
-          </a-radio>
-        </a-radio-group>
+      <c-form-item label="庫存數量">
+        <a-input
+                v-decorator="['quantity', { rules: [
+            { required: true, message: '請輸入資料' },
+            ]}]"
+                placeholder="庫存數量"
+                :disabled="!editPermissioncheck()"
+        />
       </c-form-item>
       <c-form-item label="商品副標題">
         <a-input
-          v-decorator="['sub_title']"
-          placeholder="商品副標題"
-          :disabled="!editPermissioncheck()"
+                v-decorator="['sub_title']"
+                placeholder="商品副標題"
+                :disabled="!editPermissioncheck()"
         />
       </c-form-item>
       <c-form-item label="商品售價">
         <a-input
-          v-decorator="['price',{
+                v-decorator="['price',{
           rules: [
             { required: true, message: '請新增資料' },
             ] }]"
-          type="number"
-          placeholder="商品售價"
-          :disabled="!editPermissioncheck()"
+                type="number"
+                placeholder="商品售價"
+                :disabled="!editPermissioncheck()"
         />
       </c-form-item>
       <c-form-item label="商品原價">
         <a-input
-          v-decorator="['fake_price']"
-          placeholder="商品原價"
-          :disabled="!editPermissioncheck()"
+                v-decorator="['fake_price']"
+                placeholder="商品原價"
+                :disabled="!editPermissioncheck()"
         />
       </c-form-item>
       <c-form-item label="商品重量">
         <a-input
-          v-decorator="['weight',{
+                v-decorator="['weight',{
           rules: [
             { required: true, message: '請新增資料' },
             ] }]"
-          type="number"
-          placeholder="單位: 公斤"
-          :disabled="!editPermissioncheck()"
+                type="number"
+                placeholder="單位: 公斤"
+                :disabled="!editPermissioncheck()"
         />
       </c-form-item>
       <c-form-item label="商品規格">
@@ -100,12 +94,12 @@
       </c-form-item>
       <c-form-item label="自定義標籤">
         <a-select
-          mode="tags"
-          v-decorator="['tag', {
+                mode="tags"
+                v-decorator="['tag', {
           rules: [
             ] }]"
-          placeholder="請新增標籤"
-          :disabled="!editPermissioncheck()"
+                placeholder="請新增標籤"
+                :disabled="!editPermissioncheck()"
         >
           <a-select-option :value="tag.name" :key="tag.id" v-for="tag of tags">
             {{tag.name}}
@@ -114,18 +108,18 @@
       </c-form-item>
       <c-form-item label="選擇分類">
         <a-tree-select
-          placeholder="請選擇分類"
-          allowClear
-          :maxTagCount="3"
-          :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
-          multiple
-          treeDefaultExpandAll
-          v-decorator="['category', {
+                placeholder="請選擇分類"
+                allowClear
+                :maxTagCount="3"
+                :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
+                multiple
+                treeDefaultExpandAll
+                v-decorator="['category', {
           initialValue:null,
           rules: [
             { required: false, message: '請選擇分類' },
             ] }]"
-          :disabled="!editPermissioncheck()"
+                :disabled="!editPermissioncheck()"
         >
           <a-tree-select-node :value="c1.value" :title="c1.label" :key="c1.fake_id"
                               v-for="c1 of categories"
@@ -150,9 +144,9 @@
                    extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
       >
         <c-upload
-          ref="uploads"
-          :type="type"
-          v-decorator="[
+                ref="uploads"
+                :type="type"
+                v-decorator="[
           'main_productimage',
           {
             ...mixinUpload,
@@ -162,24 +156,24 @@
           },
 
           ]"
-          :disabled="!editPermissioncheck()"
+                :disabled="!editPermissioncheck()"
         />
       </c-form-item>
       <c-form-item label="上傳圖片"
                    extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
       >
         <c-upload
-          ref="uploads"
-          :type="type"
-          :multiple=true
-          v-decorator="[
+                ref="uploads"
+                :type="type"
+                :multiple=true
+                v-decorator="[
           'productimages',
           {
             ...mixinMultipleUpload,
           },
 
           ]"
-          :disabled="!editPermissioncheck()"
+                :disabled="!editPermissioncheck()"
         />
       </c-form-item>
     </a-form>
@@ -195,7 +189,7 @@
     mixins: [drawerMixin, uploadMixin],
     data() {
       return {
-        update_field_keys: ['name', 'brand', 'inventory_status', 'sub_title',
+        update_field_keys: ['name', 'brand', 'quantity', 'sub_title',
           'price', 'fake_price', 'weight', 'tag',
           'category'],
         default_api: this.$api.product,
@@ -349,10 +343,10 @@
       },
       deleteHandler(callback, err) {
         return this.defaultThenProcess(
-          this.default_api.deleteData(this.item.id).then(() => {
-            callback()
-            this.$message.success('刪除商品成功')
-          })
+                this.default_api.deleteData(this.item.id).then(() => {
+                  callback()
+                  this.$message.success('刪除商品成功')
+                })
         )
 
 

@@ -35,31 +35,31 @@
         </tr>
         <tr>
           <td class="text-right">出貨方式:</td>
-          <td class="pl-16px">{{getStore(item)}}</td>
+          <td class="pl-16px">{{getStore(order)}}</td>
         </tr>
         <tr v-show="!item.to_store">
           <td class="text-right">郵遞區號:</td>
-          <td class="pl-16px">{{item.shipping_area}}</td>
+          <td class="pl-16px">{{order.shipping_area}}</td>
         </tr>
         <tr v-show="!item.to_store">
           <td class="text-right">收貨地址:</td>
-          <td class="pl-16px">{{item.shipping_address}}</td>
+          <td class="pl-16px">{{order.shipping_address}}</td>
         </tr>
         <tr v-show="item.to_store">
           <td class="text-right">取貨店名:</td>
-          <td class="pl-16px">{{item.store_name}}({{item.address}})</td>
+          <td class="pl-16px">{{order.store_name}}({{order.address}})</td>
         </tr>
         <tr v-if=false>
           <td class="text-right">收貨人抬頭:</td>
-          <td class="pl-16px">{{item.company_title}}</td>
+          <td class="pl-16px">{{order.company_title}}</td>
         </tr>
         <tr v-if=false>
           <td class="text-right">收貨人統編:</td>
-          <td class="pl-16px">{{item.bussiness_number}}</td>
+          <td class="pl-16px">{{order.bussiness_number}}</td>
         </tr>
         <tr>
           <td class="text-right">訂單備註:</td>
-          <td class="pl-16px">{{item.order_remark}}</td>
+          <td class="pl-16px">{{order.order_remark}}</td>
         </tr>
         <tr>
           <td class="text-right pa-0px">
@@ -69,8 +69,8 @@
             {{order.display_remark_date}}
             <br>
             {{order.remark}}
-            <div>{{order.remark_date}}</div>
-            <div>{{order.remark}}</div>
+            <!--            <div>{{item.remark_date}}</div>-->
+            <!--            <div>{{item.remark}}</div>-->
           </td>
         </tr>
       </table>
@@ -105,22 +105,22 @@
     </a-table>
     <div class="mt-24px">
       <div class="d-flex d-center gray-text">
-        總重量: {{item.total_weight}} kg
+        總重量: {{order.total_weight}} kg
       </div>
       <div class="d-flex d-center gray-text">
-        商品總金額: ${{item.product_price}}
+        商品總金額: ${{order.product_price}}
       </div>
       <div class="d-flex d-center gray-text">
-        運費: +${{item.freeshipping_price}}
+        運費: +${{order.freeshipping_price}}
       </div>
       <div class="d-flex d-center gray-text">
-        優惠券折抵: -${{item.coupon_price}}
+        優惠券折抵: -${{order.coupon_price}}
       </div>
       <div class="d-flex d-center gray-text">
-        忠誠點數折抵: -${{item.reward_price}}
+        忠誠點數折抵: -${{order.reward_price}}
       </div>
       <div class="d-flex d-center gray-text">
-        總計: ${{item.total_price}}
+        總計: ${{order.total_price}}
       </div>
       <div class="d-flex d-center gray-text">
         本次消費金額可獲得忠誠獎勵: <a href="">{{order.rewrad[0].point}}</a> 點
@@ -134,18 +134,18 @@
     </div>
 
     <order-remark-drawer
-      v-if="type==='update'"
-      v-model="update_drawer"
-      :item="order"
-      :okCallback="updateRemark"
-      ref="drawer"
+            v-if="type==='update'"
+            v-model="update_drawer"
+            :item="order"
+            :okCallback="updateRemark"
+            ref="drawer"
     ></order-remark-drawer>
     <order-reward-drawer
-      v-if="type==='update'"
-      v-model="reward_drawer"
-      :item="order.rewrad[0]"
-      :okCallback="updateReward"
-      ref="reward_drawer"
+            v-if="type==='update'"
+            v-model="reward_drawer"
+            :item="order.rewrad[0]"
+            :okCallback="updateReward"
+            ref="reward_drawer"
     ></order-reward-drawer>
 
   </c-drawer>
@@ -233,9 +233,9 @@
           simple_status_display: '已取消'
         }
         return this.defaultThenProcess(
-          this.default_api.putData(this.order.id, values).then(() => {
-            callback()
-          })
+                this.default_api.putData(this.order.id, values).then(() => {
+                  callback()
+                })
         )
 
       },

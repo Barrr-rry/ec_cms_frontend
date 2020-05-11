@@ -49,6 +49,9 @@
                  @change="handleChangePage"
                  :rowKey="record => record.id"
         >
+          <div slot="inventory_status_display" slot-scope="text">
+            <a-badge :status="statusBadge(text)" :text="text"></a-badge>
+          </div>
           <div slot="operation" slot-scope="text, record">
             <a class="mr-24px" href="#"
                @click="openUpdateDrawer(record, ()=>product_info_drawer=true,)">商品資訊</a>
@@ -59,26 +62,26 @@
       </a-card>
     </div>
     <product-drawer
-      v-model="create_drawer"
-      :initCallback="initData"
+            v-model="create_drawer"
+            :initCallback="initData"
     ></product-drawer>
 
     <product-drawer
-      v-model="update_drawer"
-      :initCallback="initData"
-      :item="target"
+            v-model="update_drawer"
+            :initCallback="initData"
+            :item="target"
     ></product-drawer>
 
     <Product-info-drawer
-      v-model="product_info_drawer"
-      :initCallback="initData"
-      :item="target"
+            v-model="product_info_drawer"
+            :initCallback="initData"
+            :item="target"
     ></Product-info-drawer>
 
     <ProductDetailInfoDrawer
-      v-model="detail_info_drawer"
-      :initCallback="initData"
-      :item="target"
+            v-model="detail_info_drawer"
+            :initCallback="initData"
+            :item="target"
     ></ProductDetailInfoDrawer>
 
   </a-layout-content>
@@ -117,6 +120,11 @@
       sorter: true,
     },
     {
+      title: '庫存狀況',
+      dataIndex: 'inventory_status_display',
+      scopedSlots: {customRender: 'inventory_status_display'},
+    },
+    {
       title: '編輯商品',
       dataIndex: 'operation',
       scopedSlots: {customRender: 'operation'},
@@ -142,7 +150,21 @@
     methods: {
       editPermission() {
         return this.permissioncheck('permission_product_manage', 2)
-      }
+      },
+      statusBadge(text) {
+        let ret = 'default'
+        let mapping = {
+          error: ['缺貨'],
+          warning: ['庫存緊張，不到十件'],
+          success: ['有庫存'],
+        }
+        for (let key in mapping) {
+          if (mapping[key].includes(text)) {
+            ret = key
+          }
+        }
+        return ret
+      },
     },
     computed: {
       ...mapState(table_name, {

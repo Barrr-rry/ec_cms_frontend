@@ -1,9 +1,36 @@
 <template>
   <a-card class="manage-card pointer" v-on="$listeners "
   >
-    <div class="d-flex h-100 w-100">
+    <div class="d-flex h-100 w-100" style="position:relative">
       <div class="manage-card-image-box">
-        <a-icon type="user"/>
+        <div v-show="item.tag_image_image_url=='label-green'">
+          <img src="/img/product-label/label-green.svg" class="img">
+          <div class="label">{{item.name}}</div>
+        </div>
+        <div v-show="item.tag_image_image_url=='label-pink'">
+          <img src="/img/product-label/label-pink.svg" class="img">
+          <div class="label">{{item.name}}</div>
+        </div>
+        <div v-show="item.tag_image_image_url=='label-yellow'">
+          <img src="/img/product-label/label-yellow.svg" class="img">
+          <div class="label">{{item.name}}</div>
+        </div>
+        <div v-show="item.tag_image_image_url=='ribbon-green'">
+          <img src="/img/product-label/ribbon-green.svg" class="img">
+          <div class="ribbon">{{item.name}}</div>
+        </div>
+        <div v-show="item.tag_image_image_url=='ribbon-orange'">
+          <img src="/img/product-label/ribbon-orange.svg" class="img">
+          <div class="ribbon">{{item.name}}</div>
+        </div>
+        <div v-show="item.tag_image_image_url=='ribbon-pink'">
+          <img src="/img/product-label/ribbon-pink.svg" class="img">
+          <div class="ribbon">{{item.name}}</div>
+        </div>
+        <div v-show="item.tag_image_image_url=='ribbon-yellow'">
+          <img src="/img/product-label/ribbon-yellow.svg" class="img">
+          <div class="ribbon">{{item.name}}</div>
+        </div>
       </div>
       <div class="manage-card-content to-flex-col">
         <h3>{{item.name}}</h3>
@@ -13,7 +40,7 @@
     <template class="ant-card-actions" slot="actions">
       <div class="pointer" @click="callbackCheck(()=>$emit('update'),)">編輯</div>
       <c-popover
-        @ok="deleteHandler"
+              @ok="deleteHandler"
       >
         <template slot="content">
           <p>
