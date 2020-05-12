@@ -160,6 +160,9 @@
       ...mapState('manager', {
         info: state => state.info
       }),
+      ...mapState('configsetting', {
+        configsetting: state => state.item
+      }),
       computed_menuItems() {
         let ret = []
         for (let el of this.menuItems) {
@@ -202,6 +205,7 @@
     created() {
       this.initMenuSelect()
       this.$store.dispatch('manager/getInfo')
+      this.$store.dispatch('configsetting/getList')
     }
   }
 </script>
