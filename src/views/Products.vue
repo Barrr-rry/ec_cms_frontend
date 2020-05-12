@@ -15,16 +15,16 @@
       <a-card>
         <div class="pb-24px d-flex">
           <a-form
-                  :form="search_form"
-                  layout="inline"
-                  @submit="submit"
+            :form="search_form"
+            layout="inline"
+            @submit="submit"
           >
             <a-form-item label="快速查詢商品">
               <a-input
-                      v-decorator="['keywords', { rules: [
+                v-decorator="['keywords', { rules: [
             ]}]"
-                      placeholder="請輸入商品編號、商品名稱"
-                      style="width: 250px"
+                placeholder="請輸入商品編號、商品名稱"
+                style="width: 250px"
               />
             </a-form-item>
 
@@ -49,6 +49,8 @@
                  @change="handleChangePage"
                  :rowKey="record => record.id"
         >
+          <div slot="price" slot-scope="text,record">{{getProductPriceRange(record)}}</div>
+          <div slot="specifications_name" slot-scope="text,record">{{getProductSpecificationsName(record)}}</div>
           <div slot="inventory_status_display" slot-scope="text">
             <a-badge :status="statusBadge(text)" :text="text"></a-badge>
           </div>
@@ -62,26 +64,26 @@
       </a-card>
     </div>
     <product-drawer
-            v-model="create_drawer"
-            :initCallback="initData"
+      v-model="create_drawer"
+      :initCallback="initData"
     ></product-drawer>
 
     <product-drawer
-            v-model="update_drawer"
-            :initCallback="initData"
-            :item="target"
+      v-model="update_drawer"
+      :initCallback="initData"
+      :item="target"
     ></product-drawer>
 
     <Product-info-drawer
-            v-model="product_info_drawer"
-            :initCallback="initData"
-            :item="target"
+      v-model="product_info_drawer"
+      :initCallback="initData"
+      :item="target"
     ></Product-info-drawer>
 
     <ProductDetailInfoDrawer
-            v-model="detail_info_drawer"
-            :initCallback="initData"
-            :item="target"
+      v-model="detail_info_drawer"
+      :initCallback="initData"
+      :item="target"
     ></ProductDetailInfoDrawer>
 
   </a-layout-content>
@@ -108,11 +110,13 @@
     {
       title: '商品金額',
       dataIndex: 'price',
+      scopedSlots: {customRender: 'price'},
       sorter: true,
     },
     {
       title: '規格',
-      dataIndex: 'specifications.nane',
+      dataIndex: 'specifications_name',
+      scopedSlots: {customRender: 'specifications_name'},
     },
     {
       title: '商品銷量',
@@ -133,12 +137,12 @@
 
   let table_name = 'product'
   export default {
-    mixins: [pageMixin, tablePageMixin, searchFormMixin],
     components: {
       ProductDrawer,
       ProductInfoDrawer,
       ProductDetailInfoDrawer,
     },
+    mixins: [pageMixin, tablePageMixin, searchFormMixin],
     data() {
       return {
         columns,
@@ -147,7 +151,51 @@
         detail_info_drawer: false,
       }
     },
+    computed: {
+      ...mapState('configsetting', {
+        configsetting: state => state.item
+      }),
+      ...mapState(table_name, {
+        items: state => state.items,
+        raw_data: state => state.raw_data
+      }),
+    },
     methods: {
+      productStockProcess() {
+        // 如果 product_stock_setting = 1 代表沒有庫存 columns 要刪掉
+        if (this.configsetting.product_stock_setting === 2) {
+          this.columns = this.columns.filter(x => x.title !== '庫存狀況')
+          this.columns.length
+        }
+      },
+      getProductSpecificationsName(item) {
+        let ret = []
+        for (let el of item.specifications) {
+          if (el.level !== 1) {
+            continue
+          }
+          ret.push(el.name)
+        }
+        return ret.join('/')
+      },
+      getProductPriceRange(item) {
+        let max_price = null
+        let min_price = null
+        for (let el of item.specifications_detail) {
+          if (max_price === null && min_price === null) {
+            max_price = el.price
+            min_price = el.price
+            continue
+          }
+          if (max_price < el.price) {
+            max_price = el.price
+          }
+          if (min_price > el.price) {
+            min_price = el.price
+          }
+        }
+        return max_price !== max_price ? `${min_price} ~ ${max_price}` : `${max_price}`
+      },
       editPermission() {
         return this.permissioncheck('permission_product_manage', 2)
       },
@@ -166,11 +214,8 @@
         return ret
       },
     },
-    computed: {
-      ...mapState(table_name, {
-        items: state => state.items,
-        raw_data: state => state.raw_data
-      }),
+    created() {
+      this.productStockProcess()
     }
   }
 </script>
