@@ -49,7 +49,7 @@
           </div>
         </div>
       </a-layout-header>
-      <router-view></router-view>
+      <router-view v-if="configsetting"></router-view>
     </a-layout>
 
 

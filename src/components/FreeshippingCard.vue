@@ -1,6 +1,24 @@
 <template>
   <a-card :title="item.backstage_name">
     <a-form :form="form" @submit="submitHandler">
+      <c-form-item label="地區">
+
+        {{item.location===1?'國內':'海外'}}
+      </c-form-item>
+      <c-form-item label="開關">
+        <a-radio-group v-decorator="['enable',{rules:[
+        { required: true, message: '請輸入資料' },
+        ]}]"
+                       :disabled="!editPermission()"
+        >
+          <a-radio :value="false">
+            關
+          </a-radio>
+          <a-radio :value="true">
+            開
+          </a-radio>
+        </a-radio-group>
+      </c-form-item>
       <c-form-item label="設定運費">
         <a-input
           v-decorator="['price', { rules: [
@@ -83,7 +101,7 @@
     data() {
       return {
         update_field_keys: [
-          'title', 'role', 'weight', 'price'
+          'title', 'role', 'weight', 'price', 'enable'
         ],
         default_api: this.$api.freeshipping,
         // for check to add
