@@ -18,6 +18,7 @@ import Tags from "@/views/Tags"
 import Index from "@/views/Index"
 import Coupon from "@/views/Coupon"
 import NoPermission from "@/views/NoPermission"
+import ProductEdit from "@/views/ProductEdit"
 
 Vue.use(VueRouter)
 
@@ -81,7 +82,7 @@ const routes = [
       {
         path: '/products',
         name: 'products',
-        component: Products
+        component: Products,
       },
       {
         path: '/reward',
@@ -103,6 +104,16 @@ const routes = [
         name: 'nopermission',
         component: NoPermission
       },
+      {
+        path: '/products/:id',
+        name: 'product_edit',
+        component: ProductEdit
+      },
+      {
+        path: '/products/create',
+        name: 'product_edit',
+        component: ProductEdit
+      }
     ]
   },
   {

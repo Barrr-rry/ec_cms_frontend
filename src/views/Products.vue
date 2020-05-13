@@ -41,7 +41,7 @@
           </a-form>
         </div>
         <div class="pb-24px">
-          <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 增 商 品</a-button>
+          <a-button type="primary" @click="goNextRoute()">+ 新 增 商 品</a-button>
         </div>
         <a-table :columns="columns" :dataSource="items"
                  :loading="loading"
@@ -58,7 +58,7 @@
             <a class="mr-24px" href="#"
                @click="openUpdateDrawer(record, ()=>product_info_drawer=true,)">商品資訊</a>
             <a class="mr-24px" href="#" @click="openUpdateDrawer(record, ()=>detail_info_drawer=true,)">詳細資訊</a>
-            <a href="#" @click="openUpdateDrawer(record,null,)">編輯</a>
+            <router-link :to="`/products/${record.id}`">編輯</router-link>
           </div>
         </a-table>
       </a-card>
@@ -212,6 +212,15 @@
           }
         }
         return ret
+      },
+      goNextRoute(callback) {
+        if (!this.permissioncheck('permission_product_manage', 2)) {
+          this.$message.warn('權限不足')
+          callback()
+          return
+        }
+        this.$router.push(`/products/create`)
+
       },
     },
     created() {
