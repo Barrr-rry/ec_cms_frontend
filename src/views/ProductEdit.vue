@@ -72,8 +72,7 @@
       DetailInfoCard
     },
     data() {
-      // todo hardcode
-      let type = 'update'
+      let type = this.$route.params.id === 'create' ? 'create' : 'update'
       return {
         table_name,
         type,
@@ -106,14 +105,17 @@
         return this.default_api.putData(this.$route.params.id, values)
       },
       submitCreate(values) {
+        return this.default_api.postData(values)
       },
       initData() {
         let promise_list = [
           this.$store.dispatch('brand/getList'),
           this.$store.dispatch('tag/getList'),
           this.$store.dispatch('category/getList'),
-          this.$store.dispatch(`${this.table_name}/getRead`, this.$route.params.id)
         ]
+        if (this.type !== 'create') {
+          promise_list.push(this.$store.dispatch(`${this.table_name}/getRead`, this.$route.params.id))
+        }
 
         this.loading = true
         Promise.all(promise_list).then(() => {
