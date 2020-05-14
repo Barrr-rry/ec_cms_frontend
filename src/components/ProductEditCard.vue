@@ -3,52 +3,123 @@
     <a-form :form="form" @submit="submitHandler">
       <c-form-item label="商品名稱">
         <a-input
-                v-decorator="['name', { rules: [
+          v-decorator="['name', { rules: [
             { required: true, message: '請輸入資料' },
             ]}]"
-                placeholder="請輸入商品名稱"
-                :disabled="!editPermission()"
+          placeholder="商品名稱"
+          :disabled="!editPermissioncheck()"
         />
       </c-form-item>
       <c-form-item label="選擇品牌">
         <a-select
-                v-decorator="['brand', {
+          v-decorator="['brand', {
           initialValue:brands.length?brands[0].id:null,
           rules: [
             { required: true, message: '請選擇品牌' },
             ] }]"
-                placeholder="請新增品牌"
-                :disabled="!editPermission()"
+          placeholder="請新增品牌"
+          :disabled="!editPermissioncheck()"
         >
           <a-select-option :value="brand.id" :key="brand.id" v-for="brand of brands">
             {{brand.en_name}}
           </a-select-option>
         </a-select>
       </c-form-item>
-      <c-form-item label="商品副標題">
+      <c-form-item label="庫存數量"
+                   v-if="configsetting.product_stock_setting===3"
+      >
         <a-input
-                v-decorator="['sub_title']"
-                placeholder="商品副標題"
-                :disabled="!editPermission()"
-        />
-      </c-form-item>
-      <c-form-item label="商品編號">
-        <a-input
-                v-decorator="['product_number', { rules: [
+          v-decorator="['quantity', { rules: [
             { required: true, message: '請輸入資料' },
             ]}]"
-                placeholder="請輸入商品編號"
-                :disabled="!editPermission()"
+          placeholder="庫存數量"
+          :disabled="!editPermissioncheck()"
         />
+      </c-form-item>
+      <c-form-item label="庫存功能"
+                   v-if="configsetting.product_stock_setting===2"
+      >
+        <a-select
+          :disabled="!editPermissioncheck()"
+          v-decorator="['inventory_status', {
+          initialValue:1,
+          rules: [
+            { required: true, message: '請選擇庫存' },
+            ] }]"
+          placeholder="請選擇庫存"
+        >
+          <a-select-option :value="1">
+            有庫存
+          </a-select-option>
+          <a-select-option :value="2">
+            無庫存
+          </a-select-option>
+          <a-select-option :value="3">
+            預購品
+          </a-select-option>
+        </a-select>
+      </c-form-item>
+      <c-form-item label="商品副標題">
+        <a-input
+          v-decorator="['sub_title']"
+          placeholder="商品副標題"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="商品售價">
+        <a-input
+          v-decorator="['price',{
+          rules: [
+            { required: true, message: '請新增資料' },
+            ] }]"
+          type="number"
+          placeholder="商品售價"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="商品原價">
+        <a-input
+          v-decorator="['fake_price']"
+          placeholder="商品原價"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="商品重量" v-if="configsetting.weight">
+        <a-input
+          v-decorator="['weight',{
+          rules: [
+            { required: true, message: '請新增資料' },
+            ] }]"
+          type="number"
+          placeholder="單位: 公斤"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="商品規格">
+        <a-select
+          mode="tags"
+          placeholder="商品規格"
+          v-decorator="[
+                          'specifications',
+                          { rules:
+                                [
+                                    { required: true, message: '請输入規格' }
+                                ],
+                            initialValue: ['一般']
+                          }
+                        ]"
+          :disabled="!editPermissioncheck()"
+        >
+        </a-select>
       </c-form-item>
       <c-form-item label="自定義標籤">
         <a-select
-                mode="tags"
-                v-decorator="['tag', {
-          rules: [
-            ] }]"
-                placeholder="請新增標籤"
-                :disabled="!editPermission()"
+          mode="tags"
+          v-decorator="['tag', {
+                rules: [
+                  ] }]"
+          placeholder="請新增標籤"
+          :disabled="!editPermissioncheck()"
         >
           <a-select-option :value="tag.name" :key="tag.id" v-for="tag of tags">
             {{tag.name}}
@@ -57,18 +128,18 @@
       </c-form-item>
       <c-form-item label="選擇分類">
         <a-tree-select
-                placeholder="請選擇分類"
-                allowClear
-                :maxTagCount="3"
-                :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
-                multiple
-                treeDefaultExpandAll
-                v-decorator="['category', {
+          placeholder="請選擇分類"
+          allowClear
+          :maxTagCount="3"
+          :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
+          multiple
+          treeDefaultExpandAll
+          v-decorator="['category', {
           initialValue:null,
           rules: [
             { required: false, message: '請選擇分類' },
             ] }]"
-                :disabled="!editPermission()"
+          :disabled="!editPermissioncheck()"
         >
           <a-tree-select-node :value="c1.value" :title="c1.label" :key="c1.fake_id"
                               v-for="c1 of categories"
@@ -89,47 +160,57 @@
           </a-tree-select-node>
         </a-tree-select>
       </c-form-item>
-      <div class="d-flex justify-content-end">
-        <c-popover
-          @ok="submitPopoup"
-        >
-          <template slot="content">
-            <p>
-              確定要發布嗎?
-            </p>
-          </template>
-          <a-button class="mt-24px" type="primary" html-type="submit">
-            確 定 發 布
-          </a-button>
-        </c-popover>
+      <c-form-item label="上傳主要圖片"
+                   extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
+      >
+        <c-upload
+          ref="uploads"
+          :type="type"
+          v-decorator="[
+          'main_productimage',
+          {
+            ...mixinUpload,
+            rules:[
+            { required: true, message: '請選擇標籤' },
+            ]
+          },
 
-      </div>
+          ]"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="上傳圖片"
+                   extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
+      >
+        <c-upload
+          ref="uploads"
+          :type="type"
+          :multiple=true
+          v-decorator="[
+          'productimages',
+          {
+            ...mixinMultipleUpload,
+          },
+
+          ]"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
     </a-form>
   </a-card>
 </template>
 
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
-  import {mapState} from "vuex";
+  import uploadMixin from "@/mixins/uploadMixin"
+  import configsettingMixin from "@/mixins/configsettingMixin"
+  import {mapState} from "vuex"
 
   export default {
-    mixins: [drawerMixin],
-    props: {
-      title: {
-        type: String,
-        default: ''
-      },
-      item: {
-        type: Object,
-        default: () => {
-        }
-      }
-    },
+    mixins: [configsettingMixin, drawerMixin, uploadMixin],
     data() {
       return {
-        update_field_keys: [
-          'name', 'brand', 'sub_title', 'product_number', 'tag', 'category'
-        ],
+        update_field_keys: ['name', 'brand', 'sub_title', 'tag', 'category'],
         default_api: this.$api.product,
         // for check to add
         // fake_data: {}
@@ -207,21 +288,37 @@
       })
     },
     methods: {
-      editPermission() {
-        return this.permissioncheck('permission_product_manage', 2)
+      createHandler(e) {
+        // todo
+        this.submitValidate(e, (values) => {
+          values = this.removeBlankValue(values)
+          values = this.createValueTransfer(values)
+          return this.defaultThenProcess(this.default_api.postData(values).then(() => {
+            this.$message.success('新增商品成功')
+          }))
+        })
       },
-      submitPopoup(callback) {
-        this.submitHandler()
-        callback()
+      updateHandler(e) {
+        // todo
+        this.submitValidate(e, (values) => {
+          values = this.removeBlankValue(values)
+          values = this.updateValueTransfer(values)
+          return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
+            this.$message.success('更新商品成功')
+          }))
+        })
+
       },
-      initData() {
-        this.initFields()
-        this.$store.dispatch('brand/firstInitList')
-        this.$store.dispatch('tag/firstInitList')
-        this.$store.dispatch('category/firstInitList')
-      },
-      displayRender({labels}) {
-        return labels[labels.length - 1];
+      deleteHandler(callback, err) {
+        // todo
+        return this.defaultThenProcess(
+          this.default_api.deleteData(this.item.id).then(() => {
+            callback()
+            this.$message.success('刪除商品成功')
+          })
+        )
+
+
       },
       createValueTransfer(values) {
         let ret = {...values}
@@ -232,6 +329,22 @@
             }
           })
         }
+        let productimages = []
+        if (ret.productimages) {
+          for (let image of ret.productimages) {
+            productimages.push({
+              image_url: image,
+              main_image: false,
+            })
+          }
+        }
+        if (ret.main_productimage) {
+          productimages.push({
+            image_url: ret.main_productimage,
+            main_image: true,
+          })
+        }
+        ret.productimages = productimages
         if (ret.tag) {
           let tag = ret.tag.map(el => this.tag_reverse_mapping[el])
           ret.tag = tag
@@ -245,51 +358,71 @@
         return ret
       },
       initFields() {
-
         let obj = {
           specifications: [],
+          productimages: [],
+          main_productimage: null,
+          // for loop to get
+          price: null,
+          fake_price: null,
         }
+        // 確認weight 有加入
+        if (this.configsetting.weight) {
+          obj.weight = null
+        }
+        // 確認quantity
+        if (this.configsetting.product_stock_setting === 3) {
+          obj.quantity = null
+        }
+        // 確認inventory_status
+        if (this.configsetting.product_stock_setting === 2) {
+          obj.inventory_status = null
+        }
+        // 規格1 把price 這些欄位帶入
+        for (let spec of this.item.specifications_detail) {
+          obj.price = spec.price
+          obj.fake_price = spec.fake_price
+          obj.quantity = spec.quantity
+          if (this.configsetting.weight) {
+            obj.weight = spec.weight
+          }
+          if (this.configsetting.product_stock_setting === 3) {
+            obj.quantity = spec.quantity
+          }
+          if (this.configsetting.product_stock_setting === 2) {
+            obj.inventory_status = spec.inventory_status
+          }
+        }
+
+        // 規格1 把圖片帶入
+        for (let el of this.item.productimages) {
+          if (el.main_image) {
+            obj.main_productimage = el.image_url
+          } else {
+            obj.productimages.push(el.image_url)
+          }
+        }
+        // 規格1 只會有一個規格
         for (let el of this.item.specifications) {
-          obj.specifications.push(el.name)
+          if (el.level === 1) {
+            obj.specifications.push(el.name)
+          }
         }
 
         for (let key of this.update_field_keys) {
           obj[key] = this.item[key]
         }
         obj.tag = obj.tag.map((el) => {
-          return this.tag_mapping[el]
+          let ret = this.tag_mapping[el]
+          return ret
         })
         this._initFileds(obj)
       },
-      deleteHandler(callback, err) {
-        return this.defaultThenProcess(
-                this.default_api.deleteData(this.item.id).then(() => {
-                  callback()
-                  this.$message.success('刪除商品成功')
-                })
-        )
-
-
-      },
-      updateHandler(e) {
-        this.submitValidate(e, (values) => {
-          values = this.removeBlankValue(values)
-          values = this.updateValueTransfer(values)
-          return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
-            this.$message.success('更新商品成功')
-          }))
-        })
-
-      },
-      createHandler(e) {
-        this.submitValidate(e, (values) => {
-          values = this.removeBlankValue(values)
-          values = this.createValueTransfer(values)
-          return this.defaultThenProcess(this.default_api.postData(values).then(() => {
-            this.$message.success('新增商品成功')
-          }))
-        })
-      },
+    },
+    mounted() {
+      if (this.item) {
+        this.initFields()
+      }
     }
   }
 </script>

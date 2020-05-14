@@ -14,24 +14,38 @@
       </a-breadcrumb>
       <h3>{{type==='create'?'新增商品':'編輯商品'}}</h3>
     </div>
-    <div class="container-fluid pt-24px">
-<!--      todo 抓不到item-->
+    <div class="container-fluid pt-24px" v-if="!loading">
       <ProductEditCard
         class="mb-24px"
-        :item="items[0]"
+        :item="item"
       />
-      <ProductUploadImage
-        class="mb-24px"
-        :item="items[0]"
-      />
-      <ProductInfoCard
-        class="mb-24px"
-        :item="items[0]"
-      />
-      <DetailInfoCard
-        class="mb-24px"
-        :item="items[0]"
-      />
+      <!--      <ProductUploadImage-->
+      <!--        class="mb-24px"-->
+      <!--        :item="itme"-->
+      <!--      />-->
+      <!--      <ProductInfoCard-->
+      <!--        class="mb-24px"-->
+      <!--        :item="itme"-->
+      <!--      />-->
+      <!--      <DetailInfoCard-->
+      <!--        class="mb-24px"-->
+      <!--        :item="itme"-->
+      <!--      />-->
+      <div class="d-flex justify-content-end">
+        <c-popover
+          @ok="submitPopoup"
+        >
+          <template slot="content">
+            <p>
+              確定要發布嗎?
+            </p>
+          </template>
+          <a-button class="mt-24px" type="primary" html-type="submit">
+            確 定 發 布
+          </a-button>
+        </c-popover>
+
+      </div>
     </div>
 
   </a-layout-content>
@@ -50,17 +64,12 @@
     mixins: [pageMixin],
     components: {
       ProductEditCard,
-      ProductUploadImage,
-      ProductInfoCard,
-      DetailInfoCard
+      // ProductUploadImage,
+      // ProductInfoCard,
+      // DetailInfoCard
     },
     data() {
-      // todo 抓不到id
-      // let loading = !!this.$route.params.id
       let type = 'update'
-      // if (loading) {
-      //   type = 'update'
-      // }
       return {
         table_name,
         type
@@ -69,16 +78,30 @@
     computed: {
       ...mapState(table_name, {
         item: state => state.item,
-        items: state => state.items,
       }),
     },
 
     methods: {
-      // todo
-      // initData() {
-      //   this.initData()
-      //   this.$store.dispatch('product/getRead')
-      // }
+      submitPopoup(callback) {
+        // todo
+        // this.submitHandler()
+        console.log('wait for submit....')
+        callback()
+      },
+      initData() {
+        let promise_list = [
+          this.$store.dispatch('brand/getList'),
+          this.$store.dispatch('tag/getList'),
+          this.$store.dispatch('category/getList'),
+          this.$store.dispatch(`${this.table_name}/getRead`, this.$route.params.id)
+        ]
+
+        this.loading = true
+        Promise.all(promise_list).then(() => {
+          this.loading = false
+        })
+      }
+
     }
   }
 </script>
