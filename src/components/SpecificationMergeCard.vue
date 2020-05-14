@@ -1,22 +1,11 @@
 <template>
-  <a-card :title="title">
-    <a-button type="primary"
-              @click="addToTable">
-      + 新 增 項 目
-    </a-button>
-    <c-form-item label="規格名稱">
-      <a-input
-        placeholder="規格名稱"
-        :disabled="!editPermissioncheck()"
-        v-model="name"
-      />
-    </c-form-item>
-    <a-table :columns="columns" :data-source="data"
+  <a-card title="規格詳情">
+    <a-table :columns="computed_columns" :data-source="data"
              :pagination="false"
              :rowKey="record => record.key"
     >
       <template
-        v-for="col in ['name']"
+        v-for="col in edit_columns"
         :slot="col"
         slot-scope="text, record"
       >
@@ -44,12 +33,6 @@
         </span>
           <span v-else>
           <a class="mr-8px" :disabled="editingKey !== ''" @click="() => edit(record.key)">編輯</a>
-            <a-popconfirm title="確定刪除?" @confirm="() => remove(record.key)"
-                          okText="確定" cancelText="取消"
-            >
-            <a :disabled="editingKey !== ''">刪除</a>
-          </a-popconfirm>
-
         </span>
         </div>
       </template>
@@ -58,11 +41,47 @@
 </template>
 
 <script>
+  import configsettingMixin from "@/mixins/configsettingMixin"
+
   const columns = [
+    // level1_spec
     {
-      title: '名稱',
-      dataIndex: 'name',
-      scopedSlots: {customRender: 'name'},
+      title: '',
+      dataIndex: 'level1_spec',
+      scopedSlots: {customRender: 'level1_spec'},
+    },
+    // level2_spec
+    {
+      title: '',
+      dataIndex: 'level2_spec',
+      scopedSlots: {customRender: 'level2_spec'},
+    },
+    {
+      title: '原價（ NTD ）',
+      dataIndex: 'fake_price',
+      scopedSlots: {customRender: 'fake_price'},
+    },
+    {
+      title: '售價（ NTD )',
+      dataIndex: 'price',
+      scopedSlots: {customRender: 'price'},
+    },
+    // 有可能是 inventory_status 庫存功能
+    {
+      title: '庫存數量',
+      dataIndex: 'quantity',
+      scopedSlots: {customRender: 'quantity'},
+    },
+    // config 判斷
+    {
+      title: '重量（ Kg ）',
+      dataIndex: 'weight',
+      scopedSlots: {customRender: 'weight'},
+    },
+    {
+      title: '商品貨號',
+      dataIndex: 'product_code',
+      scopedSlots: {customRender: 'product_code'},
     },
     {
       width: '120px',
@@ -73,35 +92,27 @@
   ]
 
   export default {
-    name: "SpecificationCard",
+    name: "SpecificationMergeCard",
+    mixins: [configsettingMixin],
     props: {
       item: {
         type: Object,
         default: null,
       },
-      level: {
-        type: Number,
-        default: 1,
-      }
     },
     data() {
-      // init name
-      let name = this.item ? this.item[`level${this.level}_title`] : null
-      // init spec data
-      let key = 0
+      let edit_columns = [
+        'fake_price', 'price', 'quantity', 'inventory_status',
+        'weight', 'product_code'
+      ]
       let data = []
-      if (this.item) {
-        for (let el of this.item.specifications) {
-          if (el.level === this.level) {
-            el.key = key++
-            data.push(el)
-          }
-        }
-      }
-
+      let key = 0
       // 實際的資料
       this.cacheData = data.map(item => ({...item}))
       return {
+        edit_columns,
+        // 顯示level 2 name
+        has_level2_spec: true,
         name,
         key,
         data,
@@ -115,19 +126,31 @@
       }
     },
     computed: {
-      title() {
-        return this.level === 1 ? '商品規格一' : '商品規格二（選填）'
-      }
+      computed_columns() {
+        let columns = [...this.columns]
+        if (!this.has_level2) {
+          columns = columns.filter(x => x.dataIndex !== 'level2')
+        }
+        if (!this.configsetting.weight) {
+          columns = columns.filter(x => x.dataIndex !== 'weight')
+        }
+        // 沒有庫存
+        if (this.configsetting.product_stock_setting === 1) {
+          columns = columns.filter(x => x.dataIndex !== 'quantity')
+        }
+        // 只有庫存文案顯示
+        if (this.configsetting.product_stock_setting === 2) {
+          let target = columns.filter(x => x.dataIndex === 'quantity')[0]
+          if (target) {
+            target.dataIndex = 'inventory_status'
+            target.scopedSlots = {customRender: 'inventory_status'}
+            target.title = '庫存功能'
+          }
+        }
+        return columns
+      },
     },
     methods: {
-      addToTable() {
-        let obj = {
-          key: this.key++,
-          name: '未輸入'
-        }
-        this.cacheData.push(obj)
-        this.data.push(obj)
-      },
       handleChange(value, key, column) {
         const newData = [...this.data]
         const target = newData.filter(item => key === item.key)[0]
@@ -157,13 +180,6 @@
           this.cacheData = newCacheData
         }
         this.editingKey = ''
-        this.$emit('onChange')
-      },
-      remove(key) {
-        let newData = [...this.data]
-        newData = newData.filter(x => x.key !== key)
-        this.data = [...newData]
-        this.cacheData = [...newData]
         this.$emit('onChange')
       },
       cancel(key) {
