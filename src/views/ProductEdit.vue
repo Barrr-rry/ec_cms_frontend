@@ -102,6 +102,7 @@
     data() {
       let type = this.$route.params.id === 'create' ? 'create' : 'update'
       return {
+        init_merge: false,
         table_name,
         type,
         default_api: this.$api.product,
@@ -119,24 +120,43 @@
         this.initTable()
       },
       initTable() {
-        let spec1_table = this.$refs.spec_level1.cacheData
-        // todo 可能只有一個
-        let spec2_table = this.$refs.spec_level2.cacheData
         let data = []
         let key = 0
-        for (let spec1 of spec1_table) {
-          for (let spec2 of spec2_table) {
+        // first init
+        if (!this.init_merge) {
+          this.init_merge = true
+          for (let el of this.item.specifications_detail) {
             data.push({
               key: key++,
-              level1_spec: spec1.name,
-              level2_spec: spec2.name,
-              // todo
-              fake_price: 2,
-              price: 10,
-              inventory_status: 1,
-              weight: 0.3
-
+              inventory_status: el.inventory_status,
+              level1_spec: el.spec1_name,
+              level2_spec: el.spec2_name,
+              price: el.price,
+              product: el.product,
+              product_code: el.product_code,
+              quantity: el.quantity,
+              weight: el.weight,
             })
+          }
+        } else {
+          let spec1_table = this.$refs.spec_level1.cacheData
+          // todo 可能只有一個
+          let spec2_table = this.$refs.spec_level2.cacheData
+          for (let spec1 of spec1_table) {
+            for (let spec2 of spec2_table) {
+              data.push({
+                key: key++,
+                level1_spec: spec1.name,
+                level2_spec: spec2.name,
+                // todo
+                fake_price: null,
+                price: null,
+                inventory_status: null,
+                weight: null
+                quantity: null,
+
+              })
+            }
           }
         }
         this.$refs.spec_merge.cacheData = [...data]
