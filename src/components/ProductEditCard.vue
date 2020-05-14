@@ -26,7 +26,7 @@
         </a-select>
       </c-form-item>
       <c-form-item label="庫存數量"
-                   v-if="configsetting.product_stock_setting===3"
+                   v-if="configsetting.product_stock_setting===3&&configsetting.product_specifications_setting===1"
       >
         <a-input
           v-decorator="['quantity', { rules: [
@@ -37,7 +37,7 @@
         />
       </c-form-item>
       <c-form-item label="庫存功能"
-                   v-if="configsetting.product_stock_setting===2"
+                   v-if="configsetting.product_stock_setting===2&&configsetting.product_specifications_setting===1"
       >
         <a-select
           :disabled="!editPermissioncheck()"
@@ -66,7 +66,9 @@
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="商品售價">
+      <c-form-item label="商品售價"
+                   v-if="configsetting.product_specifications_setting===1"
+      >
         <a-input
           v-decorator="['price',{
           rules: [
@@ -77,14 +79,17 @@
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="商品原價">
+      <c-form-item label="商品原價"
+                   v-if="configsetting.product_specifications_setting===1"
+      >
         <a-input
           v-decorator="['fake_price']"
           placeholder="商品原價"
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="商品重量" v-if="configsetting.weight">
+      <c-form-item label="商品重量" v-if="configsetting.weight&&configsetting.product_specifications_setting===1"
+      >
         <a-input
           v-decorator="['weight',{
           rules: [
@@ -95,7 +100,9 @@
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="商品規格">
+      <c-form-item label="商品規格"
+                   v-if="configsetting.product_specifications_setting===1"
+      >
         <a-select
           mode="tags"
           placeholder="商品規格"
@@ -162,6 +169,7 @@
       </c-form-item>
       <c-form-item label="上傳主要圖片"
                    extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
+                   v-if="configsetting.product_specifications_setting===1"
       >
         <c-upload
           ref="uploads"
@@ -181,6 +189,7 @@
       </c-form-item>
       <c-form-item label="上傳圖片"
                    extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
+                   v-if="configsetting.product_specifications_setting===1"
       >
         <c-upload
           ref="uploads"
@@ -320,22 +329,6 @@
       },
       createValueTransfer(values) {
         let ret = {...values}
-        let productimages = []
-        if (ret.productimages) {
-          for (let image of ret.productimages) {
-            productimages.push({
-              image_url: image,
-              main_image: false,
-            })
-          }
-        }
-        if (ret.main_productimage) {
-          productimages.push({
-            image_url: ret.main_productimage,
-            main_image: true,
-          })
-        }
-        ret.productimages = productimages
         if (ret.tag) {
           let tag = ret.tag.map(el => this.tag_reverse_mapping[el])
           ret.tag = tag
@@ -345,78 +338,100 @@
         if (!ret.category) {
           ret.category = []
         }
-
-        // init specification 資料
-        let specification_level1 = []
-        let specifications_detail_data = []
-        for (let spec of values.specifications) {
-          specification_level1.push({
-            name: spec
-          })
-          let detail = {
-            level1_spec: spec,
-          }
-          for (let key of ['weight', 'price', 'fake_price', 'quantity', 'inventory_status']) {
-            if (values.hasOwnProperty(key)) {
-              detail[key] = values[key]
+        if (this.configsetting.product_specifications_setting === 1) {
+          // product image
+          let productimages = []
+          if (ret.productimages) {
+            for (let image of ret.productimages) {
+              productimages.push({
+                image_url: image,
+                main_image: false,
+              })
             }
           }
-          specifications_detail_data.push(detail)
+          if (ret.main_productimage) {
+            productimages.push({
+              image_url: ret.main_productimage,
+              main_image: true,
+            })
+          }
+          ret.productimages = productimages
+
+          // init specification 資料
+          let specification_level1 = []
+          let specifications_detail_data = []
+          for (let spec of values.specifications) {
+            specification_level1.push({
+              name: spec
+            })
+            let detail = {
+              level1_spec: spec,
+            }
+            for (let key of ['weight', 'price', 'fake_price', 'quantity', 'inventory_status']) {
+              if (values.hasOwnProperty(key)) {
+                detail[key] = values[key]
+              }
+            }
+            specifications_detail_data.push(detail)
+          }
+          ret.specification_level1 = specification_level1
+          ret.specifications_detail_data = specifications_detail_data
         }
-        ret.specification_level1 = specification_level1
-        ret.specifications_detail_data = specifications_detail_data
 
         return ret
       },
       initFields() {
-        let obj = {
-          specifications: [],
-          productimages: [],
-          main_productimage: null,
-          // for loop to get
-          price: null,
-          fake_price: null,
-        }
-        // 確認weight 有加入
-        if (this.configsetting.weight) {
-          obj.weight = null
-        }
-        // 確認quantity
-        if (this.configsetting.product_stock_setting === 3) {
-          obj.quantity = null
-        }
-        // 確認inventory_status
-        if (this.configsetting.product_stock_setting === 2) {
-          obj.inventory_status = null
-        }
-        // 規格1 把price 這些欄位帶入
-        for (let spec of this.item.specifications_detail) {
-          obj.price = spec.price
-          obj.fake_price = spec.fake_price
-          obj.quantity = spec.quantity
+        let obj = {}
+        if (this.configsetting.product_specifications_setting === 1) {
+          obj = {
+            specifications: [],
+            productimages: [],
+            main_productimage: null,
+            // for loop to get
+            price: null,
+            fake_price: null,
+          }
+          // 確認weight 有加入
           if (this.configsetting.weight) {
-            obj.weight = spec.weight
+            obj.weight = null
           }
+          // 確認quantity
           if (this.configsetting.product_stock_setting === 3) {
-            obj.quantity = spec.quantity
+            obj.quantity = null
           }
+          // 確認inventory_status
           if (this.configsetting.product_stock_setting === 2) {
-            obj.inventory_status = spec.inventory_status
+            obj.inventory_status = null
           }
-        }
+          // 規格1 把price 這些欄位帶入
+          for (let spec of this.item.specifications_detail) {
+            obj.price = spec.price
+            obj.fake_price = spec.fake_price
+            obj.quantity = spec.quantity
+            if (this.configsetting.weight) {
+              obj.weight = spec.weight
+            }
+            if (this.configsetting.product_stock_setting === 3) {
+              obj.quantity = spec.quantity
+            }
+            if (this.configsetting.product_stock_setting === 2) {
+              obj.inventory_status = spec.inventory_status
+            }
+          }
 
-        // 規格1 把圖片帶入
-        for (let el of this.item.productimages) {
-          if (el.main_image) {
-            obj.main_productimage = el.image_url
-          } else {
-            obj.productimages.push(el.image_url)
+          // 規格1 把圖片帶入
+          for (let el of this.item.productimages) {
+            if (el.main_image) {
+              obj.main_productimage = el.image_url
+            } else {
+              obj.productimages.push(el.image_url)
+            }
           }
-        }
-        // 規格1 只會有一個規格
-        for (let el of this.item.specifications) {
-          if (el.level === 1) {
-            obj.specifications.push(el.name)
+          // 規格1 只會有一個規格
+          for (let el of this.item.specifications) {
+            if (el.level === 1) {
+              obj.specifications.push(el.name)
+            }
           }
         }
 
