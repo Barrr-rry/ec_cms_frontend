@@ -152,7 +152,7 @@
                 fake_price: null,
                 price: null,
                 inventory_status: null,
-                weight: null
+                weight: null,
                 quantity: null,
 
               })
