@@ -1,12 +1,14 @@
 <template>
-  <a-card title="編輯詳細資訊">
+  <a-card title="編輯商品資訊">
     <div class="row">
-      <div class="col-6">
-        <ckeditor :editor="editor" v-model="editor_data" :config="editorConfig" :disabled="!editPermissioncheck()"></ckeditor>
+      <div class="col-12">
+        <ckeditor :editor="editor" v-model="editor_data" :config="editorConfig"
+                  :disabled="!editPermissioncheck()"></ckeditor>
       </div>
-      <div class="col-6">
-        <div class="custom-desc" v-html="editor_data"></div>
-      </div>
+      <!--新的版型不需要顯示-->
+      <!--      <div class="col-6">-->
+      <!--        <div class="custom-desc" v-html="editor_data"></div>-->
+      <!--      </div>-->
 
     </div>
   </a-card>
@@ -22,13 +24,10 @@
     props: {},
     data() {
       return {
-        product_key: [
-          'product_info'
-        ],
+        product_key: 'detail_info',
       }
     },
-    computed: {
-    }
+    computed: {}
   }
 </script>
 

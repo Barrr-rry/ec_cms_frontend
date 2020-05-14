@@ -1,5 +1,5 @@
 <template>
-  <c-drawer v-model="input" title="商品資訊"
+  <c-drawer v-model="input" title="詳細資訊"
             @ok="submitHandler"
   >
     <div class="row">
@@ -25,7 +25,7 @@
     props: {},
     data() {
       return {
-        product_key: 'product_info',
+        product_key: 'detail_info',
       }
     },
     computed: {},

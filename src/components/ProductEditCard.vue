@@ -320,13 +320,6 @@
       },
       createValueTransfer(values) {
         let ret = {...values}
-        if (Array.isArray(ret.specifications)) {
-          ret.specifications = ret.specifications.map(name => {
-            return {
-              name
-            }
-          })
-        }
         let productimages = []
         if (ret.productimages) {
           for (let image of ret.productimages) {
@@ -352,6 +345,26 @@
         if (!ret.category) {
           ret.category = []
         }
+
+        // init specification 資料
+        let specification_level1 = []
+        let specifications_detail_data = []
+        for (let spec of values.specifications) {
+          specification_level1.push({
+            name: spec
+          })
+          let detail = {
+            level1_spec: spec,
+          }
+          for (let key of ['weight', 'price', 'fake_price', 'quantity', 'inventory_status']) {
+            if (values.hasOwnProperty(key)) {
+              detail[key] = values[key]
+            }
+          }
+          specifications_detail_data.push(detail)
+        }
+        ret.specification_level1 = specification_level1
+        ret.specifications_detail_data = specifications_detail_data
 
         return ret
       },

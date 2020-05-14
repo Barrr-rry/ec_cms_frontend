@@ -24,14 +24,16 @@
       <!--        class="mb-24px"-->
       <!--        :item="itme"-->
       <!--      />-->
-      <!--      <ProductInfoCard-->
-      <!--        class="mb-24px"-->
-      <!--        :item="itme"-->
-      <!--      />-->
-      <!--      <DetailInfoCard-->
-      <!--        class="mb-24px"-->
-      <!--        :item="itme"-->
-      <!--      />-->
+      <ProductInfoCard
+        class="mb-24px"
+        :item="item"
+        ref="product_info_card"
+      />
+      <DetailInfoCard
+        class="mb-24px"
+        :item="item"
+        ref="detail_info_card"
+      />
       <div class="d-flex justify-content-end">
         <c-popover
           @ok="submitPopoup"
@@ -66,14 +68,16 @@
     components: {
       ProductEditCard,
       // ProductUploadImage,
-      // ProductInfoCard,
-      // DetailInfoCard
+      ProductInfoCard,
+      DetailInfoCard
     },
     data() {
+      // todo hardcode
       let type = 'update'
       return {
         table_name,
-        type
+        type,
+        default_api: this.$api.product,
       }
     },
     computed: {
@@ -85,9 +89,23 @@
     methods: {
       submitPopoup(callback) {
         this.$refs.product_edit_card.submitHandler().then(values => {
-          console.log('get valeus:', values)
-          callback()
+          values.product_info = this.$refs.product_info_card.editor_data
+          values.detail_info = this.$refs.product_info_card.editor_data
+          if (this.type === 'update') {
+            this.submitUpdate(values).then(() => {
+              callback()
+            })
+          } else {
+            this.submitCreate(values).then(() => {
+              callback()
+            })
+          }
         })
+      },
+      submitUpdate(values) {
+        return this.default_api.putData(this.$route.params.id, values)
+      },
+      submitCreate(values) {
       },
       initData() {
         let promise_list = [
