@@ -289,23 +289,21 @@
     },
     methods: {
       createHandler(e) {
-        // todo
-        this.submitValidate(e, (values) => {
-          values = this.removeBlankValue(values)
-          values = this.createValueTransfer(values)
-          return this.defaultThenProcess(this.default_api.postData(values).then(() => {
-            this.$message.success('新增商品成功')
-          }))
+        return new Promise((resolve) => {
+          this.submitValidate(e, (values) => {
+            values = this.removeBlankValue(values)
+            values = this.createValueTransfer(values)
+            resolve(values)
+          })
         })
       },
       updateHandler(e) {
-        // todo
-        this.submitValidate(e, (values) => {
-          values = this.removeBlankValue(values)
-          values = this.updateValueTransfer(values)
-          return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
-            this.$message.success('更新商品成功')
-          }))
+        return new Promise((resolve) => {
+          this.submitValidate(e, (values) => {
+            values = this.removeBlankValue(values)
+            values = this.updateValueTransfer(values)
+            resolve(values)
+          })
         })
 
       },

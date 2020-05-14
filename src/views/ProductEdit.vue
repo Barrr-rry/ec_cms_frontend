@@ -18,6 +18,7 @@
       <ProductEditCard
         class="mb-24px"
         :item="item"
+        ref="product_edit_card"
       />
       <!--      <ProductUploadImage-->
       <!--        class="mb-24px"-->
@@ -83,10 +84,10 @@
 
     methods: {
       submitPopoup(callback) {
-        // todo
-        // this.submitHandler()
-        console.log('wait for submit....')
-        callback()
+        this.$refs.product_edit_card.submitHandler().then(values => {
+          console.log('get valeus:', values)
+          callback()
+        })
       },
       initData() {
         let promise_list = [
