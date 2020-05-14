@@ -20,6 +20,12 @@
         :item="item"
         ref="product_edit_card"
       />
+      <SpecificationCard
+        v-if="configsetting.product_specifications_setting===2"
+        :item="item"
+        :level="1"
+        class="mb-24px"
+      />
       <!--      <ProductUploadImage-->
       <!--        class="mb-24px"-->
       <!--        :item="itme"-->
@@ -60,16 +66,19 @@
   import ProductUploadImage from "@/components/ProductUploadImage"
   import ProductInfoCard from "@/components/ProductInfoCard"
   import DetailInfoCard from "@/components/DetailInfoCard"
+  import SpecificationCard from "@/components/SpecificationCard"
+  import configsettingMixin from "@/mixins/configsettingMixin"
 
 
   let table_name = 'product'
   export default {
-    mixins: [pageMixin],
+    mixins: [configsettingMixin, pageMixin],
     components: {
       ProductEditCard,
       // ProductUploadImage,
       ProductInfoCard,
-      DetailInfoCard
+      DetailInfoCard,
+      SpecificationCard
     },
     data() {
       let type = this.$route.params.id === 'create' ? 'create' : 'update'
