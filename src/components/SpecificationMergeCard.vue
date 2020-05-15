@@ -21,6 +21,31 @@
           </template>
         </div>
       </template>
+      <div
+        slot="inventory_status"
+        slot-scope="text, record"
+      >
+        <a-select
+          v-if="record.editable"
+          style="margin: -5px 0"
+          :value="text"
+          @change="value => handleChange(value, record.key, 'inventory_status')"
+        >
+          <!--庫存狀況 0: 無庫存功能，或者是庫存使用數量表示 1：有庫存；2：無庫存；3：預購品-->
+          <a-select-option :value="1">
+            有庫存
+          </a-select-option>
+          <a-select-option :value="2">
+            無庫存
+          </a-select-option>
+          <a-select-option :value="3">
+            預購品
+          </a-select-option>
+        </a-select>
+        <template v-else>
+          {{ inveuntory_status_mapping[text] }}
+        </template>
+      </div>
       <template slot="operation" slot-scope="text, record">
         <div class="editable-row-operations">
         <span v-if="record.editable">
@@ -118,6 +143,12 @@
         data,
         columns,
         editingKey: '',
+        // 庫存狀況 0: 無庫存功能，或者是庫存使用數量表示 1：有庫存；2：無庫存；3：預購品
+        inveuntory_status_mapping: {
+          1: '有庫存',
+          2: '無庫存',
+          3: '預購品',
+        }
       }
     },
     watch: {
