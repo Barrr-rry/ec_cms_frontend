@@ -43,10 +43,10 @@
         ref="spec_merge"
 
       />
-      <!--      <ProductUploadImage-->
-      <!--        class="mb-24px"-->
-      <!--        :item="itme"-->
-      <!--      />-->
+      <ProductUploadImage
+        class="mb-24px"
+        :item="item"
+      />
       <ProductInfoCard
         class="mb-24px"
         :item="item"
@@ -93,7 +93,7 @@
     mixins: [configsettingMixin, pageMixin],
     components: {
       ProductEditCard,
-      // ProductUploadImage,
+      ProductUploadImage,
       ProductInfoCard,
       DetailInfoCard,
       SpecificationCard,

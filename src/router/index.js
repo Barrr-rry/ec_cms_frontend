@@ -105,15 +105,15 @@ const routes = [
         component: NoPermission
       },
       {
+        path: '/products/create',
+        name: 'product_edit_create',
+        component: ProductEdit
+      },
+      {
         path: '/products/:id',
         name: 'product_edit',
         component: ProductEdit
       },
-      {
-        path: '/products/create',
-        name: 'product_edit',
-        component: ProductEdit
-      }
     ]
   },
   {
