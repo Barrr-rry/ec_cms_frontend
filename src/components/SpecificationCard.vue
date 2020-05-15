@@ -127,6 +127,7 @@
         }
         this.cacheData.push(obj)
         this.data.push(obj)
+        this.$emit('onChange')
       },
       handleChange(value, key, column) {
         const newData = [...this.data]

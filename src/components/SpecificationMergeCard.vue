@@ -128,8 +128,8 @@
     computed: {
       computed_columns() {
         let columns = [...this.columns]
-        if (!this.has_level2) {
-          columns = columns.filter(x => x.dataIndex !== 'level2')
+        if (!this.has_level2_spec) {
+          columns = columns.filter(x => x.dataIndex !== 'level2_spec')
         }
         if (!this.configsetting.weight) {
           columns = columns.filter(x => x.dataIndex !== 'weight')

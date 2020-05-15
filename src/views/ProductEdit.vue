@@ -126,8 +126,18 @@
         if (!this.init_merge) {
           this.init_merge = true
           for (let el of this.item.specifications_detail) {
+            // key1,key 2 是比較 到時候價錢等 不會跟著變動被刪除
+            let spec1 = this.$refs.spec_level1.cacheData.filter(x => x.id === el.level1_spec)[0]
+            let spec2 = this.$refs.spec_level2.cacheData.filter(x => x.id === el.level2_spec)[0]
+            if (!spec2) {
+              spec2 = {
+                key: null
+              }
+            }
             data.push({
               key: key++,
+              key1: spec1.key,
+              key2: spec2.key,
               inventory_status: el.inventory_status,
               level1_spec: el.spec1_name,
               level2_spec: el.spec2_name,
@@ -139,21 +149,38 @@
             })
           }
         } else {
+          let cacheData = [...this.$refs.spec_merge.cacheData]
           let spec1_table = this.$refs.spec_level1.cacheData
-          // todo 可能只有一個
           let spec2_table = this.$refs.spec_level2.cacheData
+          // 更新 has_level2_spec 狀態
+          this.$refs.spec_merge.has_level2_spec = true
+          if (!spec2_table.length) {
+            spec2_table = [{key: null, name: null}]
+            this.$refs.spec_merge.has_level2_spec = false
+          }
           for (let spec1 of spec1_table) {
             for (let spec2 of spec2_table) {
+              let target = cacheData.filter(x => x.key1 === spec1.key && x.key2 === spec2.key)[0]
+              if (!target) {
+                target = {
+                  fake_price: null,
+                  price: null,
+                  inventory_status: null,
+                  weight: null,
+                  quantity: null,
+                }
+              }
               data.push({
                 key: key++,
+                key1: spec1.key,
+                key2: spec2.key,
                 level1_spec: spec1.name,
                 level2_spec: spec2.name,
-                // todo
-                fake_price: null,
-                price: null,
-                inventory_status: null,
-                weight: null,
-                quantity: null,
+                fake_price: target.fake_price,
+                price: target.price,
+                inventory_status: target.inventory_status,
+                weight: target.weight,
+                quantity: target.quantity,
 
               })
             }
