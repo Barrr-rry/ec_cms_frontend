@@ -47,6 +47,7 @@
         class="mb-24px"
         :item="item"
         ref="product_upload_image"
+        :specifications_image="specifications_image"
       />
       <ProductInfoCard
         class="mb-24px"
@@ -107,6 +108,7 @@
         table_name,
         type,
         default_api: this.$api.product,
+        specifications_image: [],
       }
     },
     computed: {
@@ -118,7 +120,12 @@
     methods: {
       initSpecMergeData() {
         this.initColumns()
+        this.initImages()
         this.initTable()
+      },
+      initImages() {
+        let spec1_table = this.$refs.spec_level1.cacheData
+        this.specifications_image = spec1_table
       },
       initTable() {
         let data = []

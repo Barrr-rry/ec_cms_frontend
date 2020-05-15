@@ -12,7 +12,7 @@
           {
             ...mixinUpload,
             rules:[
-            { required: true, message: '請選擇標籤' },
+            { required: true, message: '請選擇圖片' },
             ]
           },
 
@@ -37,24 +37,28 @@
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <!--      todo 規格功能還沒做-->
-      <!--      <c-form-item label="規格圖片"-->
-      <!--                   extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"-->
-      <!--      >-->
-      <!--        <c-upload-->
-      <!--                ref="uploads"-->
-      <!--                :type="type"-->
-      <!--                :multiple=true-->
-      <!--                v-decorator="[-->
-      <!--          'productimages',-->
-      <!--          {-->
-      <!--            ...mixinMultipleUpload,-->
-      <!--          },-->
+      <c-form-item
+        v-for="el in specifications_image"
+        :key="el.key"
+        :label="el.name"
+        extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
+      >
+        <c-upload
+          ref="uploads"
+          :type="type"
+          v-decorator="[
+          `specifications_image_${el.key}`,
+          {
+            ...mixinUpload,
+            rules:[
+            { required: true, message: '請選擇圖片' },
+            ]
+          },
 
-      <!--          ]"-->
-      <!--                :disabled="!editPermissioncheck()"-->
-      <!--        />-->
-      <!--      </c-form-item>-->
+          ]"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
     </a-form>
   </a-card>
 </template>
@@ -67,6 +71,10 @@
   export default {
     mixins: [drawerMixin, uploadMixin],
     props: {
+      specifications_image: {
+        type: Array,
+        default: () => []
+      },
       title: {
         type: String,
         default: ''
@@ -78,7 +86,39 @@
       }
     },
     data() {
-      return {}
+      return {
+        is_first_init: true,
+        last_obj: null,
+      }
+    },
+    watch: {
+      'specifications_image.length'() {
+        let obj = {}
+        for (let el of this.specifications_image) {
+          let target = null
+          let key = `specifications_image_${el.key}`
+          // 第一次init
+          if (this.is_first_init) {
+            target = this.item.productimages.filter(x => x.specification === el.id)[0]
+          }
+          let image_url = this.form.getFieldValue(key)
+          if (image_url) {
+            target = {
+              image_url
+            }
+          }
+          if (target) {
+            obj[key] = target.image_url
+          } else {
+            obj[key] = null
+          }
+        }
+        this.is_first_init = false
+        this.last_obj = obj
+        this.$nextTick(() => {
+          this.form.setFieldsValue(obj)
+        })
+      }
     },
     computed: {},
     methods: {
@@ -122,7 +162,13 @@
             }
           )
         }
-
+        for (let el of this.specifications_image) {
+          data.push({
+            "main_image": false,
+            "specification_name": el.name,
+            "image_url": values[`specifications_image_${el.key}`],
+          })
+        }
         return {
           productimages: data
         }
@@ -133,17 +179,17 @@
           productimages: [],
           main_productimage: null,
         }
+
         for (let el of this.item.productimages) {
           if (el.main_image) {
             obj.main_productimage = el.image_url
           } else {
-            obj.productimages.push(el.image_url)
+            if (!el.specification) {
+              obj.productimages.push(el.image_url)
+            }
           }
         }
-        // todo
-        // for (let el of this.item.specifications) {
-        //   obj.specifications.push(el.name)
-        // }
+
         this._initFileds(obj)
       },
     },
