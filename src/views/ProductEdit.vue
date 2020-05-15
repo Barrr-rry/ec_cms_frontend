@@ -46,6 +46,7 @@
       <ProductUploadImage
         class="mb-24px"
         :item="item"
+        ref="product_upload_image"
       />
       <ProductInfoCard
         class="mb-24px"
@@ -221,8 +222,11 @@
           // 規格細節
           let specifications_detail_data = [...this.$refs.spec_merge.cacheData]
           for (let el of specifications_detail_data) {
-            if (el.hasOwnProperty('key')) {
-              delete el['key']
+            // remove key
+            for (let key of ['key', 'key1', 'key2']) {
+              if (el.hasOwnProperty(key)) {
+                delete el[key]
+              }
             }
           }
           values.specifications_detail_data = specifications_detail_data
@@ -230,7 +234,15 @@
         return values
       },
       submitPopoup(callback) {
-        this.$refs.product_edit_card.submitHandler().then(values => {
+        let promise_list = [
+          this.$refs.product_upload_image.submitHandler(),
+          this.$refs.product_edit_card.submitHandler()
+        ]
+        Promise.all(promise_list).then(value_list => {
+          let values = {}
+          for (let v of value_list) {
+            values = {...v, ...values}
+          }
           values = this.mergeSpecificationValues(values)
           values.product_info = this.$refs.product_info_card.editor_data
           values.detail_info = this.$refs.product_info_card.editor_data

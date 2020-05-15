@@ -6,7 +6,7 @@
       >
         <c-upload
           ref="uploads"
-          :type="type"
+          :multiple="false"
           v-decorator="[
           'main_productimage',
           {
@@ -78,51 +78,54 @@
       }
     },
     data() {
-      return {
-        default_api: this.$api.product,
-      }
+      return {}
     },
     computed: {},
     methods: {
+      createHandler(e) {
+        return new Promise((resolve) => {
+          this.submitValidate(e, (values) => {
+            values = this.removeBlankValue(values)
+            values = this.createValueTransfer(values)
+            resolve(values)
+          })
+        })
+      },
+      updateHandler(e) {
+        return new Promise((resolve) => {
+          this.submitValidate(e, (values) => {
+            values = this.removeBlankValue(values)
+            values = this.updateValueTransfer(values)
+            resolve(values)
+          })
+        })
+
+      },
       editPermission() {
         return this.permissioncheck('permission_product_manage', 2)
       },
       createValueTransfer(values) {
-        let ret = {...values}
-        if (Array.isArray(ret.specifications)) {
-          ret.specifications = ret.specifications.map(name => {
-            return {
-              name
+        let data = []
+        for (let productimage of values.productimages) {
+          data.push(
+            {
+              "main_image": false,
+              "image_url": productimage,
             }
-          })
+          )
         }
-        let productimages = []
-        if (ret.productimages) {
-          for (let image of ret.productimages) {
-            productimages.push({
-              image_url: image,
-              main_image: false,
-            })
-          }
-        }
-        if (ret.main_productimage) {
-          productimages.push({
-            image_url: ret.main_productimage,
-            main_image: true,
-          })
-        }
-        ret.productimages = productimages
-        if (ret.tag) {
-          let tag = ret.tag.map(el => this.tag_reverse_mapping[el])
-          ret.tag = tag
-        } else {
-          ret.tag = []
-        }
-        if (!ret.category) {
-          ret.category = []
+        if (values.main_productimage) {
+          data.push(
+            {
+              "main_image": true,
+              "image_url": values.main_productimage,
+            }
+          )
         }
 
-        return ret
+        return {
+          productimages: data
+        }
       },
       initFields() {
 
