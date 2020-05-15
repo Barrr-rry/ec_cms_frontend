@@ -59,7 +59,10 @@
         :item="item"
         ref="detail_info_card"
       />
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-center align-items-center">
+        <a-button @click="$router.go(-1)" class="mr-8px">
+          取消
+        </a-button>
         <c-popover
           @ok="submitPopoup"
         >
@@ -68,7 +71,7 @@
               確定要發布嗎?
             </p>
           </template>
-          <a-button class="mt-24px" type="primary" html-type="submit">
+          <a-button class="ml-8px" type="primary" html-type="submit">
             確 定 發 布
           </a-button>
         </c-popover>
