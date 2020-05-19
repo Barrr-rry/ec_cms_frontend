@@ -146,13 +146,15 @@
       },
       createValueTransfer(values) {
         let data = []
-        for (let productimage of values.productimages) {
-          data.push(
-            {
-              "main_image": false,
-              "image_url": productimage,
-            }
-          )
+        if (values.productimages) {
+          for (let productimage of values.productimages) {
+            data.push(
+              {
+                "main_image": false,
+                "image_url": productimage,
+              }
+            )
+          }
         }
         if (values.main_productimage) {
           data.push(
