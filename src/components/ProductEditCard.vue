@@ -167,44 +167,6 @@
           </a-tree-select-node>
         </a-tree-select>
       </c-form-item>
-      <c-form-item label="上傳主要圖片"
-                   extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
-                   v-if="configsetting.product_specifications_setting===1"
-      >
-        <c-upload
-          ref="uploads"
-          :type="type"
-          v-decorator="[
-          'main_productimage',
-          {
-            ...mixinUpload,
-            rules:[
-            { required: true, message: '請選擇標籤' },
-            ]
-          },
-
-          ]"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="上傳圖片"
-                   extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
-                   v-if="configsetting.product_specifications_setting===1"
-      >
-        <c-upload
-          ref="uploads"
-          :type="type"
-          :multiple=true
-          v-decorator="[
-          'productimages',
-          {
-            ...mixinMultipleUpload,
-          },
-
-          ]"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
     </a-form>
   </a-card>
 </template>
@@ -339,23 +301,6 @@
           ret.category = []
         }
         if (this.configsetting.product_specifications_setting === 1) {
-          // product image
-          let productimages = []
-          if (ret.productimages) {
-            for (let image of ret.productimages) {
-              productimages.push({
-                image_url: image,
-                main_image: false,
-              })
-            }
-          }
-          if (ret.main_productimage) {
-            productimages.push({
-              image_url: ret.main_productimage,
-              main_image: true,
-            })
-          }
-          ret.productimages = productimages
 
           // init specification 資料
           let specification_level1 = []
@@ -385,8 +330,6 @@
         if (this.configsetting.product_specifications_setting === 1) {
           obj = {
             specifications: [],
-            productimages: [],
-            main_productimage: null,
             // for loop to get
             price: null,
             fake_price: null,
@@ -419,14 +362,6 @@
             }
           }
 
-          // 規格1 把圖片帶入
-          for (let el of this.item.productimages) {
-            if (el.main_image) {
-              obj.main_productimage = el.image_url
-            } else {
-              obj.productimages.push(el.image_url)
-            }
-          }
           // 規格1 只會有一個規格
           for (let el of this.item.specifications) {
             if (el.level === 1) {
