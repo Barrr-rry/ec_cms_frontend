@@ -271,9 +271,23 @@
         })
       },
       submitUpdate(values) {
+        // todo 之後在重構
+        for (let detail_data of values.specifications_detail_data) {
+          if (detail_data.price == null) {
+            this.$message.warning('請輸入商品金額')
+            break
+          }
+        }
         return this.default_api.putData(this.$route.params.id, values)
       },
       submitCreate(values) {
+        // todo 之後在重構
+        for (let detail_data of values.specifications_detail_data) {
+          if (detail_data.price == null) {
+            this.$message.warning('請輸入商品金額')
+            break
+          }
+        }
         return this.default_api.postData(values)
       },
       initData() {
@@ -285,8 +299,6 @@
         if (this.type !== 'create') {
           promise_list.push(this.$store.dispatch(`${this.table_name}/getRead`, this.$route.params.id))
         }
-        console.log('this.type:', this.type)
-
         this.loading = true
         Promise.all(promise_list).then(() => {
           this.loading = false
