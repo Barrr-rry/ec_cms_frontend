@@ -105,7 +105,7 @@
       SpecificationMergeCard,
     },
     data() {
-      let type = this.$route.params.id === 'create' ? 'create' : 'update'
+      let type = this.$route.params.id === 'create' || this.$route.params.id === undefined ? 'create' : 'update'
       return {
         init_merge: false,
         table_name,
@@ -136,28 +136,31 @@
         // first init
         if (!this.init_merge) {
           this.init_merge = true
-          for (let el of this.item.specifications_detail) {
-            // key1,key 2 是比較 到時候價錢等 不會跟著變動被刪除
-            let spec1 = this.$refs.spec_level1.cacheData.filter(x => x.id === el.level1_spec)[0]
-            let spec2 = this.$refs.spec_level2.cacheData.filter(x => x.id === el.level2_spec)[0]
-            if (!spec2) {
-              spec2 = {
-                key: null
+          // 會有可能沒有資料 ex: type=create
+          if (this.item) {
+            for (let el of this.item.specifications_detail) {
+              // key1,key 2 是比較 到時候價錢等 不會跟著變動被刪除
+              let spec1 = this.$refs.spec_level1.cacheData.filter(x => x.id === el.level1_spec)[0]
+              let spec2 = this.$refs.spec_level2.cacheData.filter(x => x.id === el.level2_spec)[0]
+              if (!spec2) {
+                spec2 = {
+                  key: null
+                }
               }
+              data.push({
+                key: key++,
+                key1: spec1.key,
+                key2: spec2.key,
+                inventory_status: el.inventory_status,
+                level1_spec: el.spec1_name,
+                level2_spec: el.spec2_name,
+                price: el.price,
+                product: el.product,
+                product_code: el.product_code,
+                quantity: el.quantity,
+                weight: el.weight,
+              })
             }
-            data.push({
-              key: key++,
-              key1: spec1.key,
-              key2: spec2.key,
-              inventory_status: el.inventory_status,
-              level1_spec: el.spec1_name,
-              level2_spec: el.spec2_name,
-              price: el.price,
-              product: el.product,
-              product_code: el.product_code,
-              quantity: el.quantity,
-              weight: el.weight,
-            })
           }
         } else {
           let cacheData = [...this.$refs.spec_merge.cacheData]
@@ -282,6 +285,7 @@
         if (this.type !== 'create') {
           promise_list.push(this.$store.dispatch(`${this.table_name}/getRead`, this.$route.params.id))
         }
+        console.log('this.type:', this.type)
 
         this.loading = true
         Promise.all(promise_list).then(() => {

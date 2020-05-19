@@ -97,8 +97,8 @@
         for (let el of this.specifications_image) {
           let target = null
           let key = `specifications_image_${el.key}`
-          // 第一次init
-          if (this.is_first_init) {
+          // 第一次init 且有資料
+          if (this.is_first_init && this.item) {
             target = this.item.productimages.filter(x => x.specification === el.id)[0]
           }
           let image_url = this.form.getFieldValue(key)

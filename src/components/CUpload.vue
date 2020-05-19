@@ -45,6 +45,9 @@
     },
     watch: {
       computed_value(val) {
+        if (!val) {
+          return
+        }
         if (this.init) {
           return
         }
