@@ -148,6 +148,7 @@
                 }
               }
               data.push({
+                id: el.id,
                 key: key++,
                 key1: spec1.key,
                 key2: spec2.key,
@@ -177,6 +178,7 @@
               let target = cacheData.filter(x => x.key1 === spec1.key && x.key2 === spec2.key)[0]
               if (!target) {
                 target = {
+                  id: null,
                   fake_price: null,
                   price: null,
                   inventory_status: null,
@@ -185,6 +187,7 @@
                 }
               }
               data.push({
+                id: target.id,
                 key: key++,
                 key1: spec1.key,
                 key2: spec2.key,
@@ -219,17 +222,25 @@
           // 規格1
           let specification_level1 = []
           for (let el of this.$refs.spec_level1.cacheData) {
-            specification_level1.push({
-              name: el.name
-            })
+            let obj = {
+              name: el.name,
+            }
+            if (el.id) {
+              obj.id = el.id
+            }
+            specification_level1.push(obj)
           }
           values.specification_level1 = specification_level1
           // 規格2
           let specification_level2 = []
           for (let el of this.$refs.spec_level2.cacheData) {
-            specification_level2.push({
-              name: el.name
-            })
+            let obj = {
+              name: el.name,
+            }
+            if (el.id) {
+              obj.id = el.id
+            }
+            specification_level2.push(obj)
           }
           values.specification_level2 = specification_level2
           // 規格細節
