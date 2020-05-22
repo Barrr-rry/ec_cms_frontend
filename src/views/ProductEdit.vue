@@ -270,6 +270,12 @@
           values = this.mergeSpecificationValues(values)
           values.product_info = this.$refs.product_info_card.editor_data
           values.detail_info = this.$refs.product_info_card.editor_data
+          for (let detail_data of values.specifications_detail_data) {
+            if (detail_data.price == null) {
+              this.$message.warning('請輸入商品售價')
+              return
+            }
+          }
           if (this.type === 'update') {
             this.submitUpdate(values).then(() => {
               callback()
@@ -282,24 +288,20 @@
         })
       },
       submitUpdate(values) {
-        // todo 之後在重構
-        for (let detail_data of values.specifications_detail_data) {
-          if (detail_data.price == null) {
-            this.$message.warning('請輸入商品金額')
-            break
-          }
-        }
-        return this.default_api.putData(this.$route.params.id, values)
+        return this.default_api.putData(this.$route.params.id, values).then(() => {
+          this.$message.success('更新商品成功')
+          setTimeout(() => {
+            this.$router.push('/products')
+          }, 500)
+        })
       },
       submitCreate(values) {
-        // todo 之後在重構
-        for (let detail_data of values.specifications_detail_data) {
-          if (detail_data.price == null) {
-            this.$message.warning('請輸入商品金額')
-            break
-          }
-        }
-        return this.default_api.postData(values)
+        return this.default_api.postData(values).then(() => {
+          this.$message.success('新增商品成功')
+          setTimeout(() => {
+            this.$router.push('/products')
+          }, 500)
+        })
       },
       initData() {
         let promise_list = [
