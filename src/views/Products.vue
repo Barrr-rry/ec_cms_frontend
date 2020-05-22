@@ -163,7 +163,7 @@
     methods: {
       productStockProcess() {
         // 如果 product_stock_setting = 1 代表沒有庫存 columns 要刪掉
-        if (this.configsetting.product_stock_setting === 2) {
+        if (this.configsetting.product_stock_setting in [1, 2]) {
           this.columns = this.columns.filter(x => x.title !== '庫存狀況')
           this.columns.length
         }
