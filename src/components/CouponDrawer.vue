@@ -160,17 +160,12 @@
         </a-radio-group>
       </c-form-item>
       <c-form-item :wrapperCol="{span:19,offset:5}" v-if="has_member_list">
-        <!--        <a-input-->
-        <!--          v-decorator="['member', { rules: [{ required: true, message: '請輸入資料' }] }]"-->
-        <!--          type="number"-->
-        <!--          placeholder="請選擇可使用此優惠券的會員"-->
-        <!--          :disabled="!editPermissioncheck()"-->
-        <!--        />-->
         <a-select
           mode="multiple"
           v-decorator="['member', { rules: [{ required: true, message: '請輸入資料' }] }]"
           style="width: 100%"
           placeholder="請選擇可使用此優惠券的會員"
+          :filterOption="filterOption"
         >
           <a-select-option v-for="el of members" :key="el.id" :value="el.id">
             {{el.name}}
@@ -233,6 +228,9 @@
       })
     },
     methods: {
+      filterOption(input, option) {
+        return option.componentOptions.children[0].text.includes(input)
+      },
       changeMethod(e) {
         this.method = e.target.value
       },
