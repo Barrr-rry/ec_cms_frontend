@@ -52,24 +52,25 @@
           <create-card
             @click="create_drawer=true" style="height: 160px" title="新 增 活 動"></create-card>
         </div>
-        <div class="col-3 pb-24px" v-for="activity in items" :key="activity.id">
+        <div class="col-3 pb-24px" v-for="item in items" :key="item.id">
           <ActivityCard
-            :item="activity"
+            :item="item"
             :initCallback="initData"
+            @update="openUpdateDrawer(item)"
           />
         </div>
       </div>
     </div>
-    <!--    <banner-drawer-->
-    <!--      v-model="create_drawer"-->
-    <!--      :initCallback="initData"-->
-    <!--    ></banner-drawer>-->
+    <ActivityDrawer
+      v-model="create_drawer"
+      :initCallback="initData"
+    ></ActivityDrawer>
 
-    <!--    <banner-drawer-->
-    <!--      v-model="update_drawer"-->
-    <!--      :initCallback="initData"-->
-    <!--      :item="target"-->
-    <!--    ></banner-drawer>-->
+    <ActivityDrawer
+      v-model="update_drawer"
+      :initCallback="initData"
+      :item="target"
+    ></ActivityDrawer>
   </a-layout-content>
 </template>
 
@@ -79,6 +80,7 @@
   import {mapState} from 'vuex'
   import pageMixin from "@/mixins/pageMixin"
   import searchFormMixin from "@/mixins/searchFormMixin"
+  import ActivityDrawer from "@/components/ActivityDrawer"
 
   let table_name = 'activity'
   export default {
@@ -86,6 +88,7 @@
     components: {
       CreateCard,
       ActivityCard,
+      ActivityDrawer
     },
     data() {
       return {
