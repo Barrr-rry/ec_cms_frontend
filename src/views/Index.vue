@@ -143,6 +143,9 @@
       }, {
         title: '忠誠獎勵管理',
         link: '/reward'
+      }, {
+        title: '買就送活動',
+        link: '/activity'
       }]
     }
   ]
