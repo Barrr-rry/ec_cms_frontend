@@ -7,8 +7,7 @@
       <div class="activity-card-content flex-grow-1 ml-12px">
         <h3 class="mb-12px">{{item.ch_name}}</h3>
         <div class="gray-text">
-          <!--TODO 假資料-->
-          使用中商品 : 25 個
+          使用中商品 : {{item.products.length}} 個
         </div>
       </div>
     </div>

@@ -64,27 +64,26 @@
         </div>
       </div>
     </a-form>
-    <tag-product-drawer
+    <ActivityProductDrawer
       v-model="create_drawer"
       @ok="productHandler"
-    ></tag-product-drawer>
+    ></ActivityProductDrawer>
   </c-drawer>
 </template>
 
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
-  import {mapState} from 'vuex'
+  import ActivityProductDrawer from "@/components/ActivityProductDrawer"
   import CreateCard from "@/components/CreateCard"
   import TagProductCard from "@/components/TagProductCard"
-  import TagProductDrawer from "@/components/TagProductDrawer"
 
 
   export default {
     mixins: [drawerMixin],
     components: {
+      ActivityProductDrawer,
       CreateCard,
       TagProductCard,
-      TagProductDrawer,
     },
     data() {
       return {
@@ -125,7 +124,7 @@
       deleteHandler(callback, err) {
         return this.defaultThenProcess(
           this.default_api.deleteData(this.item.id).then(() => {
-            this.$message.success('刪除自定義標籤成功')
+            this.$message.success('刪活動成功')
           }).finally(() => {
             callback()
           })
@@ -139,7 +138,7 @@
           values = this.updateValueTransfer(values)
           values.product_ids = this.products.map(x => x.id)
           return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
-            this.$message.success('更新自定義標籤成功')
+            this.$message.success('更活動成功')
           }))
         })
       },
@@ -149,7 +148,7 @@
           values = this.createValueTransfer(values)
           values.product_ids = this.products.map(x => x.id)
           return this.defaultThenProcess(this.default_api.postData(values).then(() => {
-            this.$message.success('新增自定義標籤成功')
+            this.$message.success('新增活動成功')
           }))
         })
       },
