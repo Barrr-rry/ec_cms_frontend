@@ -271,8 +271,12 @@
           values.product_info = this.$refs.product_info_card.editor_data
           values.detail_info = this.$refs.product_info_card.editor_data
           for (let detail_data of values.specifications_detail_data) {
-            if (detail_data.price == null) {
+            if (detail_data.price == '') {
               this.$message.warning('請輸入商品售價')
+              return
+            }
+            if (detail_data.quantity == '') {
+              this.$message.warning('請輸入商品數量')
               return
             }
           }

@@ -20,7 +20,7 @@
             @submit="submit"
             class="row fill-width"
           >
-            <div class="col-6 mr-0px">
+            <div class="col-4 mr-0px">
               <a-form-item label="查詢商品" class="search-input">
                 <a-input
                         v-decorator="['keywords', { rules: [
@@ -49,7 +49,7 @@
               </a-form-item>
             </div>
 
-            <div class="col-2 " v-show="configsetting.product_stock_setting === 2 || configsetting.product_stock_setting === 3">
+            <div class="col-2 " v-show="configsetting.product_stock_setting === 3">
               <a-form-item label="庫存狀態" class="w-100 d-flex l-form-select">
                 <a-select
                         v-decorator="['inventory_status', { rules: [] }]"
@@ -71,7 +71,29 @@
               </a-form-item>
             </div>
 
-            <div class="col-6 d-flex justify-content-end">
+            <div class="col-2 " v-show="configsetting.product_stock_setting === 2">
+              <a-form-item label="庫存狀態" class="w-100 d-flex l-form-select">
+                <a-select
+                        v-decorator="['inventory_status_2', { rules: [] }]"
+                        placeholder="請選擇"
+                >
+                  <a-select-option :value="0">
+                    全部
+                  </a-select-option>
+                  <a-select-option :value="1">
+                    有庫存
+                  </a-select-option>
+                  <a-select-option :value="2">
+                    無庫存
+                  </a-select-option>
+                  <a-select-option :value="3">
+                    預購品
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+            </div>
+
+            <div class="col-4 d-flex justify-content-end">
               <a-form-item>
                 <a-button type="primary" html-type="submit" block>
                   查 詢
@@ -318,8 +340,8 @@
         let ret = 'default'
         let mapping = {
           error: ['無庫存'],
-          warning: ['庫存不足'],
-          success: ['庫存充足'],
+          warning: ['庫存不足', '預購品'],
+          success: ['庫存充足', '有庫存'],
         }
         for (let key in mapping) {
           if (mapping[key].includes(text)) {
