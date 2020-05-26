@@ -19,6 +19,7 @@ import Index from "@/views/Index"
 import Coupon from "@/views/Coupon"
 import NoPermission from "@/views/NoPermission"
 import ProductEdit from "@/views/ProductEdit"
+import Activity from "@/views/Activity"
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/banner',
         name: 'banner',
         component: Banner
+      },
+      {
+        path: '/activity',
+        name: 'activity',
+        component: Activity
       },
       {
         path: '/coupon',

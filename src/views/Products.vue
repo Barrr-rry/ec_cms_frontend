@@ -16,11 +16,11 @@
         <div>
           <a-form
             :form="search_form"
-            class="w-100 row"
             layout="inline"
             @submit="submit"
+            class="row fill-width"
           >
-            <div class="col-4">
+            <div class="col-6 mr-0px">
               <a-form-item label="查詢商品" class="search-input">
                 <a-input
                         v-decorator="['keywords', { rules: [
@@ -71,7 +71,7 @@
               </a-form-item>
             </div>
 
-            <div class="col-4">
+            <div class="col-6 d-flex justify-content-end">
               <a-form-item>
                 <a-button type="primary" html-type="submit" block>
                   查 詢

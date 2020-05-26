@@ -61,14 +61,7 @@
         table_name,
       }
     },
-    methods: {
-      NoPermission(item, callback) {
-        debugger
-        if (this.item && this.item.role_manage == 0) {
-          this.$router.push('/nopermission')
-        }
-      }
-    },
+    methods: {},
     computed: {
       ...mapState(table_name, {
         items: state => state.items
