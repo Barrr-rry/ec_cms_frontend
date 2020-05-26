@@ -25,6 +25,15 @@
           </a-select-option>
         </a-select>
       </c-form-item>
+      <c-form-item label="排序順序">
+        <a-input
+          v-decorator="['order', { rules: [
+            { required: true, message: '請輸入資料' },
+            ]}]"
+          placeholder="排序順序"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
       <c-form-item label="庫存數量"
                    v-if="configsetting.product_stock_setting===3&&configsetting.product_specifications_setting===1"
       >
@@ -181,7 +190,7 @@
     mixins: [configsettingMixin, drawerMixin, uploadMixin],
     data() {
       return {
-        update_field_keys: ['name', 'brand', 'sub_title', 'tag', 'category'],
+        update_field_keys: ['name', 'brand', 'order', 'sub_title', 'tag', 'category'],
         default_api: this.$api.product,
         // for check to add
         // fake_data: {}
