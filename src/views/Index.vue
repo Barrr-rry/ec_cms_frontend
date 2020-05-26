@@ -141,10 +141,10 @@
         title: '優惠券管理',
         link: '/coupon'
       }, {
-        title: '忠誠獎勵管理',
+        title: '忠誠點數管理',
         link: '/reward'
       }, {
-        title: '買就送活動',
+        title: '買就送活動管理',
         link: '/activity'
       }]
     }

@@ -18,8 +18,9 @@
             :form="search_form"
             layout="inline"
             @submit="submit"
+            class="row fill-width"
           >
-            <a-form-item label="快速查詢商品">
+            <a-form-item label="快速查詢商品" class="col-6 mr-0px">
               <a-input
                 v-decorator="['keywords', { rules: [
             ]}]"
@@ -28,16 +29,18 @@
               />
             </a-form-item>
 
-            <a-form-item>
-              <a-button type="primary" html-type="submit" block>
-                查 詢
-              </a-button>
-            </a-form-item>
-            <a-form-item>
-              <a-button type="" @click="reset">
-                重 置
-              </a-button>
-            </a-form-item>
+            <div class="col-6 d-flex justify-content-end">
+              <a-form-item>
+                <a-button type="primary" html-type="submit" block>
+                  查 詢
+                </a-button>
+              </a-form-item>
+              <a-form-item class="mr-0px">
+                <a-button type="" @click="reset">
+                  重 置
+                </a-button>
+              </a-form-item>
+            </div>
           </a-form>
         </div>
         <div class="pb-24px">
