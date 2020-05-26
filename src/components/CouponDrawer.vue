@@ -160,12 +160,22 @@
         </a-radio-group>
       </c-form-item>
       <c-form-item :wrapperCol="{span:19,offset:5}" v-if="has_member_list">
-        <a-input
+        <!--        <a-input-->
+        <!--          v-decorator="['member', { rules: [{ required: true, message: '請輸入資料' }] }]"-->
+        <!--          type="number"-->
+        <!--          placeholder="請選擇可使用此優惠券的會員"-->
+        <!--          :disabled="!editPermissioncheck()"-->
+        <!--        />-->
+        <a-select
+          mode="multiple"
           v-decorator="['member', { rules: [{ required: true, message: '請輸入資料' }] }]"
-          type="number"
+          style="width: 100%"
           placeholder="請選擇可使用此優惠券的會員"
-          :disabled="!editPermissioncheck()"
-        />
+        >
+          <a-select-option v-for="el of members" :key="el.id" :value="el.id">
+            {{el.name}}
+          </a-select-option>
+        </a-select>
       </c-form-item>
     </a-form>
 
@@ -177,6 +187,7 @@
   import drawerMixin from "@/mixins/drawerMixin"
   import uploadMixin from "@/mixins/uploadMixin"
   import momentMixin from "@/mixins/momentMixin"
+  import {mapState} from 'vuex'
 
   export default {
     mixins: [drawerMixin, uploadMixin, momentMixin],
@@ -215,6 +226,11 @@
         //   password: "a123456",
         // }
       }
+    },
+    computed: {
+      ...mapState('member', {
+        members: state => state.items
+      })
     },
     methods: {
       changeMethod(e) {
@@ -255,9 +271,10 @@
         this._initFileds(obj)
       },
       createValueTransfer(values) {
-        values.start_time = this.toDateStr(values.time_list[0])
-        values.end_time = this.toDateStr(values.time_list[1])
-        values.member = []
+        if (values.time_list && values.time_list.length) {
+          values.start_time = this.toDateStr(values.time_list[0])
+          values.end_time = this.toDateStr(values.time_list[1])
+        }
         return values
       },
       deleteHandler(callback, err) {
@@ -303,6 +320,9 @@
 
         })
       },
+    },
+    mounted() {
+      this.$store.dispatch('member/getList')
     }
   }
 </script>
