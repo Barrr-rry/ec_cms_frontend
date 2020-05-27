@@ -82,12 +82,32 @@
                  :rowSelection="{selectedRowKeys: selected_row_keys, onChange: onSelectChange}"
 
         >
+
+          <span slot="account" slot-scope="text, record">
+            {{text}}
+            <a-tag
+                    :color="'red'"
+                    class="mr-12px"
+                    v-if="record.in_blacklist"
+            >
+              {{ '黑名單' }}
+            </a-tag>
+            <a-tag
+                    :color="'red'"
+                    class="mr-12px"
+                    v-if="record.was_in_blacklist && !record.in_blacklist"
+            >
+              {{ '曾是黑名單' }}
+            </a-tag>
+          </span>
+
           <div slot="status" slot-scope="text">
             <c-badge :status="text?'success':'error'"></c-badge>
           </div>
 
           <div slot="operation" slot-scope="text, record">
             <a href="#" @click="openUpdateDrawer(record,()=>overview_drawer=true)">歷史訂單</a>
+            <a class="ml-24px" href="#" @click="openUpdateDrawer(record,()=>overview_drawer=true)">回饋金管理</a>
             <a class="ml-24px" href="#" @click="openUpdateDrawer(record,null)">總覽</a>
           </div>
         </a-table>
@@ -133,23 +153,26 @@
     {
       title: '會員帳號',
       dataIndex: 'account',
+      scopedSlots: { customRender: 'account' },
     },
     {
-      title: '電話',
-      dataIndex: 'phone',
-    },
-    {
-      title: '手機',
-      dataIndex: 'cell_phone',
-    },
-    {
-      title: '加入時間',
+      title: '註冊時間',
       dataIndex: 'join_at',
       sorter: true,
     },
     {
-      title: '忠誠點數',
+      title: '回饋點數',
       dataIndex: 'returns',
+      sorter: true,
+    },
+    {
+      title: '消費次數',
+      dataIndex: 'order_count',
+      sorter: true,
+    },
+    {
+      title: '消費金額',
+      dataIndex: 'pay_total',
       sorter: true,
     },
     {
