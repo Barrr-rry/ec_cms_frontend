@@ -35,7 +35,7 @@
     data() {
       return {
         fileList: [],
-        init: false,
+        is_init: false,
       }
     },
     computed: {
@@ -48,10 +48,10 @@
         if (!val) {
           return
         }
-        if (this.init) {
+        if (this.is_init) {
           return
         }
-        this.init = true
+        this.is_init = true
         let files = []
         if (!val) {
           this.fileList = files
@@ -86,6 +86,13 @@
       }
     },
     methods: {
+      init() {
+        this.$nextTick(() => {
+          this.fileList = []
+          this.$refs.file.sFileList = []
+          this.is_init = false
+        })
+      },
       handleChange(info) {
         let files = info.fileList
         if (!this.multiple && files.length) {

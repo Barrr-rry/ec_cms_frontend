@@ -23,9 +23,9 @@
             <div class="col-4 mr-0px">
               <a-form-item label="查詢商品" class="search-input">
                 <a-input
-                        v-decorator="['keywords', { rules: [
+                  v-decorator="['keywords', { rules: [
             ]}]"
-                        placeholder="請輸入商品編號、商品名稱、商品貨號"
+                  placeholder="請輸入商品編號、商品名稱、商品貨號"
                 />
               </a-form-item>
             </div>
@@ -33,8 +33,8 @@
             <div class="col-2 ">
               <a-form-item label="商品狀態" class="w-100 d-flex l-form-select">
                 <a-select
-                        v-decorator="['status', { rules: [] }]"
-                        placeholder="請選擇"
+                  v-decorator="['status', { rules: [] }]"
+                  placeholder="請選擇"
                 >
                   <a-select-option :value="2">
                     全部
@@ -52,8 +52,8 @@
             <div class="col-2 " v-show="configsetting.product_stock_setting === 3">
               <a-form-item label="庫存狀態" class="w-100 d-flex l-form-select">
                 <a-select
-                        v-decorator="['inventory_status', { rules: [] }]"
-                        placeholder="請選擇"
+                  v-decorator="['inventory_status', { rules: [] }]"
+                  placeholder="請選擇"
                 >
                   <a-select-option :value="0">
                     全部
@@ -74,8 +74,8 @@
             <div class="col-2 " v-show="configsetting.product_stock_setting === 2">
               <a-form-item label="庫存狀態" class="w-100 d-flex l-form-select">
                 <a-select
-                        v-decorator="['inventory_status_2', { rules: [] }]"
-                        placeholder="請選擇"
+                  v-decorator="['inventory_status_2', { rules: [] }]"
+                  placeholder="請選擇"
                 >
                   <a-select-option :value="0">
                     全部
@@ -112,7 +112,7 @@
         <div class="d-flex">
           <a-button type="primary" @click="goNextRoute()">+ 新 增 商 品</a-button>
           <c-popover
-                  @ok="updateSelectedHandler($event)"
+            @ok="updateSelectedHandler($event,{status:true})"
           >
             <template slot="content">
               <p>
@@ -120,12 +120,13 @@
               </p>
             </template>
             <div class="ml-12px">
-              <a-button :disabled="!selected_row_keys.length" :value="true"
-              >上 架</a-button>
+              <a-button :disabled="!selected_row_keys.length"
+              >上 架
+              </a-button>
             </div>
           </c-popover>
           <c-popover
-                  @ok="updateSelectedHandler($event)"
+            @ok="updateSelectedHandler($event,{status:false})"
           >
             <template slot="content">
               <p>
@@ -133,13 +134,13 @@
               </p>
             </template>
             <div class="ml-12px">
-              <a-button :disabled="!selected_row_keys.length" :value="false"
-                        :form="update_table_form"
-              >下 架</a-button>
+              <a-button :disabled="!selected_row_keys.length"
+              >下 架
+              </a-button>
             </div>
           </c-popover>
           <c-popover
-                  @ok="deleteSelectedItems"
+            @ok="deleteSelectedItems"
           >
             <template slot="content">
               <p>
@@ -285,7 +286,6 @@
         product_info_drawer: false,
         detail_info_drawer: false,
         default_api: this.$api.product,
-        update_table_form: this.$form.createForm(this),
       }
     },
     computed: {
@@ -389,22 +389,20 @@
           this.popoverCatch(err)
         })
       },
-      updateSelectedHandler(callback) {
+      updateSelectedHandler(callback, values) {
         if (!this.editPermission()) {
           this.$message.warn('權限不足')
           callback()
           return
         }
-        this.update_table_form.validateFields((err, values) => {
-          callback()
-          this.$axios.all(this.selected_row_keys.map(id => {
-            return this.default_api.putData(id, values)
-          })).then(() => {
-            this.selected_row_keys = []
-            this.initData()
-          }).catch((err) => {
-            this.popoverCatch(err)
-          })
+        callback()
+        this.$axios.all(this.selected_row_keys.map(id => {
+          return this.default_api.putData(id, values)
+        })).then(() => {
+          this.selected_row_keys = []
+          this.initData()
+        }).catch((err) => {
+          this.popoverCatch(err)
         })
       },
     },

@@ -9,14 +9,15 @@
       :form="form"
       @submit="submitHandler"
     >
-      <c-form-item label="折價門檻">
+      <c-form-item label="設定使用門檻">
         <a-input
           v-decorator="['role', { rules: [{ required: true, message: '請輸入資料' }] }]"
           type="number"
+          placeholder="請輸入使用優惠券的門檻價格"
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="折價方式">
+      <c-form-item label="設定優惠方式">
         <a-radio-group v-decorator="['method',{rules:[],initialValue:method}]"
                        @change="changeMethod"
                        :disabled="!editPermissioncheck()"
@@ -70,23 +71,106 @@
         />
 
       </c-form-item>
-      <c-form-item label="啟用日期">
-        <a-date-picker
+      <!--使用期限-->
+      <c-form-item label="使用期限">
+        <a-radio-group
           :disabled="!editPermissioncheck()"
-          placeholder="啟用日期"
-          v-decorator="['start_time', { rules: [
-          { required: true, message: '請輸入資料' },
-          { validator: validateStarttime }
-          ] }]"></a-date-picker>
+          v-decorator="['has_period',{rules:[{ required: true, message: '請輸入資料' }],initialValue:has_period}]"
+          @change="(e)=>has_period=e.target.value"
+        >
+          <a-radio :value="false">
+            無限制
+          </a-radio>
+          <a-radio :value="true">
+            有
+          </a-radio>
+        </a-radio-group>
       </c-form-item>
-      <c-form-item label="到期日期">
-        <a-date-picker
+      <c-form-item :wrapperCol="{span:19,offset:5}" v-if="has_period">
+
+        <a-range-picker
           :disabled="!editPermissioncheck()"
-          placeholder="到期日期"
-          v-decorator="['end_time', { rules: [{ validator: validateEndtime },
+          v-decorator="['time_list', { rules: [,
           { required: true, message: '請輸入資料' }
           ] }]"
-        ></a-date-picker>
+        />
+      </c-form-item>
+
+      <!--會員使用次數-->
+      <c-form-item label="會員使用次數">
+        <a-radio-group
+          :disabled="!editPermissioncheck()"
+          v-decorator="['has_member_use_limit',{rules:[{ required: true, message: '請輸入資料' }],initialValue:has_member_use_limit}]"
+          @change="(e)=>has_member_use_limit=e.target.value"
+        >
+          <a-radio :value="false">
+            無限制
+          </a-radio>
+          <a-radio :value="true">
+            有
+          </a-radio>
+        </a-radio-group>
+      </c-form-item>
+      <c-form-item :wrapperCol="{span:19,offset:5}" v-if="has_member_use_limit">
+        <a-input
+          v-decorator="['member_use_limit', { rules: [{ required: true, message: '請輸入資料' }] }]"
+          type="number"
+          placeholder="請輸入同一會員最多可使用次數"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+
+      <!--優惠券使用次數-->
+      <c-form-item label="優惠券使用次數">
+        <a-radio-group
+          :disabled="!editPermissioncheck()"
+          v-decorator="['has_coupon_use_limit',{rules:[{ required: true, message: '請輸入資料' }],initialValue:has_coupon_use_limit}]"
+          @change="(e)=>has_coupon_use_limit=e.target.value"
+        >
+          <a-radio :value="false">
+            無限制
+          </a-radio>
+          <a-radio :value="true">
+            有
+          </a-radio>
+        </a-radio-group>
+      </c-form-item>
+      <c-form-item :wrapperCol="{span:19,offset:5}" v-if="has_coupon_use_limit">
+        <a-input
+          v-decorator="['coupon_use_limit', { rules: [{ required: true, message: '請輸入資料' }] }]"
+          type="number"
+          placeholder="請輸入此優惠券最多可被使用次數"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+
+      <!--針對會員發放-->
+      <c-form-item label="針對會員發放">
+        <a-radio-group
+          :disabled="!editPermissioncheck()"
+          v-decorator="['has_member_list',{rules:[{ required: true, message: '請輸入資料' }],initialValue:has_member_list}]"
+          @change="(e)=>has_member_list=e.target.value"
+        >
+          <a-radio :value="false">
+            無限制
+          </a-radio>
+          <a-radio :value="true">
+            有
+          </a-radio>
+        </a-radio-group>
+      </c-form-item>
+      <c-form-item :wrapperCol="{span:19,offset:5}" v-if="has_member_list">
+        <a-select
+          mode="multiple"
+          v-decorator="['member', { rules: [{ required: true, message: '請輸入資料' }] }]"
+          style="width: 100%"
+          placeholder="請選擇可使用此優惠券的會員"
+          :filterOption="filterOption"
+        >
+          <a-select-option v-for="el of members" :key="el.id" :value="el.id">
+            {{el.name}}
+          </a-select-option>
+        </a-select>
       </c-form-item>
     </a-form>
 
@@ -98,6 +182,7 @@
   import drawerMixin from "@/mixins/drawerMixin"
   import uploadMixin from "@/mixins/uploadMixin"
   import momentMixin from "@/mixins/momentMixin"
+  import {mapState} from 'vuex'
 
   export default {
     mixins: [drawerMixin, uploadMixin, momentMixin],
@@ -105,9 +190,26 @@
     data() {
       return {
         update_drawer: false,
-        update_field_keys: ['role', 'method', 'discount', 'title', 'discount_code', 'image_url', 'start_time', 'end_time'],
+        update_field_keys: [
+          'role',
+          'method',
+          'discount',
+          'title',
+          'discount_code',
+          'image_url',
+          'has_period',
+          'has_member_use_limit',
+          'member_use_limit',
+          'has_coupon_use_limit',
+          'coupon_use_limit',
+          'has_member_list',
+        ],
         default_api: this.$api.coupon,
         method: 1,
+        has_period: false,
+        has_member_use_limit: false,
+        has_coupon_use_limit: false,
+        has_member_list: false,
         start_time: null,
         end_time: null,
         // for check to add
@@ -120,7 +222,15 @@
         // }
       }
     },
+    computed: {
+      ...mapState('member', {
+        members: state => state.items
+      })
+    },
     methods: {
+      filterOption(input, option) {
+        return option.componentOptions.children[0].text.includes(input)
+      },
       changeMethod(e) {
         this.method = e.target.value
       },
@@ -134,18 +244,35 @@
             obj[key] = this.item[key]
           }
         }
-        obj.start_time = this.toMoment(this.item.start_time)
-        obj.end_time = this.toMoment(this.item.end_time)
 
         this.method = this.item.method
-        this.start_time = obj.start_time
-        this.end_time = obj.end_time
+        this.has_period = this.item.has_period
+        if (this.has_period) {
+          let time_list = []
+          time_list.push(this.toMoment(this.item.start_time))
+          time_list.push(this.toMoment(this.item.end_time))
+          obj.time_list = time_list
+        }
+        this.has_member_use_limit = this.item.has_member_use_limit
+        if (this.has_member_use_limit) {
+          obj.member_use_limit = this.item.member_use_limit
+        }
+        this.has_coupon_use_limit = this.item.has_coupon_use_limit
+        if (this.has_coupon_use_limit) {
+          obj.coupon_use_limit = this.item.coupon_use_limit
+        }
+        this.has_member_list = this.item.has_member_list
+        if (this.has_member_list) {
+          obj.member = this.item.member
+        }
 
         this._initFileds(obj)
       },
       createValueTransfer(values) {
-        values.start_time = this.toDateStr(values.start_time)
-        values.end_time = this.toDateStr(values.end_time)
+        if (values.time_list && values.time_list.length) {
+          values.start_time = this.toDateStr(values.time_list[0])
+          values.end_time = this.toDateStr(values.time_list[1])
+        }
         return values
       },
       deleteHandler(callback, err) {
@@ -191,6 +318,9 @@
 
         })
       },
+    },
+    mounted() {
+      this.$store.dispatch('member/getList')
     }
   }
 </script>
