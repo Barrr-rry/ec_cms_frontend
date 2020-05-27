@@ -58,13 +58,14 @@
                   重 置
                 </a-button>
               </a-form-item>
+              <a href="#" @click="callbackCheck(()=>filter_drawer=true,editPermission())" class="mt-2">進階篩選</a>
             </div>
             <!--button-->
 
           </a-form>
         </div>
         <div class="pb-24px d-flex">
-          <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 增</a-button>
+          <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 建</a-button>
           <a-button type="primary" class="ml-24px" v-if=false>匯 出 已 選 擇 會 員</a-button>
         </div>
         <div class="mb-24px" style="height: 39px">
@@ -107,7 +108,7 @@
 
           <div slot="operation" slot-scope="text, record">
             <a href="#" @click="openUpdateDrawer(record,()=>overview_drawer=true)">歷史訂單</a>
-            <a class="ml-24px" href="#" @click="openUpdateDrawer(record,()=>overview_drawer=true)">回饋金管理</a>
+            <a class="ml-24px" href="#" @click="openUpdateDrawer(record,()=>reward_drawer=true)">回饋金管理</a>
             <a class="ml-24px" href="#" @click="openUpdateDrawer(record,null)">總覽</a>
           </div>
         </a-table>
@@ -116,8 +117,7 @@
     <member-drawer
       v-model="create_drawer"
       :initCallback="initData"
-    >
-    </member-drawer>
+    ></member-drawer>
     <member-drawer
       v-model="update_drawer"
       :initCallback="initData"
@@ -128,6 +128,15 @@
       :initCallback="initData"
       :item="target"
     ></MemberOrderOverviewDrawer>
+    <MemberFilterDrawer
+      v-model="filter_drawer"
+      :initCallback="initData"
+    ></MemberFilterDrawer>
+    <MemberRewardDrawerDrawer
+      v-model="reward_drawer"
+      :initCallback="initData"
+      :item="target"
+    ></MemberRewardDrawerDrawer>
 
 
   </a-layout-content>
@@ -139,6 +148,8 @@
   import MemberDrawer from "../components/MemberDrawer"
   import searchFormMixin from "@/mixins/searchFormMixin"
   import MemberOrderOverviewDrawer from "@/components/MemberOrderOverviewDrawer"
+  import MemberFilterDrawer from "@/components/MemberFilterDrawer"
+  import MemberRewardDrawerDrawer from "@/components/MemberRewardDrawer"
 
   const columns = [
     {
@@ -195,13 +206,16 @@
     mixins: [pageMixin, tablePageMixin, searchFormMixin],
     components: {
       MemberDrawer,
-      MemberOrderOverviewDrawer
+      MemberOrderOverviewDrawer,
+      MemberFilterDrawer,
+      MemberRewardDrawerDrawer
     },
     data() {
       return {
         columns,
         table_name,
-        overview_drawer: false
+        overview_drawer: false,
+        filter_drawer: false
       }
     },
     computed: {

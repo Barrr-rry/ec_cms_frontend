@@ -1,12 +1,13 @@
 <template>
   <c-drawer v-model="input" :title="type==='create'?'新會員資料':'修改會員資料'"
             @ok="submitHandler"
-            :displayDelete="type!=='create'&&editPermission()"
+            :displayDelete="type!=='create'&&editPermission
+            ()"
             @delete="deleteHandler"
   >
     <h3>{{type==='create'?'新會員資料':'修改會員資料'}}</h3>
     <a-form :form="form" @submit="submitHandler">
-      <c-form-item label="目前忠誠點數" v-if="item">
+      <c-form-item label="目前回饋點數" v-if="item">
         <a href="#">{{item.returns}}</a> 點
       </c-form-item>
       <c-form-item label="會員編號" v-if="type!=='create'">
