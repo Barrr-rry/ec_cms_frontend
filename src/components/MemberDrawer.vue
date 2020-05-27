@@ -18,6 +18,15 @@
           placeholder="請輸入會員編號"
         />
       </c-form-item>
+      <c-form-item label="會員所在地">
+        <a-input
+                :disabled="!editPermission()"
+                v-decorator="['local', { rules: [
+            { required: true, message: '請輸入資料' },
+            ]}]"
+                placeholder="請輸入會員所在地"
+        />
+      </c-form-item>
       <c-form-item label="會員姓名">
         <a-input
           :disabled="!editPermission()"
@@ -35,6 +44,30 @@
             ]}]"
           placeholder="請輸入Email"
         />
+      </c-form-item>
+      <c-form-item label="會員狀態">
+        <a-radio-group v-decorator="['status',{rules:[],initialValue:true}]"
+                       :disabled="!editPermission()"
+        >
+          <a-radio :value="true">
+            啟用
+          </a-radio>
+          <a-radio :value="false">
+            停用
+          </a-radio>
+        </a-radio-group>
+      </c-form-item>
+      <c-form-item label="標註為黑名單">
+        <a-radio-group v-decorator="['in_blacklist',{rules:[],initialValue:true}]"
+                       :disabled="!editPermission()"
+        >
+          <a-radio :value="true">
+            啟用
+          </a-radio>
+          <a-radio :value="false">
+            停用
+          </a-radio>
+        </a-radio-group>
       </c-form-item>
       <c-form-item label="會員密碼"
                    v-if="type==='create'"
@@ -95,18 +128,6 @@
           placeholder="請輸入手機，格式（0912345678）"
         />
       </c-form-item>
-      <c-form-item label="停權狀態">
-        <a-radio-group v-decorator="['status',{rules:[],initialValue:true}]"
-                       :disabled="!editPermission()"
-        >
-          <a-radio :value="true">
-            啟用
-          </a-radio>
-          <a-radio :value="false">
-            停用
-          </a-radio>
-        </a-radio-group>
-      </c-form-item>
       <c-form-item label="內部備註">
         <a-input
           :disabled="!editPermission()"
@@ -134,7 +155,7 @@
           ext: ''
         },
         update_field_keys: [
-          'member_number', 'name', 'account', 'line_id', 'phone', 'cellphone', 'status', 'remarks'],
+          'member_number', 'name', 'account', 'local', 'in_blacklist', 'line_id', 'phone', 'cellphone', 'status', 'remarks'],
         default_api: this.$api.member,
         // for check to add
         // fake_data: {}
