@@ -55,6 +55,7 @@
                 type="number"
                 placeholder="商品售價"
                 :disabled="!editPermissioncheck()"
+                suffix="元"
         />
       </c-form-item>
       <c-form-item label="商品原價">
@@ -62,6 +63,7 @@
                 v-decorator="['fake_price']"
                 placeholder="商品原價"
                 :disabled="!editPermissioncheck()"
+                suffix="元"
         />
       </c-form-item>
       <c-form-item label="商品重量">
@@ -73,6 +75,7 @@
                 type="number"
                 placeholder="單位: 公斤"
                 :disabled="!editPermissioncheck()"
+                suffix="公斤"
         />
       </c-form-item>
       <c-form-item label="商品規格">

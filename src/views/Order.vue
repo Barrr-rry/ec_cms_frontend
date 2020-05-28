@@ -78,7 +78,10 @@
           </a-form>
         </div>
         <div class="pb-24px d-flex" v-if=false>
-          <a-button type="primary">匯 出 已 選 擇 會 員</a-button>
+          <a-button type="primary" @click="export_order(false)"
+                    :disabled="!selected_row_keys.length"
+          >匯 出 已 選 擇 會 員</a-button>
+          <a :href="export_link" ref="export_link" style="display: none">yo</a>
         </div>
         <div class="mb-24px" style="height: 39px">
           <a-alert type="info" showIcon v-if="selected_row_keys.length">
@@ -199,6 +202,7 @@
       return {
         columns,
         table_name,
+        export_link: null,
       }
     },
     computed: {
@@ -209,6 +213,28 @@
     },
 
     methods: {
+      export_order(all) {
+        this.search_form.validateFields((err, values) => {
+          if (err) {
+            return
+          }
+          for (let k in values) {
+            if (values[k] === undefined) {
+              delete values[k]
+            }
+          }
+          if (!all) {
+            values.ids = this.selected_row_keys.join(',')
+          }
+          this.$api.exportorder.getList(values).then((res) => {
+            this.export_link = this.$axios.baseURL.replace('/api/', '/media/') + res.data.file_name
+            this.$nextTick(() => {
+              this.$refs.export_link.click()
+              this.export_link = null
+            })
+          })
+        })
+      },
       statusBadge(text) {
         let ret = 'default'
         let mapping = {

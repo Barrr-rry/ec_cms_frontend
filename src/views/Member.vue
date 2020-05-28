@@ -230,7 +230,6 @@
         return this.permissioncheck('permission_member_manage', 2)
       },
       handleTableChange(pagination, filters, sorter) {
-        console.log(pagination);
         const pager = {...this.pagination};
         pager.current = pagination.current;
         this.pagination = pager;

@@ -1,5 +1,5 @@
 <template>
-  <c-drawer v-model="input" title="詳細資訊"
+  <c-drawer v-model="input" title="商品說明"
             @ok="submitHandler"
   >
     <div class="row">

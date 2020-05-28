@@ -33,19 +33,23 @@
           <td class="text-right">收貨人電話:</td>
           <td class="pl-16px">{{order.phone}}</td>
         </tr>
+        <tr v-show="order.to_store">
+          <td class="text-right">寄件編號:</td>
+          <td class="pl-16px"><a href="">{{order.all_pay_logistics_id}}</a></td>
+        </tr>
         <tr>
           <td class="text-right">出貨方式:</td>
           <td class="pl-16px">{{getStore(order)}}</td>
         </tr>
-        <tr v-show="!item.to_store">
+        <tr v-show="!order.to_store">
           <td class="text-right">郵遞區號:</td>
           <td class="pl-16px">{{order.shipping_area}}</td>
         </tr>
-        <tr v-show="!item.to_store">
+        <tr v-show="!order.to_store">
           <td class="text-right">收貨地址:</td>
           <td class="pl-16px">{{order.shipping_address}}</td>
         </tr>
-        <tr v-show="item.to_store">
+        <tr v-show="!order.to_store">
           <td class="text-right">取貨店名:</td>
           <td class="pl-16px">{{order.store_name}}({{order.address}})</td>
         </tr>
