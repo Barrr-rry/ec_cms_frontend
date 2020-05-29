@@ -177,10 +177,11 @@
             <a-badge :status="InventoryStatusBadge(text)" :text="text"></a-badge>
           </div>
           <div slot="operation" slot-scope="text, record">
+            <a class="mr-24px" href="#" @click="openUpdateDrawer(record, ()=>specification_drawer=true,)">庫存管理</a>
             <a class="mr-24px" href="#"
                @click="openUpdateDrawer(record, ()=>product_info_drawer=true,)">商品資訊</a>
             <a class="mr-24px" href="#" @click="openUpdateDrawer(record, ()=>detail_info_drawer=true,)">詳細資訊</a>
-            <router-link :to="`/products/${record.id}`">編輯</router-link>
+            <router-link :to="`/products/${record.id}`">編輯商品</router-link>
           </div>
         </a-table>
       </a-card>
@@ -208,6 +209,12 @@
       :item="target"
     ></ProductDetailInfoDrawer>
 
+    <ProductSpecificationDrawer
+      v-model="specification_drawer"
+      :initCallback="initData"
+      :item="target"
+    ></ProductSpecificationDrawer>
+
   </a-layout-content>
 </template>
 
@@ -215,6 +222,7 @@
   import ProductDrawer from "../components/ProductDrawer"
   import ProductInfoDrawer from "@/components/ProductInfoDrawer"
   import ProductDetailInfoDrawer from "@/components/ProductDetailInfoDrawer"
+  import ProductSpecificationDrawer from "@/components/ProductSpecificationDrawer"
   import pageMixin from "@/mixins/pageMixin"
   import tablePageMixin from "@/mixins/tablePageMixin"
   import searchFormMixin from "@/mixins/searchFormMixin"
@@ -277,6 +285,7 @@
       ProductDrawer,
       ProductInfoDrawer,
       ProductDetailInfoDrawer,
+      ProductSpecificationDrawer
     },
     mixins: [pageMixin, tablePageMixin, searchFormMixin],
     data() {
