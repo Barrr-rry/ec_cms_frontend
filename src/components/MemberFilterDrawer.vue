@@ -47,7 +47,7 @@
             <a-input
               class="col-4"
               :disabled="!editPermission()"
-              v-decorator="['mony_lower', { rules: [
+              v-decorator="['money_lower', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
               placeholder="0"
@@ -58,7 +58,7 @@
             <a-input
               class="col-4"
               :disabled="!editPermission()"
-              v-decorator="['mony_upper', { rules: [
+              v-decorator="['money_upper', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
               placeholder="100"
@@ -67,41 +67,42 @@
           元
         </div>
       </c-form-item>
-      <!--      <c-form-item label="消費次數">-->
-      <!--        <div class="row">-->
-      <!--          <a-form-item>-->
-      <!--            <a-input-->
-      <!--              class="col-4"-->
-      <!--              :disabled="!editPermission()"-->
-      <!--              v-decorator="['local', { rules: [-->
-      <!--            { required: false, message: '請輸入資料' },-->
-      <!--            ]}]"-->
-      <!--              placeholder="0"-->
-      <!--            />-->
-      <!--          </a-form-item>-->
-      <!--          次 ～-->
-      <!--          <a-form-item>-->
-      <!--            <a-input-->
-      <!--              class="col-4"-->
-      <!--              :disabled="!editPermission()"-->
-      <!--              v-decorator="['local', { rules: [-->
-      <!--            { required: false, message: '請輸入資料' },-->
-      <!--            ]}]"-->
-      <!--              placeholder="100"-->
-      <!--            />-->
-      <!--          </a-form-item>-->
-      <!--          次-->
-      <!--        </div>-->
-      <!--      </c-form-item>-->
+      <c-form-item label="消費次數">
+        <div class="row">
+          <a-form-item>
+            <a-input
+              class="col-4"
+              :disabled="!editPermission()"
+              v-decorator="['order_count_lower', { rules: [
+                  { required: false, message: '請輸入資料' },
+                  ]}]"
+              placeholder="0"
+            />
+          </a-form-item>
+          次 ～
+          <a-form-item>
+            <a-input
+              class="col-4"
+              :disabled="!editPermission()"
+              v-decorator="['order_count_upper', { rules: [
+                  { required: false, message: '請輸入資料' },
+                  ]}]"
+              placeholder="100"
+            />
+          </a-form-item>
+          次
+        </div>
+      </c-form-item>
     </a-form>
   </c-drawer>
 </template>
 
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
+  import momentMixin from "@/mixins/momentMixin"
 
   export default {
-    mixins: [drawerMixin],
+    mixins: [drawerMixin, momentMixin],
     props: {
       vm: {
         type: Object,
@@ -125,9 +126,12 @@
             delete values[key]
           }
         }
-        // if (values.range_date) {
-        //
-        // }
+        // moment 轉成date str 格式
+        if (values.range_date) {
+          values.start_date = this.toDateStr(values.range_date[0])
+          values.end_date = this.toDateStr(values.range_date[1])
+          delete values.range_date
+        }
         return values
       },
       createHandler(e) {
