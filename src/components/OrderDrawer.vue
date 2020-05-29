@@ -34,6 +34,10 @@
           <td class="text-right">收貨人電話:</td>
           <td class="pl-16px">{{item.phone}}</td>
         </tr>
+        <tr v-show="item.to_store">
+          <td class="text-right">寄件編號:</td>
+          <td class="pl-16px"><a href="">{{item.all_pay_logistics_id}}</a></td>
+        </tr>
         <tr>
           <td class="text-right">出貨方式:</td>
           <td class="pl-16px">{{getStore(item)}}</td>
@@ -127,10 +131,10 @@
         總計: ${{item.total_price}}
       </div>
       <div class="d-flex d-center gray-text">
-        本次消費金額可獲得忠誠獎勵: <a href="">{{item.rewrad[0].point}}</a> 點
+        本次消費金額可獲得忠誠獎勵: <a href="">{{item.rewrad_temp[0].point}}</a> 點
       </div>
       <div class="d-flex d-center gray-text">
-        預計於 <a href="">{{item.rewrad[0].start_date}}</a> 發放
+        預計於 <a href="">{{item.rewrad_temp[0].start_date}}</a> 發放
       </div>
       <div class="d-flex d-center">
         <a-button

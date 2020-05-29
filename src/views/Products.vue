@@ -179,7 +179,7 @@
           <div slot="operation" slot-scope="text, record">
             <a class="mr-24px" href="#" @click="openUpdateDrawer(record, ()=>specification_drawer=true,)">庫存管理</a>
             <a class="mr-24px" href="#"
-               @click="openUpdateDrawer(record, ()=>product_info_drawer=true,)">商品資訊</a>
+               @click="openUpdateDrawer(record, ()=>product_info_drawer=true,)">商品說明</a>
             <a class="mr-24px" href="#" @click="openUpdateDrawer(record, ()=>detail_info_drawer=true,)">詳細資訊</a>
             <router-link :to="`/products/${record.id}`">編輯商品</router-link>
           </div>
@@ -292,6 +292,7 @@
       return {
         columns,
         table_name,
+        specification_drawer: false,
         product_info_drawer: false,
         detail_info_drawer: false,
         default_api: this.$api.product,

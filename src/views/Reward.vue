@@ -36,7 +36,7 @@
               :disabled="!editPermission()"
             />
           </c-form-item>
-          <c-form-item label="忠誠獎勵天數">
+          <c-form-item label="忠誠獎勵有效天數">
             <a-input
               v-decorator="['still_day', { rules: [
               { required: true, message: '請輸入資料' },
@@ -45,6 +45,17 @@
               style="width: 100px"
               type="number"
               :disabled="!editPermission()"
+            />
+          </c-form-item>
+          <c-form-item label="忠誠獎勵發放天數">
+            <a-input
+                    v-decorator="['start_day', { rules: [
+              { required: true, message: '請輸入資料' },
+              ]}]"
+                    placeholder=""
+                    style="width: 100px"
+                    type="number"
+                    :disabled="!editPermission()"
             />
           </c-form-item>
           <div class="d-flex justify-content-end">
@@ -71,7 +82,7 @@
       return {
         table_name,
         form: this.$form.createForm(this),
-        update_field_keys: ['discount', 'status', 'still_day']
+        update_field_keys: ['discount', 'status', 'still_day', 'start_day']
       }
     },
     computed: {
@@ -93,11 +104,11 @@
       editPermission() {
         return this.permissioncheck('permission_coupon_manage', 2)
       },
-      submitHandler(e, err) {
+      submitHandler(e) {
         if (e) {
           e.preventDefault()
         }
-        if(!this.editPermission()){
+        if (!this.editPermission()) {
           this.$message.warn('權限不足')
           return
         }
