@@ -134,7 +134,7 @@
               </p>
             </template>
             <div class="ml-12px">
-              <a-button :disabled="!selected_row_keys.length" specification_drawer
+              <a-button :disabled="!selected_row_keys.length"
               >下 架
               </a-button>
             </div>

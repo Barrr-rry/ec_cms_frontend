@@ -121,6 +121,7 @@
           type="number"
           placeholder="單位: 公斤"
           :disabled="!editPermissioncheck()"
+          suffix="公斤"
         />
       </c-form-item>
       <c-form-item label="商品規格"
