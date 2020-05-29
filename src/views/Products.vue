@@ -181,6 +181,19 @@
             <a-divider type="vertical"/>
             <router-link :to="`/products/${record.id}`">編輯商品</router-link>
             <a-divider type="vertical"/>
+
+            <c-popover
+              @ok="changeStatus(record,$event)"
+            >
+              <template slot="content">
+                <p>
+                  <a-icon type="close-circle-o" style="color: #f5222d; margin-right: 8px"/>
+                  確定要{{record.status?'下架':'上架'}}嗎?
+                </p>
+              </template>
+              <a href="#" @click="item=record">{{record.status?'下架':'上架'}}</a>
+            </c-popover>
+            <a-divider type="vertical"/>
             <c-popover
               @ok="deleteHandler(record,$event)"
             >
@@ -303,6 +316,19 @@
       }),
     },
     methods: {
+      changeStatus(item, callback) {
+        this.default_api.putData(item.id, {status: !item.status}).then(() => {
+          callback()
+          let msg = ''
+          if (!item.status) {
+            msg = '商品下架成功'
+          } else {
+            msg = '商品上架成功'
+          }
+          this.$message.success(msg)
+          this.initData()
+        })
+      },
       deleteHandler(item, callback) {
         this.default_api.deleteData(item.id).then(() => {
           callback()
