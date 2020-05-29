@@ -292,6 +292,7 @@
       return {
         columns,
         table_name,
+        specification_drawer: false,
         product_info_drawer: false,
         detail_info_drawer: false,
         default_api: this.$api.product,
