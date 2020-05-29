@@ -134,7 +134,7 @@
               </p>
             </template>
             <div class="ml-12px">
-              <a-button :disabled="!selected_row_keys.length"
+              <a-button :disabled="!selected_row_keys.length" specification_drawer
               >下 架
               </a-button>
             </div>
@@ -177,11 +177,21 @@
             <a-badge :status="InventoryStatusBadge(text)" :text="text"></a-badge>
           </div>
           <div slot="operation" slot-scope="text, record">
-            <a class="mr-24px" href="#" @click="openUpdateDrawer(record, ()=>specification_drawer=true,)">庫存管理</a>
-            <a class="mr-24px" href="#"
-               @click="openUpdateDrawer(record, ()=>product_info_drawer=true,)">商品資訊</a>
-            <a class="mr-24px" href="#" @click="openUpdateDrawer(record, ()=>detail_info_drawer=true,)">詳細資訊</a>
+            <a href="#" @click="openUpdateDrawer(record, ()=>specification_drawer=true,)">庫存管理</a>
+            <a-divider type="vertical"/>
             <router-link :to="`/products/${record.id}`">編輯商品</router-link>
+            <a-divider type="vertical"/>
+            <c-popover
+              @ok="deleteHandler(record,$event)"
+            >
+              <template slot="content">
+                <p>
+                  <a-icon type="close-circle-o" style="color: #f5222d; margin-right: 8px"/>
+                  確定要刪除資料嗎?
+                </p>
+              </template>
+              <a href="#" style="color: #f5222d" @click="item=record">刪除</a>
+            </c-popover>
           </div>
         </a-table>
       </a-card>
@@ -197,17 +207,6 @@
       :item="target"
     ></product-drawer>
 
-    <Product-info-drawer
-      v-model="product_info_drawer"
-      :initCallback="initData"
-      :item="target"
-    ></Product-info-drawer>
-
-    <ProductDetailInfoDrawer
-      v-model="detail_info_drawer"
-      :initCallback="initData"
-      :item="target"
-    ></ProductDetailInfoDrawer>
 
     <ProductSpecificationDrawer
       v-model="specification_drawer"
@@ -220,8 +219,6 @@
 
 <script>
   import ProductDrawer from "../components/ProductDrawer"
-  import ProductInfoDrawer from "@/components/ProductInfoDrawer"
-  import ProductDetailInfoDrawer from "@/components/ProductDetailInfoDrawer"
   import ProductSpecificationDrawer from "@/components/ProductSpecificationDrawer"
   import pageMixin from "@/mixins/pageMixin"
   import tablePageMixin from "@/mixins/tablePageMixin"
@@ -283,8 +280,6 @@
   export default {
     components: {
       ProductDrawer,
-      ProductInfoDrawer,
-      ProductDetailInfoDrawer,
       ProductSpecificationDrawer
     },
     mixins: [pageMixin, tablePageMixin, searchFormMixin],
@@ -292,6 +287,7 @@
       return {
         columns,
         table_name,
+        specification_drawer: false,
         product_info_drawer: false,
         detail_info_drawer: false,
         default_api: this.$api.product,
@@ -307,6 +303,13 @@
       }),
     },
     methods: {
+      deleteHandler(item, callback) {
+        this.default_api.deleteData(item.id).then(() => {
+          callback()
+          this.$message.success('刪除商品成功')
+          this.initData()
+        })
+      },
       productStockProcess() {
         // 如果 product_stock_setting = 1 代表沒有庫存 columns 要刪掉
         if (this.configsetting.product_stock_setting in [1, 2]) {
