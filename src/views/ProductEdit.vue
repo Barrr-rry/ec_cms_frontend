@@ -271,11 +271,11 @@
           values.product_info = this.$refs.product_info_card.editor_data
           values.detail_info = this.$refs.product_info_card.editor_data
           for (let detail_data of values.specifications_detail_data) {
-            if (detail_data.price == '') {
+            if (detail_data.price === '') {
               this.$message.warning('請輸入商品售價')
               return
             }
-            if (detail_data.quantity == '') {
+            if (detail_data.quantity === '') {
               this.$message.warning('請輸入商品數量')
               return
             }
@@ -312,6 +312,7 @@
           this.$store.dispatch('brand/getList'),
           this.$store.dispatch('tag/getList'),
           this.$store.dispatch('category/getList'),
+          this.$store.dispatch('activity/getList'),
         ]
         if (this.type !== 'create') {
           promise_list.push(this.$store.dispatch(`${this.table_name}/getRead`, this.$route.params.id))
