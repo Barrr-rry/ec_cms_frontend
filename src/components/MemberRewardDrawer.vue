@@ -2,63 +2,66 @@
   <c-drawer v-model="input" title="修改會員回饋金"
             @ok="submitHandler"
   >
-    <h3>{{item.name}}</h3>
-    <a-form :form="form" @submit="submitHandler">
-      <c-form-item label="目前回饋點數" v-if="item">
-        <a href="#">{{item.returns}}</a> 點
-      </c-form-item>
-      <c-form-item label="目前回饋點數到期日" v-if="item">
-        <a href="#">{{item.reward_end_date}}</a>
-      </c-form-item>
-      <c-form-item label="修改回饋點數">
-        <a-input-group compact>
-          <a-select default-value="Option1">
-            <a-select-option value="Option1">
-              +
-            </a-select-option>
-            <a-select-option value="Option2">
-              -
-            </a-select-option>
-          </a-select>
+    <div v-if="item">
+      <h3>{{item.name}}</h3>
+      <a-form :form="form" @submit="submitHandler">
+        <c-form-item label="目前回饋點數" v-if="item">
+          <a href="#">{{item.returns}}</a> 點
+        </c-form-item>
+        <c-form-item label="目前回饋點數到期日" v-if="item">
+          <a href="#">{{item.reward_end_date}}</a>
+        </c-form-item>
+        <c-form-item label="修改回饋點數">
+          <a-input-group compact>
+            <a-select default-value="Option1">
+              <a-select-option value="Option1">
+                +
+              </a-select-option>
+              <a-select-option value="Option2">
+                -
+              </a-select-option>
+            </a-select>
+            <a-input
+              style="width: 542px"
+              :disabled="!editPermission()"
+              v-decorator="['name', { rules: [
+            { required: false, message: '請輸入資料' },
+            ]}]"
+              placeholder="請輸入數字"
+            />
+          </a-input-group>
+        </c-form-item>
+        <c-form-item label="修改回饋到期日">
           <a-input
-                  style="width: 542px"
-                  :disabled="!editPermission()"
-                  v-decorator="['name', { rules: [
+            :disabled="!editPermission()"
+            v-decorator="['name', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
-                  placeholder="請輸入數字"
+            placeholder="請選擇回饋到期日"
           />
-        </a-input-group>
-      </c-form-item>
-      <c-form-item label="修改回饋到期日">
-        <a-input
-          :disabled="!editPermission()"
-          v-decorator="['name', { rules: [
+        </c-form-item>
+        <c-form-item label="摘要">
+          <a-input
+            :disabled="!editPermission()"
+            v-decorator="['account', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
-          placeholder="請選擇回饋到期日"
-        />
-      </c-form-item>
-      <c-form-item label="摘要">
-        <a-input
-          :disabled="!editPermission()"
-          v-decorator="['account', { rules: [
-            { required: false, message: '請輸入資料' },
-            ]}]"
-          placeholder="請輸入摘要內容"
-        />
-      </c-form-item>
-      <div class="flex-grow-1">
-        <a-table :columns="columns" :dataSource="items"
-                 :pagination="false"
-                 :rowKey="record => record.id"
-        >
-          <div slot="point" slot-scope="text">
-            <d v-show="text>0">+</d>{{text}}
-          </div>
-        </a-table>
-      </div>
-    </a-form>
+            placeholder="請輸入摘要內容"
+          />
+        </c-form-item>
+        <div class="flex-grow-1">
+          <a-table :columns="columns" :dataSource="items"
+                   :pagination="false"
+                   :rowKey="record => record.id"
+          >
+            <div slot="point" slot-scope="text">
+              <d v-show="text>0">+</d>
+              {{text}}
+            </div>
+          </a-table>
+        </div>
+      </a-form>
+    </div>
   </c-drawer>
 </template>
 

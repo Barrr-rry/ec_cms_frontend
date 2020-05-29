@@ -15,27 +15,27 @@
       <a-card>
         <div class="pb-24px d-flex">
           <a-form
-                  :form="search_form"
-                  class="w-100 row"
-                  layout="inline"
-                  @submit="submit"
+            :form="search_form"
+            class="w-100 row"
+            layout="inline"
+            @submit="submit"
           >
             <div class="col-5">
               <a-form-item label="快速查詢會員">
                 <a-input
-                        v-decorator="['keywords', { rules: [
+                  v-decorator="['keywords', { rules: [
             ]}]"
-                        placeholder="請輸入會員編號、電話、信箱、姓名"
-                        style="width: 250px"
+                  placeholder="請輸入會員編號、電話、信箱、姓名"
+                  style="width: 250px"
                 />
               </a-form-item>
             </div>
             <div class="col-4">
               <a-form-item label="帳號狀態">
                 <a-select
-                        v-decorator="['status', { rules: [] }]"
-                        placeholder="請選擇狀態"
-                        style="width: 110px"
+                  v-decorator="['status', { rules: [] }]"
+                  placeholder="請選擇狀態"
+                  style="width: 110px"
                 >
                   <a-select-option :value="1">
                     啟用中
@@ -87,16 +87,16 @@
           <span slot="account" slot-scope="text, record">
             {{text}}
             <a-tag
-                    :color="'red'"
-                    class="mr-12px"
-                    v-if="record.in_blacklist"
+              :color="'red'"
+              class="mr-12px"
+              v-if="record.in_blacklist"
             >
               {{ '黑名單' }}
             </a-tag>
             <a-tag
-                    :color="'red'"
-                    class="mr-12px"
-                    v-if="record.was_in_blacklist && !record.in_blacklist"
+              :color="'red'"
+              class="mr-12px"
+              v-if="record.was_in_blacklist && !record.in_blacklist"
             >
               {{ '曾是黑名單' }}
             </a-tag>
@@ -164,7 +164,7 @@
     {
       title: '會員帳號',
       dataIndex: 'account',
-      scopedSlots: { customRender: 'account' },
+      scopedSlots: {customRender: 'account'},
     },
     {
       title: '註冊時間',
@@ -212,6 +212,7 @@
     },
     data() {
       return {
+        reward_drawer: false,
         columns,
         table_name,
         overview_drawer: false,
