@@ -25,6 +25,20 @@
           </a-select-option>
         </a-select>
       </c-form-item>
+      <c-form-item label="選擇活動">
+        <a-select
+          v-decorator="['activity', {
+          rules: [
+            { required: false, message: '請選擇品牌' },
+            ] }]"
+          placeholder="請選擇活動"
+          :disabled="!editPermissioncheck()"
+        >
+          <a-select-option :value="activity.id" :key="activity.id" v-for="activity of activity_list">
+            {{activity.ch_name}}
+          </a-select-option>
+        </a-select>
+      </c-form-item>
       <c-form-item label="排序順序">
         <a-input
           v-decorator="['order', { rules: [
@@ -191,7 +205,7 @@
     mixins: [configsettingMixin, drawerMixin, uploadMixin],
     data() {
       return {
-        update_field_keys: ['name', 'brand', 'order', 'sub_title', 'tag', 'category'],
+        update_field_keys: ['name', 'brand', 'order', 'sub_title', 'tag', 'category', 'activity'],
         default_api: this.$api.product,
         // for check to add
         // fake_data: {}
@@ -266,7 +280,10 @@
 
           return get_objects(state.items)
         }
-      })
+      }),
+      ...mapState('activity', {
+        activity_list: state => state.items,
+      }),
     },
     methods: {
       createHandler(e) {
