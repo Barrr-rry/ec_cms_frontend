@@ -4,10 +4,16 @@
   >
     <a-form :form="form" @submit="submitHandler">
       <div class="flex-grow-1">
-        <a-table :columns="columns" :dataSource="items"
+        <a-table :columns="columns" :dataSource="temp_items"
                  :pagination="false"
                  :rowKey="record => record.id"
         >
+          <template slot="quantity" slot-scope="text, record">
+            <a-input
+              :value="text"
+              @change="e => handleChange(e.target.value, record)"
+            />
+          </template>
         </a-table>
       </div>
     </a-form>
@@ -47,6 +53,7 @@
       title: '庫存數量',
       align: 'center',
       dataIndex: 'quantity',
+      scopedSlots: {customRender: 'quantity'},
     },
   ]
 
@@ -56,16 +63,31 @@
       return {
         columns,
         default_api: this.$api.product,
+        temp_items: [],
         // for check to add
         // fake_data: {}
       }
     },
-    computed: {
-      items() {
-        return this.item ? this.item.specifications_detail ? this.item.specifications_detail : [] : []
+    computed: {},
+    watch: {
+      item() {
+        this.temp_items = this.item ? this.item.specifications_detail ? this.item.specifications_detail : [] : []
       }
     },
     methods: {
+      updateHandler() {
+        this.$axios.all(this.temp_items.map(el => {
+          return this.$api.specificationdetail.putData(el.id, {quantity: el.quantity})
+        })).then(() => {
+          this.initData()
+          this.input = false
+          this.$message.success('修改商品庫存成功')
+        }).catch((err) => {
+        })
+      },
+      handleChange(value, item) {
+        item.quantity = value
+      },
       editPermission() {
         return this.permissioncheck('permission_product_manage', 2)
       },

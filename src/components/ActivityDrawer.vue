@@ -6,27 +6,33 @@
   >
     <h3>{{type==='create'?'新增買就送活動':'修改買就送活動'}}</h3>
     <a-form :form="form" @submit="submitHandler">
-      <c-form-item label="買">
-        <a-select
-          v-decorator="['buy_count', { rules: [
+      <c-form-item label="規則設定">
+        <div class="row w-100 pl-12px">
+          買
+          <a-form-item style="width: 200px" class="ml-12px mr-12px mb-0px">
+            <a-select
+              v-decorator="['buy_count', { rules: [
             { required: true, message: '請輸入資料' },
             ]}]"
-        >
-          <a-select-option :value="i" v-for="i in 10" :key="i">
-            {{i}}
-          </a-select-option>
-        </a-select>
-      </c-form-item>
-      <c-form-item label="送">
-        <a-select
-          v-decorator="['give_count', { rules: [
+            >
+              <a-select-option :value="i" v-for="i in 10" :key="i">
+                {{i}}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+          送
+          <a-form-item style="width: 200px" class="ml-12px mb-0px">
+            <a-select
+              v-decorator="['give_count', { rules: [
             { required: true, message: '請輸入資料' },
             ]}]"
-        >
-          <a-select-option :value="i" v-for="i in 10" :key="i">
-            {{i}}
-          </a-select-option>
-        </a-select>
+            >
+              <a-select-option :value="i" v-for="i in 10" :key="i">
+                {{i}}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+        </div>
       </c-form-item>
       <c-form-item label="活動中文名稱">
         <a-input

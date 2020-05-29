@@ -133,11 +133,11 @@
       :initCallback="initData"
       :vm="this"
     ></MemberFilterDrawer>
-<!--    <MemberRewardDrawerDrawer-->
-<!--      v-model="reward_drawer"-->
-<!--      :initCallback="initData"-->
-<!--      :item="target"-->
-<!--    ></MemberRewardDrawerDrawer>-->
+    <MemberRewardDrawerDrawer
+      v-model="reward_drawer"
+      :initCallback="initData"
+      :item="target"
+    ></MemberRewardDrawerDrawer>
 
 
   </a-layout-content>
@@ -209,7 +209,7 @@
       MemberDrawer,
       MemberOrderOverviewDrawer,
       MemberFilterDrawer,
-      // MemberRewardDrawerDrawer
+      MemberRewardDrawerDrawer
     },
     data() {
       let d = this
