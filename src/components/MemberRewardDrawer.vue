@@ -126,7 +126,6 @@
       },
       updateHandler(e) {
         this.submitValidate(e, (values) => {
-          console.log(values, this.positive)
           values = this.removeBlankValue(values)
           values = this.createValueTransfer(values)
           values.member = this.item.id
