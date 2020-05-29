@@ -4,74 +4,95 @@
   >
     <a-form :form="form" @submit="submitHandler">
       <c-form-item label="回饋金點數">
-        <a-input
-          class="col-4"
-          :disabled="!editPermission()"
-          v-decorator="['reward_upper', { rules: [
+        <div class="row">
+          <a-form-item>
+            <a-input
+              class="col-4"
+              :disabled="!editPermission()"
+              v-decorator="['reward_lower', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
-          placeholder="0"
-        />
-        點 ～
-        <a-input
-          class="col-4"
-          :disabled="!editPermission()"
-          v-decorator="['reward_lower', { rules: [
+              placeholder="0"
+            />
+          </a-form-item>
+          點 ～
+          <a-form-item>
+            <a-input
+              class="col-4"
+              :disabled="!editPermission()"
+              v-decorator="['reward_upper', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
-          placeholder="100"
-        />
-        點
+              placeholder="100"
+            />
+          </a-form-item>
+          點
+        </div>
       </c-form-item>
       <h3>{{'時間區間篩選'}}</h3>
       <c-form-item>
         <a-range-picker
           style="padding-left: 90px"
           class="col-11"
+          v-decorator="['range_date', { rules: [
+            { required: false, message: '請輸入資料' },
+            ]}]"
           :disabled="!editPermission()"
         />
         內
       </c-form-item>
       <c-form-item label="消費金額">
-        <a-input
-          class="col-4"
-          :disabled="!editPermission()"
-          v-decorator="['local', { rules: [
+        <div class="row">
+          <a-form-item>
+            <a-input
+              class="col-4"
+              :disabled="!editPermission()"
+              v-decorator="['mony_lower', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
-          placeholder="0"
-        />
-        元 ～
-        <a-input
-          class="col-4"
-          :disabled="!editPermission()"
-          v-decorator="['local', { rules: [
+              placeholder="0"
+            />
+          </a-form-item>
+          元 ～
+          <a-form-item>
+            <a-input
+              class="col-4"
+              :disabled="!editPermission()"
+              v-decorator="['mony_upper', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
-          placeholder="100"
-        />
-        元
+              placeholder="100"
+            />
+          </a-form-item>
+          元
+        </div>
       </c-form-item>
-      <c-form-item label="消費次數">
-        <a-input
-          class="col-4"
-          :disabled="!editPermission()"
-          v-decorator="['local', { rules: [
-            { required: false, message: '請輸入資料' },
-            ]}]"
-          placeholder="0"
-        />
-        次 ～
-        <a-input
-          class="col-4"
-          :disabled="!editPermission()"
-          v-decorator="['local', { rules: [
-            { required: false, message: '請輸入資料' },
-            ]}]"
-          placeholder="100"
-        />
-        次
-      </c-form-item>
+      <!--      <c-form-item label="消費次數">-->
+      <!--        <div class="row">-->
+      <!--          <a-form-item>-->
+      <!--            <a-input-->
+      <!--              class="col-4"-->
+      <!--              :disabled="!editPermission()"-->
+      <!--              v-decorator="['local', { rules: [-->
+      <!--            { required: false, message: '請輸入資料' },-->
+      <!--            ]}]"-->
+      <!--              placeholder="0"-->
+      <!--            />-->
+      <!--          </a-form-item>-->
+      <!--          次 ～-->
+      <!--          <a-form-item>-->
+      <!--            <a-input-->
+      <!--              class="col-4"-->
+      <!--              :disabled="!editPermission()"-->
+      <!--              v-decorator="['local', { rules: [-->
+      <!--            { required: false, message: '請輸入資料' },-->
+      <!--            ]}]"-->
+      <!--              placeholder="100"-->
+      <!--            />-->
+      <!--          </a-form-item>-->
+      <!--          次-->
+      <!--        </div>-->
+      <!--      </c-form-item>-->
     </a-form>
   </c-drawer>
 </template>
@@ -81,16 +102,45 @@
 
   export default {
     mixins: [drawerMixin],
+    props: {
+      vm: {
+        type: Object,
+      }
+    },
     data() {
       return {
         default_api: this.$api.member,
+        update_field_keys: [],
         // for check to add
         // fake_data: {}
       }
     },
     methods: {
       editPermission() {
-        return this.permissioncheck('permission_member_manage', 2)
+        return this.permissioncheck('permission_member_manage', 1)
+      },
+      updateValueTransfer(values) {
+        for (let key in values) {
+          if (values[key] === undefined || values[key] === null) {
+            delete values[key]
+          }
+        }
+        // if (values.range_date) {
+        //
+        // }
+        return values
+      },
+      createHandler(e) {
+        this.submitValidate(e, (values) => {
+          values = this.removeBlankValue(values)
+          values = this.updateValueTransfer(values)
+
+          this.vm.params = {offset: 0, limit: 10, ...values}
+          this.vm.initData()
+          this.$message.success('查詢成功')
+          this.input = false
+        })
+
       },
     }
   }
