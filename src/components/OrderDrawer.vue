@@ -97,17 +97,17 @@
       </div>
       <div slot="name" slot-scope="text,record">
         <h3>{{record.name}}</h3>
-        <div>規格: {{record.specification.name}}</div>
+        <div>規格: {{spec_name(record)}}</div>
       </div>
       <div slot="price" slot-scope="text,record">
-        <div>金額: {{record.price|commaFormat}}</div>
-        <div>重量: {{record.weight}}</div>
+        <div>金額: {{record.specification_detail.price|commaFormat}}</div>
+        <div>重量: {{record.specification_detail.weight}}</div>
       </div>
       <div slot="quantity" slot-scope="text,record">
         <div>數量: {{record.quantity}}</div>
       </div>
       <div slot="total" slot-scope="text,record">
-        <div>小計: ${{record.quantity*record.price|commaFormat}}</div>
+        <div>小計: ${{record.quantity*record.specification_detail.price|commaFormat}}</div>
       </div>
     </a-table>
 
@@ -229,12 +229,18 @@
       },
     },
     methods: {
+      spec_name(record){
+        if(record.specification_detail.spec2_name){
+          return `${record.specification_detail.spec1_name}/${record.specification_detail.spec2_name}`
+        }
+        return record.specification_detail.spec1_name
+      },
       editPermission() {
         return this.permissioncheck('permission_order_manage', 2)
       },
       deleteHandler(callback) {
         let values = {
-          simple_status_display: '已取消'
+            shipping_status: 400
         }
         return this.defaultThenProcess(
           this.default_api.putData(this.item.id, values).then(() => {
