@@ -130,10 +130,10 @@
       <div class="d-flex d-center gray-text">
         總計: ${{item.total_price}}
       </div>
-      <div class="d-flex d-center gray-text">
+      <div class="d-flex d-center gray-text" v-if="getSpec(item)">
         本次消費金額可獲得忠誠獎勵: <a href="">{{item.rewrad_temp[0].point}}</a> 點
       </div>
-      <div class="d-flex d-center gray-text">
+      <div class="d-flex d-center gray-text" v-if="getSpec(item)">
         預計於 <a href="">{{item.rewrad_temp[0].start_date}}</a> 發放
       </div>
       <div class="d-flex d-center">
@@ -234,6 +234,12 @@
           return `${record.specification_detail.spec1_name}/${record.specification_detail.spec2_name}`
         }
         return record.specification_detail.spec1_name
+      },
+      getSpec(record){
+        if(record.shipping_status != 400){
+          return true
+        }
+        return false
       },
       editPermission() {
         return this.permissioncheck('permission_order_manage', 2)
