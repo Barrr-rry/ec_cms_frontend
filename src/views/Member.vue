@@ -94,7 +94,7 @@
               {{ '黑名單' }}
             </a-tag>
             <a-tag
-              :color="'red'"
+              :color="'volcano'"
               class="mr-12px"
               v-if="record.was_in_blacklist && !record.in_blacklist"
             >
