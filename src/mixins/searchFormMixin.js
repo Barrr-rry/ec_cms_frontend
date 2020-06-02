@@ -33,13 +33,16 @@ export default {
         if (err) {
           return
         }
-        console.log(values)
         for (let k in values) {
           if (values[k] === undefined) {
             delete values[k]
           }
         }
-        console.log(values)
+        this.params = {
+          limit: 10,
+          offset: 0,
+        }
+        values = {...values, ...this.getParams()}
         this.table_loading = true
         this.$store.dispatch(`${this.table_name}/getList`, values).then(() => {
           this.table_loading = false
