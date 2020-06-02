@@ -66,5 +66,11 @@ export default {
       }
       return this.defaultThenProcess(this.default_api.putData(this.item.id, values))
     },
+  },
+  mounted() {
+    // todo 不應該這樣寫 但目前不知道怎麼寫更好
+    this.$nextTick(() => {
+      setTimeout(this.initFields, 1000)
+    })
   }
 }

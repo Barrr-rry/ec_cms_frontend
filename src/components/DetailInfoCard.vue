@@ -1,5 +1,5 @@
 <template>
-  <a-card title="編輯商品資訊">
+  <a-card title="編輯詳細資訊">
     <div class="row">
       <div class="col-12">
         <ckeditor :editor="editor" v-model="editor_data" :config="editorConfig"
