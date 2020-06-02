@@ -77,7 +77,7 @@
             </div>
           </a-form>
         </div>
-        <div class="pb-24px d-flex" v-if=false>
+        <div class="pb-24px d-flex">
           <a-button type="primary" @click="export_order(false)"
                     :disabled="!selected_row_keys.length"
           >匯 出 已 選 擇 會 員</a-button>
