@@ -79,6 +79,7 @@
                 <a-select
                   v-decorator="['inventory_status_2', { rules: [] }]"
                   placeholder="請選擇"
+                  style="width: 120px"
                 >
                   <a-select-option :value="0">
                     全部

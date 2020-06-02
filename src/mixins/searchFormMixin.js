@@ -43,6 +43,7 @@ export default {
           offset: 0,
         }
         values = {...values, ...this.getParams()}
+        this.params = values
         this.table_loading = true
         this.$store.dispatch(`${this.table_name}/getList`, values).then(() => {
           this.table_loading = false
