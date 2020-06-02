@@ -5,7 +5,7 @@
       <div>折扣碼: {{item.discount_code}}</div>
       <div>{{item.title}}</div>
       <div class="banner-card-content-footer flex-grow-1 d-flex align-items-end justify-content-between">
-        <c-badge :status="item.status?'success':'error'" error_text="已到期"></c-badge>
+        <c-badge :status="item.status==1?'success':'error'" error_text="已到期"></c-badge>
         <div class="banner-card-content-footer-end_time gray-text">
           於 {{item.end_time}} 到期
         </div>
