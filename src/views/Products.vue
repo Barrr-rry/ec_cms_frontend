@@ -124,7 +124,7 @@
               </p>
             </template>
             <div class="ml-12px">
-              <a-button :disabled="!selected_row_keys.length"
+              <a-button :disabled="selectedStatusDisabledCheck(true)"
               >上 架
               </a-button>
             </div>
@@ -138,7 +138,7 @@
               </p>
             </template>
             <div class="ml-12px">
-              <a-button :disabled="!selected_row_keys.length"
+              <a-button :disabled="selectedStatusDisabledCheck(false)"
               >下 架
               </a-button>
             </div>
@@ -320,6 +320,14 @@
       }),
     },
     methods: {
+      selectedStatusDisabledCheck(type) {
+        if (!this.selected_row_keys.length) {
+          return true
+        }
+        let filters = this.items.filter(x => this.selected_row_keys.includes(x.id) && x.status !== type)
+        return filters.length === 0
+
+      },
       changeStatus(item, callback) {
         this.default_api.putData(item.id, {status: !item.status}).then(() => {
           callback()
