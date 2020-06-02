@@ -1,6 +1,6 @@
 <template>
   <c-drawer v-model="input" title="修改會員回饋金"
-            @ok="submitHandler"
+            @ok="ok"
   >
     <div v-if="item">
       <h3>{{item.name}}</h3>
@@ -53,18 +53,26 @@
             placeholder="請輸入摘要內容"
           />
         </c-form-item>
-        <div class="flex-grow-1">
-          <a-table :columns="columns" :dataSource="items"
-                   :pagination="false"
-                   :rowKey="record => record.id"
-          >
-            <div slot="point" slot-scope="text">
-              <span v-show="text>0">+</span>
-              {{text}}
-            </div>
-          </a-table>
+        <div class="d-flex justify-content-end mb-24px">
+          <a-button type="primary" html-type="submit">
+            送 出
+          </a-button>
+          <a-button class="ml-12px" type="" @click="reset">
+            重 置
+          </a-button>
         </div>
       </a-form>
+      <div class="flex-grow-1">
+        <a-table :columns="columns" :dataSource="items"
+                 :pagination="false"
+                 :rowKey="record => record.id"
+        >
+          <div slot="point" slot-scope="text">
+            <span v-show="text>0">+</span>
+            {{text}}
+          </div>
+        </a-table>
+      </div>
     </div>
   </c-drawer>
 </template>
@@ -123,6 +131,18 @@
         }
         values.end_date = this.toDateStr(values.end_date)
         return values
+      },
+      apiSuccessHandler() {
+        // overwrite
+        // 不改input
+        this.initCallback()
+        this.reset()
+      },
+      ok() {
+        this.input = false
+      },
+      reset() {
+        this.form.resetFields()
       },
       updateHandler(e) {
         this.submitValidate(e, (values) => {

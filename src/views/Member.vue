@@ -230,6 +230,16 @@
     },
 
     methods: {
+      initData() {
+        this.loading = true
+        // store action get data
+        this.$store.dispatch(`${this.table_name}/getList`, this.getParams()).then(() => {
+          this.loading = false
+          if (this.target) {
+            this.target = this.items.filter(x => x.id === this.target.id)[0]
+          }
+        })
+      },
       editPermission() {
         return this.permissioncheck('permission_member_manage', 2)
       },
