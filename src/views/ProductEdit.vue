@@ -314,7 +314,12 @@
           this.$store.dispatch('category/getList'),
           this.$store.dispatch('activity/getList'),
         ]
-        if (this.type !== 'create') {
+        if (this.type === 'create') {
+          this.$store.commit(`${this.table_name}/changeValue`, {
+            key: 'item',
+            value: null
+          })
+        } else {
           promise_list.push(this.$store.dispatch(`${this.table_name}/getRead`, this.$route.params.id))
         }
         this.loading = true
