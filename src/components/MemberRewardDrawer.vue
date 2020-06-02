@@ -48,7 +48,7 @@
           <a-input
             :disabled="!editPermission()"
             v-decorator="['desc', { rules: [
-            { required: false, message: '請輸入資料' },
+            { required: true, message: '請輸入資料' },
             ]}]"
             placeholder="請輸入摘要內容"
           />
