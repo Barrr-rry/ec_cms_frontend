@@ -6,7 +6,7 @@
       <div class="gray-text">{{normDataText('subtitle')}}</div>
       <div class="mt-24px primary-color">順序 : {{banner.queue}}</div>
       <div class="banner-card-content-footer flex-grow-1 d-flex align-items-end justify-content-between">
-        <c-badge :status="banner.status?'success':'error'"></c-badge>
+        <a-badge :status="banner.display_status?'success':'error'" :text="banner.display_text"></a-badge>
         <div class="banner-card-content-footer-end_time gray-text" v-if="!banner.display_type">
           於 {{banner.end_time}} 到期
         </div>
