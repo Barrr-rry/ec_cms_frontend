@@ -32,12 +32,12 @@
     {
       title: '尺寸',
       align: 'center',
-      dataIndex: 'level1_spec',
+      dataIndex: 'spec1_name',
     },
     {
       title: '顏色',
       align: 'center',
-      dataIndex: 'level2_spec',
+      dataIndex: 'spec2_name',
     },
     {
       title: '原價（NTD）',
