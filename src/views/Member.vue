@@ -136,6 +136,7 @@
       v-model="filter_drawer"
       :initCallback="initData"
       :vm="this"
+      ref="filterdrawer"
     ></MemberFilterDrawer>
     <MemberRewardDrawerDrawer
       v-model="reward_drawer"
@@ -233,6 +234,16 @@
     },
 
     methods: {
+      reset() {
+        this.params = {
+          limit: 10,
+          offset: 0,
+        }
+
+        this.search_form.resetFields()
+        this.initData()
+        this.$refs.filterdrawer.reset()
+      },
       initData() {
         this.loading = true
         // store action get data

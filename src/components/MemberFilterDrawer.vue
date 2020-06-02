@@ -117,6 +117,12 @@
       }
     },
     methods: {
+      resetFields() {
+
+      },
+      reset() {
+        this.form.resetFields()
+      },
       editPermission() {
         return this.permissioncheck('permission_member_manage', 1)
       },
