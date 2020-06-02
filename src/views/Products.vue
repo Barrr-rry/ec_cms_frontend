@@ -26,6 +26,7 @@
                   v-decorator="['keywords', { rules: [
             ]}]"
                   placeholder="請輸入商品編號、商品名稱、商品貨號"
+                  style="width: 280px"
                 />
               </a-form-item>
             </div>
