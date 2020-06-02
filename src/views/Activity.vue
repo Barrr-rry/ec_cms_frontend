@@ -3,7 +3,7 @@
     <div class="l-breadcrumb container-fluid pt-16px pb-120px white-bg">
       <a-breadcrumb class="breadcrumb mb-16px">
         <a-breadcrumb-item :key="1">
-          <span>文案管理</span>
+          <span>優惠管理</span>
         </a-breadcrumb-item>
         <a-breadcrumb-item :key="2">
           <span>買就送活動管理</span>
@@ -20,11 +20,11 @@
             @submit="submit"
             class="row fill-width"
           >
-            <a-form-item label="快速查詢商品" class="col-6 mr-0px">
+            <a-form-item label="快速查詢活動" class="col-6 mr-0px">
               <a-input
                 v-decorator="['keywords', { rules: [
             ]}]"
-                placeholder="請輸入商品編號、商品名稱"
+                placeholder="請輸入活動中文或英文名稱"
                 style="width: 250px"
               />
             </a-form-item>
