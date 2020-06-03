@@ -131,14 +131,16 @@
         總計: ${{item.total_price}}
       </div>
       <div class="d-flex d-center gray-text" v-if="getSpec(item)">
-        本次消費金額可獲得忠誠獎勵: <a href="">{{item.rewrad_temp[0].point}}</a> 點
+        本次消費金額可獲得忠誠獎勵: <a href="">{{reward_target.point}}</a> 點
       </div>
       <div class="d-flex d-center gray-text" v-if="getSpec(item)">
-        預計於 <a href="">{{item.rewrad_temp[0].start_date}}</a> 發放
+        預計於 <a href="">{{reward_target.start_date}}</a> 發放
       </div>
       <div class="d-flex d-center">
         <a-button
-          @click="callbackCheck(()=>reward_drawer=true,editPermission())">修 改
+          @click="callbackCheck(()=>reward_drawer=true,editPermission())"
+          :disabled="!in_temp"
+        >修 改
         </a-button>
       </div>
     </div>
@@ -219,6 +221,16 @@
       }
     },
     computed: {
+      in_temp() {
+        return this.item.rewrad_temp.length > 0
+      },
+      reward_target() {
+        if (this.in_temp) {
+          return this.item.rewrad_temp[0]
+        } else {
+          return this.item.rewrad[0]
+        }
+      },
       products() {
         let ret = []
         if (!this.item) {
@@ -229,24 +241,21 @@
       },
     },
     methods: {
-      spec_name(record){
-        if(record.specification_detail.spec2_name){
+      spec_name(record) {
+        if (record.specification_detail.spec2_name) {
           return `${record.specification_detail.spec1_name}/${record.specification_detail.spec2_name}`
         }
         return record.specification_detail.spec1_name
       },
-      getSpec(record){
-        if(record.shipping_status != 400){
-          return true
-        }
-        return false
+      getSpec(record) {
+        return record.shipping_status !== 400
       },
       editPermission() {
         return this.permissioncheck('permission_order_manage', 2)
       },
       deleteHandler(callback) {
         let values = {
-            shipping_status: 400
+          shipping_status: 400
         }
         return this.defaultThenProcess(
           this.default_api.putData(this.item.id, values).then(() => {
@@ -256,10 +265,13 @@
 
       },
       updateReward() {
+        if (!this.in_temp) {
+          return
+        }
         this.$refs.reward_drawer.form.validateFields((err, values) => {
           if (!err) {
-            this.$api.rewardrecord.putData(this.item.rewrad[0].id, values).then(() => {
-              this.item.rewrad[0].point = values.point
+            this.$api.rewardrecordtemp.putData(this.item.rewrad_temp[0].id, values).then(() => {
+              this.item.rewrad_temp[0].point = values.point
               this.reward_drawer = false
             }).catch((err) => {
               this.$message.error(err.response.data)
