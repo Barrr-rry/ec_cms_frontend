@@ -243,7 +243,7 @@
     methods: {
       spec_name(record) {
         if (record.specification_detail.spec2_name) {
-          return `${record.specification_detail.spec1_name}/${record.specification_detail.spec2_name}`
+          return `${record.specification_detail.spec1_name} - ${record.specification_detail.spec2_name}`
         }
         return record.specification_detail.spec1_name
       },
