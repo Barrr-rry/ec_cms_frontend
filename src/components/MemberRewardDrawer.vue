@@ -38,6 +38,7 @@
         <c-form-item label="修改回饋到期日">
           <a-date-picker
             :disabled="!editPermission()"
+            :disabled-date="disabledDate"
             v-decorator="['end_date', { rules: [
             { required: true, message: '請輸入資料' },
             ]}]"
@@ -80,6 +81,7 @@
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
   import momentMixin from "@/mixins/momentMixin"
+  import moment from 'moment'
 
   const columns = [
     {
@@ -122,6 +124,11 @@
       }
     },
     methods: {
+      disabledDate(current) {
+        // Can not select days before today and today
+        return current && current <= moment().endOf('day').subtract(1, 'day')
+      },
+
       editPermission() {
         return this.permissioncheck('permission_member_manage', 2)
       },
