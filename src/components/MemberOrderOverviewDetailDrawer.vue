@@ -231,9 +231,9 @@
     methods: {
       spec_name(record){
         if(record.specification_detail.spec2_name){
-          return `${record.specification_detail.spec1_name}/${record.specification_detail.spec2_name}`
+          return `${record.specification_detail.spec1_cn_name}/${record.specification_detail.spec2_name}`
         }
-        return record.specification_detail.spec1_name
+        return record.specification_detail.spec1_cn_name
       },
       getSpec(record){
         if(record.shipping_status != 400){

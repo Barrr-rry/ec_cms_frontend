@@ -41,9 +41,15 @@
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="優惠券標題">
+      <c-form-item label="優惠券中文標題">
         <a-input
-          v-decorator="['title', { rules: [{ required: true, message: '請輸入資料' }] }]"
+          v-decorator="['cn_title', { rules: [{ required: true, message: '請輸入資料' }] }]"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="優惠券英文標題">
+        <a-input
+          v-decorator="['en_title', { rules: [{ required: true, message: '請輸入資料' }] }]"
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
@@ -194,7 +200,8 @@
           'role',
           'method',
           'discount',
-          'title',
+          'cn_title',
+          'en_title',
           'discount_code',
           'image_url',
           'has_period',
