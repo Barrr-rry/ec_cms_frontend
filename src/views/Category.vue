@@ -18,10 +18,40 @@
           <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 增 主 分 類
           </a-button>
         </div>
+        <div class="pb-24px d-flex">
+          <c-popover
+            @ok="updateSelectedHandler($event)"
+          >
+            <template slot="content">
+              <p>
+                <a-form
+                  :form="activity_form"
+                  layout="inline"
+                  class="w-100 d-flex justify-content-between"
+                >
+                  <a-form-item label="活動名稱" class="w-100 d-flex l-form-select">
+                    <a-select
+                      v-decorator="['activity', {initialValue:1 }]"
+                      placeholder="請選擇活動名稱"
+                    >
+                      <a-select-option :value="el.id" v-for="el of activity_list" :key="el.id">
+                        {{el.ch_name}}
+                      </a-select-option>
+                    </a-select>
+                  </a-form-item>
+                </a-form>
+              </p>
+            </template>
+            <div class="ml-12px">
+              <a-button :disabled="!selected_row_keys.length">新 增 活 動</a-button>
+            </div>
+          </c-popover>
+        </div>
         <a-table :columns="columns" :dataSource="items"
                  :loading="loading"
                  :pagination="false"
                  :rowKey="record => record.fake_id"
+                 :rowSelection="{selectedRowKeys: selected_row_keys, onChange: onSelectChange}"
         >
           <div slot="status" slot-scope="text">
             <c-badge :status="text?'success':'error'"/>
@@ -60,6 +90,7 @@
   import pageMixin from "@/mixins/pageMixin"
   import {mapState} from 'vuex'
   import CategoryDrawer from "@/components/CategoryDrawer"
+  import searchFormMixin from "@/mixins/searchFormMixin"
 
   const columns = [
     {
@@ -76,15 +107,18 @@
 
   let table_name = 'category'
   export default {
-    mixins: [pageMixin],
+    mixins: [pageMixin, searchFormMixin],
     components: {
       CategoryDrawer,
     },
     data() {
       return {
+        activity_form: this.$form.createForm(this),
         create_sub_drawer: false,
         columns,
-        table_name
+        table_name,
+        // fake_id: id
+        fake_id_mapping: {},
       }
     },
     computed: {
@@ -92,6 +126,8 @@
         items(state) {
           let items = state.items
           let fake_id = 0
+          this.fake_id_mapping = {}
+          let self = this
 
           function itemLoop(categories, level = 1) {
             let ret = []
@@ -100,6 +136,7 @@
                 item['children'] = itemLoop(item.sub_categories, level + 1)
               }
               item.fake_id = fake_id++
+              self.fake_id_mapping[item.fake_id] = item.id
               item.level = level
               ret.push(item)
             }
@@ -109,10 +146,35 @@
           let ret = itemLoop(items)
           return ret
         },
+      }),
+      ...mapState('activity', {
+        activity_list: state => state.items
       })
 
     },
     methods: {
+      updateSelectedHandler(callback) {
+        this.activity_form.validateFields((err, values) => {
+          let ids = []
+          for (let key of this.selected_row_keys) {
+            ids.push(this.fake_id_mapping[key])
+          }
+          values.ids = ids
+          this.$api.activity.category(values).then(() => {
+            callback()
+            this.$message.success('更新成功')
+            this.selected_row_keys = []
+          })
+        })
+      },
+      initData() {
+        this.loading = true
+        // store action get data
+        this.$store.dispatch(`activity/getList`)
+        this.$store.dispatch(`${this.table_name}/getList`, this.getParams()).then(() => {
+          this.loading = false
+        })
+      },
       editPermission() {
         return this.permissioncheck('permission_catalog_manage', 2)
       }
