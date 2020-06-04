@@ -305,17 +305,6 @@
         })
 
       },
-      deleteHandler(callback, err) {
-        // todo
-        return this.defaultThenProcess(
-          this.default_api.deleteData(this.item.id).then(() => {
-            callback()
-            this.$message.success('刪除商品成功')
-          })
-        )
-
-
-      },
       createValueTransfer(values) {
         let ret = {...values}
         if (ret.tag) {

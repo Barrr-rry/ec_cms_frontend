@@ -138,34 +138,8 @@
       initData() {
         this.$store.dispatch('permission/firstInitList')
       },
-      deleteHandler(callback, err) {
-        return this.defaultThenProcess(
-                this.default_api.deleteData(this.item.id).then(() => {
-                  callback()
-                  this.$message.success('刪除帳號成功')
-                })
-        )
-
-
-      },
-      updateHandler(e) {
-        this.submitValidate(e, (values) => {
-          values = this.removeBlankValue(values)
-          values = this.updateValueTransfer(values)
-          return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
-            this.$message.success('更新帳號成功')
-          }))
-        })
-
-      },
-      createHandler(e) {
-        this.submitValidate(e, (values) => {
-          values = this.removeBlankValue(values)
-          values = this.createValueTransfer(values)
-          return this.defaultThenProcess(this.default_api.postData(values).then(() => {
-            this.$message.success('新增帳號成功')
-          }))
-        })
+      getName() {
+        return '帳號'
       },
     }
   }
