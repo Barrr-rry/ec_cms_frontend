@@ -155,6 +155,7 @@
                 inventory_status: el.inventory_status,
                 level1_spec: el.spec1_name,
                 level2_spec: el.spec2_name,
+                fake_price: el.fake_price,
                 price: el.price,
                 product: el.product,
                 product_code: el.product_code,
