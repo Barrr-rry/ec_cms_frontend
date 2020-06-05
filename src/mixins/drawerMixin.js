@@ -60,6 +60,9 @@ export default {
         })
       }
     },
+    getName() {
+      return '資料'
+    },
     initFields() {
       let obj = {}
       for (let key of this.update_field_keys) {
@@ -89,7 +92,7 @@ export default {
       }
       return this.defaultThenProcess(
         this.default_api.deleteData(this.item.id).then(() => {
-          this.$message.success('刪除資料成功')
+          this.$message.success('刪除'+this.getName()+'成功')
         }).finally(() => {
           callback()
         })
@@ -135,7 +138,7 @@ export default {
         values = this.removeBlankValue(values)
         values = this.updateValueTransfer(values)
         return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
-          this.$message.success('更新資料成功')
+          this.$message.success('更新'+this.getName()+'成功')
         }))
       })
 
@@ -145,7 +148,7 @@ export default {
         values = this.removeBlankValue(values)
         values = this.createValueTransfer(values)
         return this.defaultThenProcess(this.default_api.postData(values).then(() => {
-          this.$message.success('新增資料成功')
+          this.$message.success('新增'+this.getName()+'成功')
         }))
       })
     },

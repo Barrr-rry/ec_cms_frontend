@@ -144,7 +144,7 @@
           values = this.updateValueTransfer(values)
           values.product_ids = this.products.map(x => x.id)
           return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
-            this.$message.success('更活動成功')
+            this.$message.success('更新活動成功')
           }))
         })
       },
