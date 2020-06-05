@@ -274,7 +274,7 @@
           }
           values = this.mergeSpecificationValues(values)
           values.product_info = this.$refs.product_info_card.editor_data
-          values.detail_info = this.$refs.product_info_card.editor_data
+          values.detail_info = this.$refs.detail_info_card.editor_data
           for (let detail_data of values.specifications_detail_data) {
             if (detail_data.price === '' || detail_data.price === null) {
               this.$message.warning('請輸入商品售價')
