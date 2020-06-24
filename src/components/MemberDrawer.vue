@@ -58,18 +58,6 @@
           </a-radio>
         </a-radio-group>
       </c-form-item>
-      <c-form-item label="標註為黑名單">
-        <a-radio-group v-decorator="['in_blacklist',{rules:[],initialValue:true}]"
-                       :disabled="!editPermission()"
-        >
-          <a-radio :value="true">
-            啟用
-          </a-radio>
-          <a-radio :value="false">
-            停用
-          </a-radio>
-        </a-radio-group>
-      </c-form-item>
       <c-form-item label="會員密碼"
                    v-if="type==='create'"
       >
@@ -156,7 +144,7 @@
           ext: ''
         },
         update_field_keys: [
-          'member_number', 'name', 'account', 'local', 'in_blacklist', 'line_id', 'phone', 'cellphone', 'status', 'remarks'],
+          'member_number', 'name', 'account', 'local', 'line_id', 'phone', 'cellphone', 'status', 'remarks'],
         default_api: this.$api.member,
         // for check to add
         // fake_data: {}

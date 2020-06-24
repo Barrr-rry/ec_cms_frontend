@@ -113,6 +113,7 @@
           <div slot="operation" slot-scope="text, record">
             <a href="#" @click="openUpdateDrawer(record,()=>overview_drawer=true)">歷史訂單</a>
             <a class="ml-24px" href="#" @click="openUpdateDrawer(record,()=>reward_drawer=true)">回饋金管理</a>
+            <a class="ml-24px" href="#" @click="openUpdateDrawer(record,()=>black_list_drawer=true)">黑名單管理</a>
             <a class="ml-24px" href="#" @click="openUpdateDrawer(record,null)">總覽</a>
           </div>
         </a-table>
@@ -143,6 +144,11 @@
       :initCallback="initData"
       :item="target"
     ></MemberRewardDrawerDrawer>
+    <MemberBlackListDrawer
+      v-model="black_list_drawer"
+      :initCallback="initData"
+      :item="target"
+    ></MemberBlackListDrawer>
 
 
   </a-layout-content>
@@ -156,6 +162,7 @@
   import MemberOrderOverviewDrawer from "@/components/MemberOrderOverviewDrawer"
   import MemberFilterDrawer from "@/components/MemberFilterDrawer"
   import MemberRewardDrawerDrawer from "@/components/MemberRewardDrawer"
+  import MemberBlackListDrawer from "@/components/MemberBlackListDrawer"
 
   const columns = [
     {
@@ -214,12 +221,14 @@
       MemberDrawer,
       MemberOrderOverviewDrawer,
       MemberFilterDrawer,
-      MemberRewardDrawerDrawer
+      MemberRewardDrawerDrawer,
+      MemberBlackListDrawer
     },
     data() {
       return {
         export_link: null,
         reward_drawer: false,
+        black_list_drawer: false,
         columns,
         table_name,
         overview_drawer: false,
