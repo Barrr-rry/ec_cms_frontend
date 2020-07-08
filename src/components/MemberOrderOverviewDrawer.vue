@@ -79,11 +79,11 @@
       content(product_shot) {
         let items = JSON.parse(product_shot)
         let ret = items.map(item => {
-          let rett = ''
+          let rett = []
           for (let i in item.specifications_detail) {
-            rett += `${item.name}/${item.specifications_detail[i].spec1_name}/${item.specifications_detail[i].spec2_name}/X${item.specifications_detail[i].quantity}/$${item.specifications_detail[i].price}`
+            rett[i] = `${item.name}/${item.specifications_detail[i].spec1_name}/${item.specifications_detail[i].spec2_name}/X${item.specifications_detail[i].quantity}/$${item.specifications_detail[i].price}`
           }
-          return rett
+          return  rett.join('、')
         })
 
         return ret.join('、')
