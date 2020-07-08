@@ -11,11 +11,25 @@
         ]}]"
                        :disabled="!editPermission()"
         >
+          <a-radio :value="true">
+            開
+          </a-radio>
           <a-radio :value="false">
             關
           </a-radio>
+        </a-radio-group>
+      </c-form-item>
+      <c-form-item label="是否串接物流">
+        <a-radio-group v-decorator="['use_ecpay_delivery',{rules:[
+        { required: true, message: '請輸入資料' },
+        ]}]"
+                       :disabled="!editPermission()"
+        >
+          <a-radio :value="false">
+            是（綠界物流）
+          </a-radio>
           <a-radio :value="true">
-            開
+            否（賣家自行寄出）
           </a-radio>
         </a-radio-group>
       </c-form-item>
@@ -101,7 +115,7 @@
     data() {
       return {
         update_field_keys: [
-          'title', 'role', 'weight', 'price', 'enable'
+          'title', 'role', 'weight', 'price', 'enable', 'use_ecpay_delivery'
         ],
         default_api: this.$api.freeshipping,
         // for check to add
