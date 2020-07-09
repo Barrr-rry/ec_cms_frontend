@@ -249,7 +249,7 @@
     },
     {
       title: '商品名稱',
-      dataIndex: 'name',
+      dataIndex: 'cn_name',
     },
     {
       title: '商品編號',
@@ -366,7 +366,7 @@
           if (el.level !== 1) {
             continue
           }
-          ret.push(el.name)
+          ret.push(el.cn_name)
         }
         return ret.join('/')
       },

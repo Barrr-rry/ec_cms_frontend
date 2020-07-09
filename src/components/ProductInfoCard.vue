@@ -1,5 +1,5 @@
 <template>
-  <a-card title="編輯商品資訊">
+  <a-card title="編輯中文商品資訊">
     <div class="row">
       <div class="col-12">
         <ckeditor :editor="editor" v-model="editor_data" :config="editorConfig"
@@ -24,7 +24,7 @@
     props: {},
     data() {
       return {
-        product_key: 'product_info',
+        product_key: 'cn_product_info',
       }
     },
     computed: {}

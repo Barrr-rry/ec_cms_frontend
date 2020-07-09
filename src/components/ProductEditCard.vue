@@ -1,10 +1,19 @@
 <template>
   <a-card title="商品基本資訊">
     <a-form :form="form" @submit="submitHandler">
-      <c-form-item label="商品名稱">
+      <c-form-item label="商品中文名稱">
         <a-input
-          v-decorator="['name', { rules: [
+          v-decorator="['cn_name', { rules: [
             { required: true, message: '請輸入資料' },
+            ]}]"
+          placeholder="商品名稱"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="商品英文名稱">
+        <a-input
+          v-decorator="['en_name', { rules: [
+            { required: false, message: '請輸入資料' },
             ]}]"
           placeholder="商品名稱"
           :disabled="!editPermissioncheck()"
@@ -82,10 +91,17 @@
           </a-select-option>
         </a-select>
       </c-form-item>
-      <c-form-item label="商品副標題">
+      <c-form-item label="商品中文副標題">
         <a-input
-          v-decorator="['sub_title']"
-          placeholder="商品副標題"
+          v-decorator="['cn_sub_title']"
+          placeholder="商品副中文標題"
+          :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
+      <c-form-item label="商品英文副標題">
+        <a-input
+          v-decorator="['en_sub_title']"
+          placeholder="商品英文副標題"
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
@@ -205,7 +221,7 @@
     mixins: [configsettingMixin, drawerMixin, uploadMixin],
     data() {
       return {
-        update_field_keys: ['name', 'brand', 'order', 'sub_title', 'tag', 'category', 'activity'],
+        update_field_keys: ['cn_name', 'en_name', 'brand', 'order', 'cn_sub_title', 'en_sub_title', 'tag', 'category', 'activity'],
         default_api: this.$api.product,
         // for check to add
         // fake_data: {}

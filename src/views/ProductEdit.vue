@@ -54,10 +54,20 @@
         :item="item"
         ref="product_info_card"
       />
+      <EnProductInfoCard
+              class="mb-24px"
+              :item="item"
+              ref="en_product_info_card"
+      />
       <DetailInfoCard
         class="mb-24px"
         :item="item"
         ref="detail_info_card"
+      />
+      <EnDetailInfoCard
+        class="mb-24px"
+        :item="item"
+        ref="en_detail_info_card"
       />
       <div class="d-flex justify-content-center align-items-center">
         <a-button @click="$router.go(-1)" class="mr-8px">
@@ -88,6 +98,8 @@
   import ProductUploadImage from "@/components/ProductUploadImage"
   import ProductInfoCard from "@/components/ProductInfoCard"
   import DetailInfoCard from "@/components/DetailInfoCard"
+  import EnProductInfoCard from "@/components/EnProductInfoCard"
+  import EnDetailInfoCard from "@/components/EnDetailInfoCard"
   import SpecificationCard from "@/components/SpecificationCard"
   import SpecificationMergeCard from "@/components/SpecificationMergeCard"
   import configsettingMixin from "@/mixins/configsettingMixin"
@@ -101,6 +113,8 @@
       ProductUploadImage,
       ProductInfoCard,
       DetailInfoCard,
+      EnProductInfoCard,
+      EnDetailInfoCard,
       SpecificationCard,
       SpecificationMergeCard,
     },
@@ -153,9 +167,9 @@
                 key1: spec1.key,
                 key2: spec2.key,
                 inventory_status: el.inventory_status,
-                level1_spec: el.spec1_name,
-                level2_spec: el.spec2_name,
                 fake_price: el.fake_price,
+                level1_spec: el.spec1_cn_name,
+                level2_spec: el.spec2_cn_name,
                 price: el.price,
                 product: el.product,
                 product_code: el.product_code,
@@ -171,7 +185,7 @@
           // 更新 has_level2_spec 狀態
           this.$refs.spec_merge.has_level2_spec = true
           if (!spec2_table.length) {
-            spec2_table = [{key: null, name: null}]
+            spec2_table = [{key: null, cn_name: null, en_name: null}]
             this.$refs.spec_merge.has_level2_spec = false
           }
           for (let spec1 of spec1_table) {
@@ -193,8 +207,8 @@
                 key: key++,
                 key1: spec1.key,
                 key2: spec2.key,
-                level1_spec: spec1.name,
-                level2_spec: spec2.name,
+                level1_spec: spec1.cn_name,
+                level2_spec: spec2.cn_name,
                 fake_price: target.fake_price,
                 price: target.price,
                 inventory_status: target.inventory_status,
@@ -260,9 +274,9 @@
       initColumns() {
         if (this.configsetting.product_specifications_setting === 2) {
           let target1 = this.$refs.spec_merge.columns.filter(x => x.dataIndex === 'level1_spec')[0]
-          target1.title = this.$refs.spec_level1.name
+          target1.title = this.$refs.spec_level1.cn_name
           let target2 = this.$refs.spec_merge.columns.filter(x => x.dataIndex === 'level2_spec')[0]
-          target2.title = this.$refs.spec_level2.name
+          target2.title = this.$refs.spec_level2.cn_name
           this.$refs.spec_merge.has_level2 = !!this.$refs.spec_level2.cacheData.length
         }
       },
@@ -276,7 +290,8 @@
           let specification_level1 = []
           for (let el of this.$refs.spec_level1.cacheData) {
             let obj = {
-              name: el.name,
+              cn_name: el.cn_name,
+              en_name: el.en_name,
             }
             if (el.id) {
               obj.id = el.id
@@ -288,7 +303,8 @@
           let specification_level2 = []
           for (let el of this.$refs.spec_level2.cacheData) {
             let obj = {
-              name: el.name,
+              cn_name: el.cn_name,
+              en_name: el.en_name,
             }
             if (el.id) {
               obj.id = el.id
@@ -329,6 +345,10 @@
           values = this.mergeSpecificationValues(values)
           values.product_info = this.$refs.product_info_card.editor_data
           values.detail_info = this.$refs.detail_info_card.editor_data
+          values.cn_product_info = this.$refs.product_info_card.editor_data
+          values.cn_detail_info = this.$refs.detail_info_card.editor_data
+          values.en_product_info = this.$refs.en_product_info_card.editor_data
+          values.en_detail_info = this.$refs.en_detail_info_card.editor_data
           for (let detail_data of values.specifications_detail_data) {
             if (detail_data.price === '' || detail_data.price === null) {
               this.$message.warning('請輸入商品售價')
