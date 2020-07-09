@@ -25,7 +25,7 @@
           </a-select-option>
         </a-select>
       </c-form-item>
-      <c-form-item label="選擇活動">
+      <c-form-item label="選擇活動" v-show="configsetting.activity">
         <a-select
           v-decorator="['activity', {
           rules: [

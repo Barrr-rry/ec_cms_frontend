@@ -268,9 +268,11 @@
           for (let v of value_list) {
             values = {...v, ...values}
           }
-          values.level1_title = this.$refs.spec_level1.name
-          if (this.$refs.spec_level2.name) {
-            values.level2_title = this.$refs.spec_level2.name
+          if (this.configsetting.product_specifications_setting==2){
+            values.level1_title = this.$refs.spec_level1.name
+            if (this.$refs.spec_level2.name) {
+              values.level2_title = this.$refs.spec_level2.name
+            }
           }
           values = this.mergeSpecificationValues(values)
           values.product_info = this.$refs.product_info_card.editor_data

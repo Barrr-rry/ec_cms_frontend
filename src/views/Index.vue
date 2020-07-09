@@ -170,6 +170,12 @@
       computed_menuItems() {
         let ret = []
         for (let el of this.menuItems) {
+          if (this.configsetting && !this.configsetting.activity) {
+            el.children = el.children.filter(x => x.title !== '買就送活動管理')
+          }
+          if (this.configsetting && this.configsetting.feeback_money_setting==1) {
+            el.children = el.children.filter(x => x.title !== '忠誠點數管理')
+          }
           if (this.info && (
             this.info.permission_highest_permission || parseInt(this.info[el.permission]) >= 1
           )) {
