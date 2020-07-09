@@ -185,6 +185,7 @@
                   inventory_status: null,
                   weight: null,
                   quantity: null,
+                  product_code: null,
                 }
               }
               data.push({
@@ -199,6 +200,7 @@
                 inventory_status: target.inventory_status,
                 weight: target.weight,
                 quantity: target.quantity,
+                product_code: target.product_code,
 
               })
             }
@@ -316,9 +318,11 @@
           for (let v of value_list) {
             values = {...v, ...values}
           }
-          values.level1_title = this.$refs.spec_level1.name
-          if (this.$refs.spec_level2.name) {
-            values.level2_title = this.$refs.spec_level2.name
+          if (this.configsetting.product_specifications_setting == 2) {
+            values.level1_title = this.$refs.spec_level1.name
+            if (this.$refs.spec_level2.name) {
+              values.level2_title = this.$refs.spec_level2.name
+            }
           }
           values = this.mergeSpecificationValues(values)
           values.product_info = this.$refs.product_info_card.editor_data
@@ -330,11 +334,21 @@
               callback()
               return
             }
-            if (detail_data.quantity === '' || detail_data.quantity === null) {
-              this.$message.warning('請輸入商品數量')
-              this.initTableAfterSubtmitFailed()
-              callback()
-              return
+            if (this.configsetting.product_stock_setting === 3) {
+              if (detail_data.quantity === '' || detail_data.quantity === null) {
+                this.$message.warning('請輸入商品數量')
+                this.initTableAfterSubtmitFailed()
+                callback()
+                return
+              }
+            }
+            if (this.configsetting.product_stock_setting === 2) {
+              if (detail_data.inventory_status === '' || detail_data.inventory_status === null) {
+                this.$message.warning('請輸入商品庫存狀態')
+                this.initTableAfterSubtmitFailed()
+                callback()
+                return
+              }
             }
           }
           if (this.type === 'update') {
@@ -366,7 +380,7 @@
               callback()
             })
           }
-        }).catch(()=>{
+        }).catch(() => {
           this.$message.warning('請確認輸入資料')
           callback()
         })
