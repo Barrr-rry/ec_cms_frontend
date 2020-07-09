@@ -7,7 +7,7 @@
       </div>
       <div class="manage-card-content to-flex-col">
         <div class="gray-text flex-grow-1">
-          <div class="mb-24px manage-card-name">{{item.name}}</div>
+          <div class="mb-24px manage-card-name">{{item.cn_name}}</div>
           <div>商品編號: {{item.product_number}}</div>
         </div>
       </div>
