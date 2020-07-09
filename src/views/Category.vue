@@ -18,7 +18,7 @@
           <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 增 主 分 類
           </a-button>
         </div>
-        <div class="pb-24px d-flex">
+        <div class="pb-24px d-flex"  v-if="configsetting.activity">
           <c-popover
             @ok="updateSelectedHandler($event)"
           >
@@ -149,7 +149,10 @@
       }),
       ...mapState('activity', {
         activity_list: state => state.items
-      })
+      }),
+      ...mapState('configsetting', {
+        configsetting: state => state.item
+      }),
 
     },
     methods: {
