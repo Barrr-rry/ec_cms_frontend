@@ -51,7 +51,7 @@
               </a-form-item>
             </div>
 
-            <div class="col-2 " v-show="configsetting.product_stock_setting === 3">
+            <div class="col-2 " v-show="configsetting.product_stock_setting == 3">
               <a-form-item label="庫存狀態" class="w-100 d-flex l-form-select">
                 <a-select
                   v-decorator="['inventory_status', { rules: [] }]"
@@ -350,8 +350,12 @@
       },
       productStockProcess() {
         // 如果 product_stock_setting = 1 代表沒有庫存 columns 要刪掉
-        if (this.configsetting.product_stock_setting in [3, 2]) {
+        if (this.configsetting.product_stock_setting === 1) {
           this.columns = this.columns.filter(x => x.title !== '庫存狀態')
+          this.columns = this.columns.filter(x => x.title !== '商品庫存')
+          this.columns.length
+        }
+        if (this.configsetting.product_stock_setting === 2) {
           this.columns = this.columns.filter(x => x.title !== '商品庫存')
           this.columns.length
         }

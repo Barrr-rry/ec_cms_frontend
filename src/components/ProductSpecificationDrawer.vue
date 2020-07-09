@@ -4,7 +4,7 @@
   >
     <a-form :form="form" @submit="submitHandler">
       <div class="flex-grow-1">
-        <a-table :columns="columns" :dataSource="temp_items"
+        <a-table :columns="computed_columns" :dataSource="temp_items"
                  :pagination="false"
                  :rowKey="record => record.id"
         >
@@ -14,6 +14,22 @@
               @change="e => handleChange(e.target.value, record)"
             />
           </template>
+          <template slot="inventory_status" slot-scope="text, record">
+            <a-select
+              :value="text"
+              @change="e => handleChange_status(e, record)"
+            >
+              <a-select-option :value="1">
+                有庫存
+              </a-select-option>
+              <a-select-option :value="2">
+                無庫存
+              </a-select-option>
+              <a-select-option :value="3">
+                預購品
+              </a-select-option>
+            </a-select>
+          </template>
         </a-table>
       </div>
     </a-form>
@@ -22,6 +38,7 @@
 
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
+  import {mapState} from "vuex";
 
   const columns = [
     {
@@ -55,6 +72,12 @@
       dataIndex: 'quantity',
       scopedSlots: {customRender: 'quantity'},
     },
+    {
+      title: '庫存狀態',
+      align: 'center',
+      dataIndex: 'inventory_status',
+      scopedSlots: {customRender: 'inventory_status'},
+    },
   ]
 
   export default {
@@ -68,7 +91,21 @@
         // fake_data: {}
       }
     },
-    computed: {},
+    computed: {
+      ...mapState('configsetting', {
+        configsetting: state => state.item
+      }),
+      computed_columns() {
+        let ret = []
+        if (this.configsetting.product_stock_setting===2) {
+          ret = this.columns.filter(x => x.title !== '庫存數量')
+        }
+        if (this.configsetting.product_stock_setting===3) {
+          ret = this.columns.filter(x => x.title !== '庫存狀態')
+        }
+        return ret
+      },
+    },
     watch: {
       item() {
         this.temp_items = this.item ? this.item.specifications_detail ? this.item.specifications_detail : [] : []
@@ -77,7 +114,9 @@
     methods: {
       updateHandler() {
         this.$axios.all(this.temp_items.map(el => {
-          return this.$api.specificationdetail.putData(el.id, {quantity: el.quantity})
+          console.log(this.temp_items)
+          console.log(el)
+          return this.$api.specificationdetail.putData(el.id, {quantity: el.quantity, inventory_status: el.inventory_status})
         })).then(() => {
           this.initData()
           this.input = false
@@ -88,11 +127,15 @@
       handleChange(value, item) {
         item.quantity = value
       },
+      handleChange_status(value, item) {
+        item.inventory_status = value
+      },
       editPermission() {
         return this.permissioncheck('permission_product_manage', 2)
       },
-    }
+    },
   }
+
 </script>
 
 <style scoped>

@@ -332,11 +332,21 @@
               callback()
               return
             }
-            if (detail_data.quantity === '' || detail_data.quantity === null) {
-              this.$message.warning('請輸入商品數量')
-              this.initTableAfterSubtmitFailed()
-              callback()
-              return
+            if (this.configsetting.product_stock_setting === 3) {
+              if (detail_data.quantity === '' || detail_data.quantity === null) {
+                this.$message.warning('請輸入商品數量')
+                this.initTableAfterSubtmitFailed()
+                callback()
+                return
+              }
+            }
+            if (this.configsetting.product_stock_setting === 2) {
+              if (detail_data.inventory_status === '' || detail_data.inventory_status === null) {
+                this.$message.warning('請輸入商品庫存狀態')
+                this.initTableAfterSubtmitFailed()
+                callback()
+                return
+              }
             }
           }
           if (this.type === 'update') {
