@@ -258,11 +258,13 @@
         this.$refs.spec_merge.data = [...data]
       },
       initColumns() {
-        let target1 = this.$refs.spec_merge.columns.filter(x => x.dataIndex === 'level1_spec')[0]
-        target1.title = this.$refs.spec_level1.name
-        let target2 = this.$refs.spec_merge.columns.filter(x => x.dataIndex === 'level2_spec')[0]
-        target2.title = this.$refs.spec_level2.name
-        this.$refs.spec_merge.has_level2 = !!this.$refs.spec_level2.cacheData.length
+        if (this.configsetting.product_specifications_setting === 2) {
+          let target1 = this.$refs.spec_merge.columns.filter(x => x.dataIndex === 'level1_spec')[0]
+          target1.title = this.$refs.spec_level1.name
+          let target2 = this.$refs.spec_merge.columns.filter(x => x.dataIndex === 'level2_spec')[0]
+          target2.title = this.$refs.spec_level2.name
+          this.$refs.spec_merge.has_level2 = !!this.$refs.spec_level2.cacheData.length
+        }
       },
       specChange() {
         this.initSpecMergeData()
@@ -345,6 +347,14 @@
             if (this.configsetting.product_stock_setting === 2) {
               if (detail_data.inventory_status === '' || detail_data.inventory_status === null) {
                 this.$message.warning('請輸入商品庫存狀態')
+                this.initTableAfterSubtmitFailed()
+                callback()
+                return
+              }
+            }
+            if (this.configsetting.product_specifications_setting === 2 && this.configsetting.weight ) {
+              if (detail_data.weight === '' || detail_data.weight === null) {
+                this.$message.warning('請輸入商品重量')
                 this.initTableAfterSubtmitFailed()
                 callback()
                 return

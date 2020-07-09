@@ -96,12 +96,15 @@
         configsetting: state => state.item
       }),
       computed_columns() {
-        let ret = []
+        let ret = this.columns
         if (this.configsetting.product_stock_setting===2) {
-          ret = this.columns.filter(x => x.title !== '庫存數量')
+          ret = ret.filter(x => x.title !== '庫存數量')
+        }
+        if (this.configsetting.product_specifications_setting===1) {
+          ret = ret.filter(x => x.dataIndex !== 'spec2_name')
         }
         if (this.configsetting.product_stock_setting===3) {
-          ret = this.columns.filter(x => x.title !== '庫存狀態')
+          ret = ret.filter(x => x.title !== '庫存狀態')
         }
         return ret
       },
