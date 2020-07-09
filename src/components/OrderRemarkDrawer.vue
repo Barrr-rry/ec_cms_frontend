@@ -33,6 +33,11 @@
       },
       items: {},
     },
+    data() {
+      return {
+        update_field_keys: ['remark']
+      }
+    }
   }
 </script>
 
