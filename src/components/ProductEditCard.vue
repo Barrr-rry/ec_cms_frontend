@@ -287,20 +287,24 @@
     },
     methods: {
       createHandler(e) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           this.submitValidate(e, (values) => {
             values = this.removeBlankValue(values)
             values = this.createValueTransfer(values)
             resolve(values)
+          }).catch(() => {
+            reject()
           })
         })
       },
       updateHandler(e) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           this.submitValidate(e, (values) => {
             values = this.removeBlankValue(values)
             values = this.updateValueTransfer(values)
             resolve(values)
+          }).catch(() => {
+            reject()
           })
         })
 

@@ -207,6 +207,54 @@
         this.$refs.spec_merge.cacheData = [...data]
         this.$refs.spec_merge.data = [...data]
       },
+      initTableAfterSubtmitFailed() {
+        let data = []
+        let key = 0
+        let cacheData = [...this.$refs.spec_merge.cacheData]
+        let spec1_table = this.$refs.spec_level1.cacheData
+        let spec2_table = this.$refs.spec_level2.cacheData
+        // 更新 has_level2_spec 狀態
+        this.$refs.spec_merge.has_level2_spec = true
+        if (!spec2_table.length) {
+          spec2_table = [{key: null, name: null}]
+          this.$refs.spec_merge.has_level2_spec = false
+        }
+        let idx = 0
+        for (let spec1 of spec1_table) {
+          for (let spec2 of spec2_table) {
+            let target = cacheData[idx]
+            idx += 1
+            if (!target) {
+              target = {
+                id: null,
+                fake_price: null,
+                price: null,
+                inventory_status: null,
+                weight: null,
+                quantity: null,
+                product_code: null,
+              }
+            }
+            data.push({
+              id: target.id,
+              key: key++,
+              key1: spec1.key,
+              key2: spec2.key,
+              level1_spec: spec1.name,
+              level2_spec: spec2.name,
+              fake_price: target.fake_price,
+              price: target.price,
+              inventory_status: target.inventory_status,
+              weight: target.weight,
+              quantity: target.quantity,
+              product_code: target.product_code,
+
+            })
+          }
+        }
+        this.$refs.spec_merge.cacheData = [...data]
+        this.$refs.spec_merge.data = [...data]
+      },
       initColumns() {
         let target1 = this.$refs.spec_merge.columns.filter(x => x.dataIndex === 'level1_spec')[0]
         target1.title = this.$refs.spec_level1.name
@@ -278,22 +326,49 @@
           for (let detail_data of values.specifications_detail_data) {
             if (detail_data.price === '' || detail_data.price === null) {
               this.$message.warning('請輸入商品售價')
+              this.initTableAfterSubtmitFailed()
+              callback()
               return
             }
             if (detail_data.quantity === '' || detail_data.quantity === null) {
               this.$message.warning('請輸入商品數量')
+              this.initTableAfterSubtmitFailed()
+              callback()
               return
             }
           }
           if (this.type === 'update') {
             this.submitUpdate(values).then(() => {
               callback()
+            }).catch((err) => {
+              let message = '其他錯誤'
+              try {
+                message = err.response.data.non_field_errors[0]
+              } catch (e) {
+                console.log('error:', err.response.data)
+              }
+              this.$message.warning(message)
+              this.initTableAfterSubtmitFailed()
+              callback()
             })
           } else {
             this.submitCreate(values).then(() => {
               callback()
+            }).catch((err) => {
+              let message = '其他錯誤'
+              try {
+                message = err.response.data.non_field_errors[0]
+              } catch (e) {
+                console.log('error:', err.response.data)
+              }
+              this.$message.warning(message)
+              this.initTableAfterSubtmitFailed()
+              callback()
             })
           }
+        }).catch(()=>{
+          this.$message.warning('請確認輸入資料')
+          callback()
         })
       },
       submitUpdate(values) {

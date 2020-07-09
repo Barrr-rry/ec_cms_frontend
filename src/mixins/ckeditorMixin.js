@@ -58,7 +58,7 @@ export default {
   computed: {},
   methods: {
     initFields() {
-      this.editor_data = this.item[this.product_key] || ''
+      this.editor_data = this.item ? this.item[this.product_key] || '' : ''
     },
     submitHandler() {
       let values = {

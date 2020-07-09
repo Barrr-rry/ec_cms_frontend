@@ -133,8 +133,9 @@
       let data = []
       let key = 0
       // 實際的資料
-      this.cacheData = data.map(item => ({...item}))
+      let cacheData = data.map(item => ({...item}))
       return {
+        cacheData,
         edit_columns,
         // 顯示level 2 name
         has_level2_spec: true,
