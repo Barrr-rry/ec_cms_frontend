@@ -181,7 +181,7 @@
             <a-badge :status="InventoryStatusBadge(text)" :text="text"></a-badge>
           </div>
           <div slot="operation" slot-scope="text, record">
-            <a href="#" @click="openUpdateDrawer(record, ()=>specification_drawer=true,)">庫存管理</a>
+            <a href="#" @click="openUpdateDrawer(record, ()=>specification_drawer=true,)" v-show="configsetting.product_stock_setting!=1">庫存管理</a>
             <a-divider type="vertical"/>
             <router-link :to="`/products/${record.id}`">編輯商品</router-link>
             <a-divider type="vertical"/>
@@ -350,8 +350,9 @@
       },
       productStockProcess() {
         // 如果 product_stock_setting = 1 代表沒有庫存 columns 要刪掉
-        if (this.configsetting.product_stock_setting in [1, 2]) {
-          this.columns = this.columns.filter(x => x.title !== '庫存狀況')
+        if (this.configsetting.product_stock_setting in [3, 2]) {
+          this.columns = this.columns.filter(x => x.title !== '庫存狀態')
+          this.columns = this.columns.filter(x => x.title !== '商品庫存')
           this.columns.length
         }
       },
