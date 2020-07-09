@@ -92,14 +92,14 @@
             {{text}}
             <a-tag
               :color="'red'"
-              class="mr-12px"
+              class="mr-12px avoid-pointer"
               v-if="record.in_blacklist"
             >
               {{ '黑名單' }}
             </a-tag>
             <a-tag
               :color="'volcano'"
-              class="mr-12px"
+              class="mr-12px avoid-pointer"
               v-if="record.was_in_blacklist && !record.in_blacklist"
             >
               {{ '曾是黑名單' }}
@@ -294,5 +294,7 @@
     }
   }
 </script>
-<style>
+<style scoped lang="sass">
+  .avoid-pointer
+    cursor: default
 </style>
