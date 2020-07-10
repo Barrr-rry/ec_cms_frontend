@@ -23,24 +23,7 @@
              :rowKey="record => record.key"
     >
       <template
-        v-for="col in ['cn_name']"
-        :slot="col"
-        slot-scope="text, record"
-      >
-        <div :key="col">
-          <a-input
-            v-if="record.editable"
-            style="margin: -5px 0"
-            :value="text"
-            @change="e => handleChange(e.target.value, record.key, col)"
-          />
-          <template v-else>
-            {{ text }}
-          </template>
-        </div>
-      </template>
-      <template
-        v-for="col in ['en_name']"
+        v-for="col in ['cn_name', 'en_name']"
         :slot="col"
         slot-scope="text, record"
       >
@@ -116,7 +99,7 @@
     data() {
       // init name
       let cn_name = this.item ? this.item[`level${this.level}_title`] : null
-      let en_name = this.item ? this.item[`level${this.level}_title`] : null
+      let en_name = this.item ? this.item[`level${this.level}_en_title`] : null
       // init spec data
       let key = 0
       let data = []

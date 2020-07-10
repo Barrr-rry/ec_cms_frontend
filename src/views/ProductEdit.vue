@@ -338,8 +338,10 @@
           }
           if (this.configsetting.product_specifications_setting == 2) {
             values.level1_title = this.$refs.spec_level1.name
+            values.level1_en_title = this.$refs.spec_level1.en_name
             if (this.$refs.spec_level2.name) {
               values.level2_title = this.$refs.spec_level2.name
+              values.level2_en_title = this.$refs.spec_level2.en_name
             }
           }
           values = this.mergeSpecificationValues(values)
