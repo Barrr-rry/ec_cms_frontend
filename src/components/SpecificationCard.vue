@@ -4,11 +4,18 @@
               @click="addToTable">
       + 新 增 項 目
     </a-button>
-    <c-form-item label="規格名稱">
+    <c-form-item label="規格中文名稱">
       <a-input
-        placeholder="規格名稱"
+        placeholder="規格中文名稱"
         :disabled="!editPermissioncheck()"
         v-model="name"
+      />
+    </c-form-item>
+    <c-form-item label="規格英文名稱">
+      <a-input
+              placeholder="規格英文名稱"
+              :disabled="!editPermissioncheck()"
+              v-model="en_name"
       />
     </c-form-item>
     <a-table :columns="columns" :data-source="data"
@@ -26,6 +33,23 @@
             style="margin: -5px 0"
             :value="text"
             @change="e => handleChange(e.target.value, record.key, col)"
+          />
+          <template v-else>
+            {{ text }}
+          </template>
+        </div>
+      </template>
+      <template
+              v-for="col in ['en_name']"
+              :slot="col"
+              slot-scope="text, record"
+      >
+        <div :key="col">
+          <a-input
+                  v-if="record.editable"
+                  style="margin: -5px 0"
+                  :value="text"
+                  @change="e => handleChange(e.target.value, record.key, col)"
           />
           <template v-else>
             {{ text }}
@@ -60,9 +84,14 @@
 <script>
   const columns = [
     {
-      title: '名稱',
+      title: '中文名稱',
       dataIndex: 'name',
       scopedSlots: {customRender: 'name'},
+    },
+    {
+      title: '英文名稱',
+      dataIndex: 'en_name',
+      scopedSlots: {customRender: 'en_name'},
     },
     {
       width: '120px',
@@ -87,6 +116,7 @@
     data() {
       // init name
       let name = this.item ? this.item[`level${this.level}_title`] : null
+      let en_name = this.item ? this.item[`level${this.level}_title`] : null
       // init spec data
       let key = 0
       let data = []
@@ -103,6 +133,7 @@
       this.cacheData = data.map(item => ({...item}))
       return {
         name,
+        en_name,
         key,
         data,
         columns,
@@ -111,6 +142,9 @@
     },
     watch: {
       name() {
+        this.$emit('onChange')
+      },
+      en_name() {
         this.$emit('onChange')
       }
     },
@@ -123,7 +157,8 @@
       addToTable() {
         let obj = {
           key: this.key++,
-          name: '未輸入'
+          name: '未輸入',
+          en_name: '未輸入'
         }
         this.cacheData.push(obj)
         this.data.push(obj)

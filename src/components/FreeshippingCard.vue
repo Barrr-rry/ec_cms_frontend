@@ -55,13 +55,22 @@
           :disabled="!editPermission()"
         />
       </c-form-item>
-      <c-form-item label="免運規則標題">
+      <c-form-item label="免運規則中文標題">
         <a-input
           v-decorator="['title', { rules: [
             { required: true, message: '請輸入資料' },
             ]}]"
           placeholder=""
           :disabled="!editPermission()"
+        />
+      </c-form-item>
+      <c-form-item label="免運規則英文標題">
+        <a-input
+                v-decorator="['en_title', { rules: [
+            { required: false, message: '請輸入資料' },
+            ]}]"
+                placeholder=""
+                :disabled="!editPermission()"
         />
       </c-form-item>
       <c-form-item label="設定使用規則">
@@ -115,7 +124,7 @@
     data() {
       return {
         update_field_keys: [
-          'title', 'role', 'weight', 'price', 'enable', 'use_ecpay_delivery'
+          'title', 'en_title', 'role', 'weight', 'price', 'enable', 'use_ecpay_delivery'
         ],
         default_api: this.$api.freeshipping,
         // for check to add

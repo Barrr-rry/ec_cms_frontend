@@ -172,6 +172,7 @@
           data.push({
             "main_image": false,
             "specification_name": el.name,
+            "specification_en_name": el.en_name,
             "image_url": values[`specifications_image_${el.key}`],
           })
         }
