@@ -336,15 +336,17 @@
           }
           if (this.configsetting.product_specifications_setting == 2) {
             values.level1_title = this.$refs.spec_level1.name
+            values.level1_en_title = this.$refs.spec_level1.en_name
             if (this.$refs.spec_level2.name) {
               values.level2_title = this.$refs.spec_level2.name
+              values.level2_en_title = this.$refs.spec_level2.en_name
             }
           }
           values = this.mergeSpecificationValues(values)
           values.product_info = this.$refs.product_info_card.editor_data
           values.detail_info = this.$refs.detail_info_card.editor_data
-          values.en_product_info = this.$refs.product_info_card.editor_data
-          values.en_detail_info = this.$refs.detail_info_card.editor_data
+          values.en_product_info = this.$refs.en_product_info_card.editor_data
+          values.en_detail_info = this.$refs.en_detail_info_card.editor_data
           for (let detail_data of values.specifications_detail_data) {
             if (detail_data.price === '' || detail_data.price === null) {
               this.$message.warning('請輸入商品售價')
