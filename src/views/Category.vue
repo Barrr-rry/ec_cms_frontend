@@ -98,6 +98,10 @@
       dataIndex: 'name',
     },
     {
+      title: '活動',
+      dataIndex: 'activity_name',
+    },
+    {
       title: '操作',
       dataIndex: 'operation',
       scopedSlots: {customRender: 'operation'},
