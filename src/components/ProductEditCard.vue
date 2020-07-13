@@ -343,7 +343,7 @@
           let specifications_detail_data = []
           for (let spec of values.specifications) {
             specification_level1.push({
-              name: spec
+              cn_name: spec
             })
             let detail = {
               level1_spec: spec,
@@ -401,7 +401,7 @@
           // 規格1 只會有一個規格
           for (let el of this.item.specifications) {
             if (el.level === 1) {
-              obj.specifications.push(el.name)
+              obj.specifications.push(el.cn_name)
             }
           }
         }
