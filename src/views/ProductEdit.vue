@@ -232,7 +232,7 @@
         // 更新 has_level2_spec 狀態
         this.$refs.spec_merge.has_level2_spec = true
         if (!spec2_table.length) {
-          spec2_table = [{key: null, name: null}]
+          spec2_table = [{key: null, name: null, en_name: null}]
           this.$refs.spec_merge.has_level2_spec = false
         }
         let idx = 0
@@ -345,8 +345,6 @@
             }
           }
           values = this.mergeSpecificationValues(values)
-          values.product_info = this.$refs.product_info_card.editor_data
-          values.detail_info = this.$refs.detail_info_card.editor_data
           values.cn_product_info = this.$refs.product_info_card.editor_data
           values.cn_detail_info = this.$refs.detail_info_card.editor_data
           values.en_product_info = this.$refs.en_product_info_card.editor_data
