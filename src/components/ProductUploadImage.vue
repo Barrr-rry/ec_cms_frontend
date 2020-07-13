@@ -40,7 +40,7 @@
       <c-form-item
         v-for="el in specifications_image"
         :key="el.key"
-        :label="el.name"
+        :label="el.cn_name"
         extra="圖片建議上傳尺寸 500 px x 500 px ， 格式 .jpg .png .svg"
       >
         <c-upload
