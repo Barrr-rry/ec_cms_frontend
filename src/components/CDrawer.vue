@@ -68,6 +68,10 @@
         type: String,
         default: '刪 除 資 料'
       },
+      okText: {
+        type: String,
+        default: '確 定'
+      },
       deleteBtnDisabled: {
         type: Boolean,
         default: false

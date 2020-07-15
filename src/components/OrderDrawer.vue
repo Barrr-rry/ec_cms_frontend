@@ -34,7 +34,7 @@
           <td class="text-right">收貨人電話:</td>
           <td class="pl-16px">{{item.phone}}</td>
         </tr>
-        <tr v-show="item.to_store">
+        <tr>
           <td class="text-right">寄件編號:</td>
           <td class="pl-16px"><a href="">{{item.all_pay_logistics_id}}</a></td>
         </tr>
