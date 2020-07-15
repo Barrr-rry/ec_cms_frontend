@@ -33,9 +33,9 @@
             <div class="col-5">
               <a-form-item label="物流狀態">
                 <a-select
-                        v-decorator="['to_store', { rules: [] }]"
-                        placeholder="請選擇物流方式"
-                        style="width: 140px"
+                  v-decorator="['to_store', { rules: [] }]"
+                  placeholder="請選擇物流方式"
+                  style="width: 140px"
                 >
                   <a-select-option :value="1">
                     超商取貨
@@ -47,9 +47,9 @@
               </a-form-item>
               <a-form-item label="訂單狀態">
                 <a-select
-                        v-decorator="['simple_status', { rules: [] }]"
-                        placeholder="請選擇訂單狀態"
-                        style="width: 140px"
+                  v-decorator="['simple_status', { rules: [] }]"
+                  placeholder="請選擇訂單狀態"
+                  style="width: 140px"
                 >
                   <a-select-option :value="2">
                     付款失敗
@@ -80,7 +80,8 @@
         <div class="pb-24px d-flex">
           <a-button type="primary" @click="export_order(false)"
                     :disabled="!selected_row_keys.length"
-          >匯 出 已 選 擇 會 員</a-button>
+          >匯 出 已 選 擇 會 員
+          </a-button>
           <a :href="export_link" ref="export_link" style="display: none">yo</a>
         </div>
         <div class="mb-24px" style="height: 39px">
@@ -109,19 +110,22 @@
 
           <div slot="operation" slot-scope="text, record">
             <a href="#" @click="openUpdateDrawer(record)">訂單總覽</a>
-            <c-popover
-              @ok="changeStatus(record,$event)"
-            >
-              <template slot="content">
-                <p>
-                  <a-icon type="close-circle-o" style="color: #f5222d; margin-right: 8px"/>
-                  確定要執行出貨嗎?
-                </p>
-              </template>
-              <a class="ml-24px" href="#"
-                 v-if="!record.to_store&&record.shipping_status===1"
-              >執行出貨</a>
-            </c-popover>
+            <a href="#" class="ml-24px" @click="openUpdateDrawer(record,()=>update_shipping_drawer=true)"
+               v-if="!record.to_store&&record.shipping_status===1"
+            >自行出貨</a>
+            <!--            <c-popover-->
+            <!--              @ok="changeStatus(record,$event)"-->
+            <!--            >-->
+            <!--              <template slot="content">-->
+            <!--                <p>-->
+            <!--                  <a-icon type="close-circle-o" style="color: #f5222d; margin-right: 8px"/>-->
+            <!--                  確定要執行出貨嗎?-->
+            <!--                </p>-->
+            <!--              </template>-->
+            <!--              <a class="ml-24px" href="#"-->
+            <!--                 v-if="!record.to_store&&record.shipping_status===1"-->
+            <!--              >執行出貨</a>-->
+            <!--            </c-popover>-->
 
           </div>
         </a-table>
@@ -133,6 +137,12 @@
       :item="target"
     >
     </order-drawer>
+    <OrderShippingStatusDrawer
+      v-model="update_shipping_drawer"
+      :initCallback="initData"
+      :item="target"
+    >
+    </OrderShippingStatusDrawer>
 
 
   </a-layout-content>
@@ -142,6 +152,7 @@
   import tablePageMixin from "@/mixins/tablePageMixin"
   import {mapState} from 'vuex'
   import OrderDrawer from "@/components/OrderDrawer"
+  import OrderShippingStatusDrawer from "@/components/OrderShippingStatusDrawer"
   import searchFormMixin from "@/mixins/searchFormMixin"
 
 
@@ -197,12 +208,14 @@
     mixins: [pageMixin, tablePageMixin, searchFormMixin],
     components: {
       OrderDrawer,
+      OrderShippingStatusDrawer,
     },
     data() {
       return {
         columns,
         table_name,
         export_link: null,
+        update_shipping_drawer: false,
       }
     },
     computed: {
