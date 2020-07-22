@@ -66,6 +66,9 @@
         </div>
         <div class="pb-24px d-flex">
           <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 建</a-button>
+          <a-button type="primary" @click="export_member_email(false)" class="ml-12px"
+        >匯 出 訂 閱 電 子 報 使 用 者 mail
+        </a-button>
           <a-button type="primary" @click="export_member(false)" class="ml-12px"
                     :disabled="!selected_row_keys.length"
           >匯 出 已 選 擇 會 員
@@ -277,6 +280,17 @@
             values.ids = this.selected_row_keys.join(',')
           }
           this.$api.exportmember.getList(values).then((res) => {
+            this.export_link = this.$axios.baseURL.replace('/api/', '/media/') + res.data.file_name
+            this.$nextTick(() => {
+              this.$refs.export_link.click()
+              this.export_link = null
+            })
+          })
+        })
+      },
+      export_member_email(all) {
+        this.search_form.validateFields((err, values) => {
+          this.$api.exportmemberemail.getList().then((res) => {
             this.export_link = this.$axios.baseURL.replace('/api/', '/media/') + res.data.file_name
             this.$nextTick(() => {
               this.$refs.export_link.click()
