@@ -7,7 +7,7 @@
         <div class="row">
           <a-form-item>
             <a-input
-              class="col-4"
+              class="col-11"
               :disabled="!editPermission()"
               v-decorator="['reward_lower', { rules: [
             { required: false, message: '請輸入資料' },
@@ -18,7 +18,7 @@
           點 ～
           <a-form-item>
             <a-input
-              class="col-4"
+              class="col-11"
               :disabled="!editPermission()"
               v-decorator="['reward_upper', { rules: [
             { required: false, message: '請輸入資料' },
@@ -28,6 +28,127 @@
           </a-form-item>
           點
         </div>
+      </c-form-item>
+      <c-form-item label="會員年齡">
+        <div class="row">
+          <a-form-item>
+            <a-input
+              class="col-11"
+              :disabled="!editPermission()"
+              v-decorator="['reward_lower', { rules: [
+            { required: false, message: '請輸入資料' },
+            ]}]"
+              placeholder="0"
+            />
+          </a-form-item>
+          歲 ～
+          <a-form-item>
+            <a-input
+              class="col-11"
+              :disabled="!editPermission()"
+              v-decorator="['reward_upper', { rules: [
+            { required: false, message: '請輸入資料' },
+            ]}]"
+              placeholder="100"
+            />
+          </a-form-item>
+          歲
+        </div>
+      </c-form-item>
+      <c-form-item label="會員 BMI">
+        <div class="row">
+          <a-form-item>
+            <a-input
+              class="col-12"
+              :disabled="!editPermission()"
+              v-decorator="['reward_lower', { rules: [
+            { required: false, message: '請輸入資料' },
+            ]}]"
+              placeholder="0"
+            />
+          </a-form-item>
+          ～
+          <a-form-item>
+            <a-input
+              class="col-12"
+              :disabled="!editPermission()"
+              v-decorator="['reward_upper', { rules: [
+            { required: false, message: '請輸入資料' },
+            ]}]"
+              placeholder="100"
+            />
+          </a-form-item>
+
+        </div>
+      </c-form-item>
+      <c-form-item label="會員所在地">
+          <a-form-item>
+            <a-select
+                    v-decorator="['status', { rules: [] }]"
+                    placeholder="請選擇地區"
+                    class="col-12"
+            >
+              <a-select-option :value="0">
+                全部
+              </a-select-option>
+              <a-select-option :value="1">
+                台灣
+              </a-select-option>
+              <a-select-option :value="2">
+                海外
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+      </c-form-item>
+      <c-form-item label="會員性別">
+        <a-form-item>
+          <a-select
+                  v-decorator="['status', { rules: [] }]"
+                  placeholder="請選擇地區"
+                  class="col-12"
+          >
+            <a-select-option :value="0">
+              全部
+            </a-select-option>
+            <a-select-option :value="1">
+              男性
+            </a-select-option>
+            <a-select-option :value="2">
+              女性
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+      </c-form-item>
+      <c-form-item label="購買尺寸">
+        <a-form-item>
+          <a-select
+                  v-decorator="['status', { rules: [] }]"
+                  placeholder="請選擇地區"
+                  class="col-12"
+          >
+            <a-select-option :value="0">
+              XS
+            </a-select-option>
+            <a-select-option :value="1">
+              S
+            </a-select-option>
+            <a-select-option :value="2">
+              M
+            </a-select-option>
+            <a-select-option :value="3">
+              L
+            </a-select-option>
+            <a-select-option :value="4">
+              XL
+            </a-select-option>
+            <a-select-option :value="5">
+              XXL
+            </a-select-option>
+            <a-select-option :value="6">
+              3XL
+            </a-select-option>
+          </a-select>
+        </a-form-item>
       </c-form-item>
       <h3>{{'時間區間篩選'}}</h3>
       <c-form-item>
