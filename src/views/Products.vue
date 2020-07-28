@@ -182,7 +182,7 @@
           </div>
           <div slot="operation" slot-scope="text, record">
             <a href="#" @click="openUpdateDrawer(record, ()=>specification_drawer=true,)" v-show="configsetting.product_stock_setting!=1">庫存管理</a>
-            <a-divider type="vertical"/>
+            <a-divider v-show="configsetting.product_stock_setting!=1" type="vertical"/>
             <router-link :to="`/products/${record.id}`">編輯商品</router-link>
             <a-divider type="vertical"/>
 
