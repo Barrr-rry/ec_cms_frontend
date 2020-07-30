@@ -2,7 +2,7 @@
   <a-layout class="h100vh l-login d-flex d-center">
     <div class="l-login-box">
       <div class="container-fluid to-flex-col align-items-center">
-        <img class="l-login-box-logo mb-16px" src="/img/logo.svg" alt="">
+        <img class="l-login-box-logo mb-16px" src="/img/conquers_280x40px.svg" alt="">
         <h1 class="mb-24px">EC 後台管理系統</h1>
         <a-form :form="form" @submit="handleSubmit" class="w-100">
           <a-form-item>
