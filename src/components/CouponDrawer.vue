@@ -59,7 +59,7 @@
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="優惠券圖片"
+      <c-form-item label="中文優惠券圖片"
                    extra="圖片建議上傳尺寸 340 px x 230 px ， 格式 .jpg .png .svg"
       >
         <c-upload
@@ -69,6 +69,24 @@
           'image_url',
           { rules: [
             { required: true, message: '請輸入資料' },
+            ],
+            ...mixinUpload,
+          },
+          ]"
+          :disabled="!editPermissioncheck()"
+        />
+
+      </c-form-item>
+      <c-form-item label="英文優惠券圖片"
+                   extra="圖片建議上傳尺寸 340 px x 230 px ， 格式 .jpg .png .svg"
+      >
+        <c-upload
+          ref="uploads"
+          :type="type"
+          v-decorator="[
+          'en_image_url',
+          { rules: [
+            { required: false, message: '請輸入資料' },
             ],
             ...mixinUpload,
           },
@@ -204,6 +222,7 @@
           'en_title',
           'discount_code',
           'image_url',
+          'en_image_url',
           'has_period',
           'has_member_use_limit',
           'member_use_limit',

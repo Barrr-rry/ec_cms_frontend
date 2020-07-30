@@ -71,7 +71,7 @@
           :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="大圖"
+      <c-form-item label="中文大圖"
                    extra="圖片建議上傳尺寸 1920 px x 700 px ， 格式 .jpg .png .svg"
       >
         <c-upload
@@ -89,7 +89,7 @@
           ]"
         />
       </c-form-item>
-      <c-form-item label="小圖"
+      <c-form-item label="中文小圖"
                    extra="圖片建議上傳尺寸 576 px x 480 px ， 格式 .jpg .png .svg   如不顯示則不需上傳"
       >
         <c-upload
@@ -98,6 +98,38 @@
           :type="type"
           v-decorator="[
           'smallimage',
+          mixinUpload,
+          ]"
+        />
+
+      </c-form-item>
+      <c-form-item label="英文大圖"
+                   extra="圖片建議上傳尺寸 1920 px x 700 px ， 格式 .jpg .png .svg"
+      >
+        <c-upload
+          :disabled="!editPermissioncheck()"
+          ref="uploads_1"
+          :type="type"
+          v-decorator="[
+          'en_bigimage',
+          { rules: [
+            { required: false, message: '請輸入資料' },
+            ],
+            ...mixinUpload,
+          },
+
+          ]"
+        />
+      </c-form-item>
+      <c-form-item label="英文小圖"
+                   extra="圖片建議上傳尺寸 576 px x 480 px ， 格式 .jpg .png .svg   如不顯示則不需上傳"
+      >
+        <c-upload
+          :disabled="!editPermissioncheck()"
+          ref="uploads_2"
+          :type="type"
+          v-decorator="[
+          'en_smallimage',
           mixinUpload,
           ]"
         />
@@ -166,6 +198,8 @@
           'link',
           'bigimage',
           'smallimage',
+          'en_bigimage',
+          'en_smallimage',
           'display_type',
           'rangePicker',
           'status',
