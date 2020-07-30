@@ -18,7 +18,7 @@
             :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
             multiple
             treeDefaultExpandAll
-            v-decorator="['category_ids', {
+            v-decorator="['category', {
           initialValue:null,
           rules: [
             { required: false, message: '請選擇分類' },
