@@ -1,23 +1,26 @@
 <template>
   <a-card :title="title">
+    <div class="row">
+      <c-form-item label="規格中文名稱" class="col-5">
+        <a-input
+                placeholder="規格中文名稱"
+                :disabled="!editPermissioncheck()"
+                v-model="cn_name"
+        />
+      </c-form-item>
+      <c-form-item label="規格英文名稱" class="col-5">
+        <a-input
+                placeholder="規格英文名稱"
+                :disabled="!editPermissioncheck()"
+                v-model="en_name"
+        />
+      </c-form-item>
+    </div>
     <a-button type="primary"
-              @click="addToTable">
+              @click="addToTable"
+              class="mb-3 ml-1">
       + 新 增 項 目
     </a-button>
-    <c-form-item label="規格中文名稱">
-      <a-input
-        placeholder="規格中文名稱"
-        :disabled="!editPermissioncheck()"
-        v-model="name"
-      />
-    </c-form-item>
-    <c-form-item label="規格英文名稱">
-      <a-input
-              placeholder="規格英文名稱"
-              :disabled="!editPermissioncheck()"
-              v-model="en_name"
-      />
-    </c-form-item>
     <a-table :columns="columns" :data-source="data"
              :pagination="false"
              :rowKey="record => record.key"
