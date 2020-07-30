@@ -15,6 +15,16 @@
     <template class="ant-card-actions" slot="actions">
       <div class="pointer" @click="callbackCheck(()=>$emit('update'),)">編輯</div>
       <c-popover
+        @ok="changeStatus"
+      >
+        <template slot="content">
+          <p>
+            確認將全部商品都套用這個優惠？
+          </p>
+        </template>
+        <div class="pointer">套用到全站</div>
+      </c-popover>
+      <c-popover
         @ok="deleteHandler"
       >
         <template slot="content">
@@ -46,7 +56,19 @@
     methods: {
       editPermission() {
         return this.permissioncheck('permission_coupon_manage', 2)
-      }
+      },
+      initData() {
+        this.loading = true
+        // store action get data
+        this.$store.dispatch(`activity/getList`)
+      },
+      changeStatus(callback) {
+        this.default_api.putData(this.item.id, {products_all: true}).then(() => {
+          callback()
+          this.$message.success('更新活動成功')
+          this.initData()
+        })
+      },
     }
   }
 </script>
