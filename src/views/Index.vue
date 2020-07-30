@@ -114,10 +114,12 @@
       children: [{
         title: '主分類管理',
         link: '/category'
-      }, {
-        title: '品牌分類管理',
-        link: '/brand'
-      }, {
+      },
+      // {
+      //   title: '品牌分類管理',
+      //   link: '/brand'
+      // },
+      {
         title: '自定義標籤管理',
         link: '/tags'
       }]
