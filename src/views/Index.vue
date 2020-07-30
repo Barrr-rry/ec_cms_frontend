@@ -2,8 +2,8 @@
   <a-layout class="h100vh">
     <a-layout-sider theme="dark" class="l-layout-sider" v-model="collapsed">
       <div class="l-layout-sider-image-header">
-        <img v-show="!collapsed" class="l-layout-sider-image-header-logo" src="/img/logo_symbol.svg" alt="">
-        <img v-show="collapsed" class="l-layout-sider-image-header-logo" src="/img/logo_symbol_small.svg" alt="">
+        <img v-show="!collapsed" class="l-layout-sider-image-header-logo" src="/img/conquers_200x64px.svg" alt="">
+        <img v-show="collapsed" class="l-layout-sider-image-header-logo" src="/img/conquers_60x60px.svg" alt="">
         <!--        <h3 v-show="!collapsed">EZGO</h3>-->
       </div>
       <a-menu
