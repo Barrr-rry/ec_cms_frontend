@@ -51,7 +51,7 @@
           {
             ...mixinUpload,
             rules:[
-            { required: true, message: '請選擇圖片' },
+            { required: false, message: '請選擇圖片' },
             ]
           },
 
