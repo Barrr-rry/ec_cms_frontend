@@ -43,7 +43,7 @@
   const columns = [
     {
       title: '',
-      width:'120px',
+      width: '120px',
       dataIndex: 'simple_status_display',
       scopedSlots: {customRender: 'simple_status_display'},
     },
@@ -54,7 +54,7 @@
     },
     {
       title: '',
-      width:'100px',
+      width: '100px',
       dataIndex: 'operation',
       scopedSlots: {customRender: 'operation'},
     },
@@ -78,9 +78,19 @@
     methods: {
       content(product_shot) {
         let items = JSON.parse(product_shot)
-        let ret = items.map(item => {
-          return `${item.name}/${item.specification_detail.spec1_name}/${item.specification_detail.spec2_name}/*${item.specification_detail.quantity}/$${item.specification_detail.price}`
-        })
+        let ret = []
+        for (let el of items) {
+          let name = el.cn_name || el.name
+          let spec = el.specification_detail
+          let msg = `${name}/${spec.spec1_cn_name}`
+          if (spec.spec2_cn_name) {
+            msg += `/${spec.spec2_cn_name}`
+          }
+          msg += `/${spec.price} X ${el.order_count}`
+          ret.push(
+            msg
+          )
+        }
 
         return ret.join('、')
       },
