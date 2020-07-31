@@ -253,7 +253,7 @@
         let mapping = {
           error: ['物流異常', '退貨待取', '取號失敗'],
           warning: ['待出貨', '取號成功', '等待付款'],
-          success: ['已取貨'],
+          success: ['已取貨', '已出貨'],
           process: ['待取貨']
         }
         for (let key in mapping) {
