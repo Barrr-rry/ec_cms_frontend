@@ -35,7 +35,7 @@
             <a-input
               class="col-11"
               :disabled="!editPermission()"
-              v-decorator="['reward_lower', { rules: [
+              v-decorator="['age_lower', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
               placeholder="0"
@@ -46,7 +46,7 @@
             <a-input
               class="col-11"
               :disabled="!editPermission()"
-              v-decorator="['reward_upper', { rules: [
+              v-decorator="['age_upper', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
               placeholder="100"
@@ -61,7 +61,7 @@
             <a-input
               class="col-12"
               :disabled="!editPermission()"
-              v-decorator="['reward_lower', { rules: [
+              v-decorator="['bmi_lower', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
               placeholder="0"
@@ -72,7 +72,7 @@
             <a-input
               class="col-12"
               :disabled="!editPermission()"
-              v-decorator="['reward_upper', { rules: [
+              v-decorator="['bmi_upper', { rules: [
             { required: false, message: '請輸入資料' },
             ]}]"
               placeholder="100"
@@ -84,7 +84,7 @@
       <c-form-item label="會員所在地">
           <a-form-item>
             <a-select
-                    v-decorator="['status', { rules: [] }]"
+                    v-decorator="['local', { rules: [] }]"
                     placeholder="請選擇地區"
                     class="col-12"
             >
@@ -103,8 +103,8 @@
       <c-form-item label="會員性別">
         <a-form-item>
           <a-select
-                  v-decorator="['status', { rules: [] }]"
-                  placeholder="請選擇地區"
+                  v-decorator="['gender', { rules: [] }]"
+                  placeholder="請選擇性別"
                   class="col-12"
           >
             <a-select-option :value="0">
@@ -121,33 +121,13 @@
       </c-form-item>
       <c-form-item label="購買尺寸">
         <a-form-item>
-          <a-select
-                  v-decorator="['status', { rules: [] }]"
-                  placeholder="請選擇地區"
-                  class="col-12"
-          >
-            <a-select-option :value="0">
-              XS
-            </a-select-option>
-            <a-select-option :value="1">
-              S
-            </a-select-option>
-            <a-select-option :value="2">
-              M
-            </a-select-option>
-            <a-select-option :value="3">
-              L
-            </a-select-option>
-            <a-select-option :value="4">
-              XL
-            </a-select-option>
-            <a-select-option :value="5">
-              XXL
-            </a-select-option>
-            <a-select-option :value="6">
-              3XL
-            </a-select-option>
-          </a-select>
+          <a-tree-select
+                  v-decorator="['size', { rules: [] }]"
+                  :tree-data="treeData"
+                  tree-checkable
+                  :show-checked-strategy="SHOW_PARENT"
+                  search-placeholder="請選擇尺寸"
+          />
         </a-form-item>
       </c-form-item>
       <h3>{{'時間區間篩選'}}</h3>
@@ -221,6 +201,40 @@
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
   import momentMixin from "@/mixins/momentMixin"
+  import { TreeSelect } from 'ant-design-vue';
+  const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+
+  const treeData = [
+    {
+      title: 'S',
+      value: 'S',
+      key: 'S',
+    },
+    {
+      title: 'SM',
+      value: 'SM',
+      key: 'SM',
+    },
+    {
+      title: 'M',
+      value: 'M',
+      key: 'M',
+    },
+    {
+      title: 'L',
+      value: 'L',
+      key: 'L',
+    },    {
+      title: 'XL',
+      value: 'XL',
+      key: 'XL',
+    },
+    {
+      title: 'XX',
+      value: 'XX',
+      key: 'XX',
+    },
+  ];
 
   export default {
     mixins: [drawerMixin, momentMixin],
@@ -235,6 +249,8 @@
         update_field_keys: [],
         // for check to add
         // fake_data: {}
+        treeData,
+        SHOW_PARENT,
       }
     },
     methods: {
@@ -265,6 +281,7 @@
         this.submitValidate(e, (values) => {
           values = this.removeBlankValue(values)
           values = this.updateValueTransfer(values)
+          debugger
 
           this.vm.params = {offset: 0, limit: 10, ...values}
           this.vm.initData()
