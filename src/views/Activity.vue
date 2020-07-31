@@ -10,6 +10,13 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
       <h3>買就送活動管理</h3>
+      <div class="d-flex justify-content-end" style="transform: translateY(100px)">
+        <a-button type="primary"
+                  @click="homeactivity_drawer=true"
+        >
+          編輯首頁優惠文案
+        </a-button>
+      </div>
     </div>
     <div class="container-fluid pt-24px">
       <a-card class="mb-24px ">
@@ -66,6 +73,12 @@
       :initCallback="initData"
     ></ActivityDrawer>
 
+    <HomeActivityDrawer
+      v-model="homeactivity_drawer"
+      :initCallback="initHomeActivity"
+      :item="homeactivity"
+    ></HomeActivityDrawer>
+
     <ActivityDrawer
       v-model="update_drawer"
       :initCallback="initData"
@@ -81,6 +94,7 @@
   import pageMixin from "@/mixins/pageMixin"
   import searchFormMixin from "@/mixins/searchFormMixin"
   import ActivityDrawer from "@/components/ActivityDrawer"
+  import HomeActivityDrawer from "@/components/HomeActivityDrawer"
 
   let table_name = 'activity'
   export default {
@@ -88,18 +102,31 @@
     components: {
       CreateCard,
       ActivityCard,
-      ActivityDrawer
+      ActivityDrawer,
+      HomeActivityDrawer
     },
     data() {
       return {
         table_name,
+        homeactivity_drawer: false,
       }
     },
-    methods: {},
+    methods: {
+      initHomeActivity() {
+        this.$store.dispatch(`homeactivity/getList`, this.getParams()).then(() => {
+        })
+      }
+    },
     computed: {
+      ...mapState('homeactivity', {
+        homeactivity: state => state.items[0]
+      }),
       ...mapState(table_name, {
         items: state => state.items
       })
+    },
+    mounted() {
+      this.initHomeActivity()
     }
   }
 </script>
