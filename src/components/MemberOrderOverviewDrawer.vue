@@ -82,9 +82,9 @@
         for (let el of items) {
           let name = el.cn_name || el.name
           let spec = el.specification_detail
-          let msg = `${name}/${spec.spec1_cn_name}`
-          if (spec.spec2_cn_name) {
-            msg += `/${spec.spec2_cn_name}`
+          let msg = `${name}/${spec.spec1_name}`
+          if (spec.spec2_name) {
+            msg += `/${spec.spec2_name}`
           }
           msg += `/${spec.price} X ${el.order_count}`
           ret.push(
