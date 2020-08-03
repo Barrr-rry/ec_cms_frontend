@@ -26,17 +26,15 @@
                   v-decorator="['keywords', { rules: [
             ]}]"
                   placeholder="請輸入商品編號、商品名稱、商品貨號"
-                  style="width: 280px"
                 />
               </a-form-item>
             </div>
 
-            <div class="col-2 ">
+            <div class="col-3 ">
               <a-form-item label="商品狀態" class="w-100 d-flex l-form-select">
                 <a-select
                   v-decorator="['status', { rules: [] }]"
                   placeholder="請選擇"
-                  style="width: 120px"
                 >
                   <a-select-option :value="2">
                     全部
@@ -51,12 +49,11 @@
               </a-form-item>
             </div>
 
-            <div class="col-2 " v-show="configsetting.product_stock_setting === 3">
+            <div class="col-3 " v-show="configsetting.product_stock_setting === 3">
               <a-form-item label="庫存狀態" class="w-100 d-flex l-form-select">
                 <a-select
                   v-decorator="['inventory_status', { rules: [] }]"
                   placeholder="請選擇"
-                  style="width: 120px"
                 >
                   <a-select-option :value="0">
                     全部
@@ -74,13 +71,11 @@
               </a-form-item>
             </div>
 
-            <div class="col-2 " v-show="configsetting.product_stock_setting === 2">
+            <div class="col-3 " v-show="configsetting.product_stock_setting === 2">
               <a-form-item label="庫存狀態" class="w-100 d-flex l-form-select">
                 <a-select
                   v-decorator="['inventory_status_2', { rules: [] }]"
-                  placeholder="請選擇"
-                  style="width: 120px"
-                >
+                  placeholder="請選擇">
                   <a-select-option :value="0">
                     全部
                   </a-select-option>
@@ -97,7 +92,7 @@
               </a-form-item>
             </div>
 
-            <div class="col-4 d-flex justify-content-end">
+            <div class="col-2 d-flex justify-content-end">
               <a-form-item>
                 <a-button type="primary" html-type="submit" block>
                   查 詢
