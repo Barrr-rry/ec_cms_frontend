@@ -5,7 +5,7 @@
       <div class="manage-card-image-box">
         <div>
           <img :src="`/img/product-label/${item.tag_image_image_url}.svg`" class="img">
-          <div :class="item.tag_image_image_url.inclueds('label')?'label':'ribbon'">{{item.name}}</div>
+          <div :class="item.tag_image_image_url.includes('label')?'label':'ribbon'">{{item.name}}</div>
         </div>
       </div>
       <div class="manage-card-content to-flex-col">
