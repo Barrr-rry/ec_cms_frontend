@@ -7,6 +7,7 @@
         <a-table :columns="columns" :dataSource="temp_items"
                  :pagination="false"
                  :rowKey="record => record.id"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <template slot="quantity" slot-scope="text, record">
             <a-input

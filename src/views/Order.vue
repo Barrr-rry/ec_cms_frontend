@@ -96,6 +96,7 @@
                  @change="handleChangePage"
                  :rowKey="record => record.id"
                  :rowSelection="{selectedRowKeys: selected_row_keys, onChange: onSelectChange}"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <div slot="simple_status_display" slot-scope="text">
             <a-badge :status="statusBadge(text)" :text="text"></a-badge>

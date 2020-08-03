@@ -91,6 +91,7 @@
              :rowKey="record => record.id"
              :pagination="false"
              :showHeader="false"
+             :locale="{emptyText:'目前無資料'}"
     >
       <div slot="image" slot-scope="text,record">
         <img :src="img_path(record.productimages)" alt="" width="100" height="100">

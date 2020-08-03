@@ -67,6 +67,7 @@
         <a-table :columns="columns" :dataSource="items"
                  :pagination="false"
                  :rowKey="record => record.id"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <div slot="point" slot-scope="text">
             <span v-show="text>0">+</span>

@@ -166,6 +166,7 @@
                  @change="handleChangePage"
                  :rowKey="record => record.id"
                  :rowSelection="{selectedRowKeys: selected_row_keys, onChange: onSelectChange}"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <div slot="price" slot-scope="text,record">{{getProductPriceRange(record)}}</div>
           <div slot="specifications_name" slot-scope="text,record">{{getProductSpecificationsName(record)}}</div>

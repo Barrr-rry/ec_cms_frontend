@@ -9,6 +9,7 @@
              :rowKey="record => record.id"
              :pagination="false"
              :showHeader="false"
+             :locale="{emptyText:'目前無資料'}"
     >
       <div slot="simple_status_display" slot-scope="text">
         <a-badge :status="statusBadge(text)" :text="text"></a-badge>
