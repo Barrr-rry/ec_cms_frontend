@@ -3,6 +3,7 @@
     <a-table :columns="computed_columns" :data-source="data"
              :pagination="false"
              :rowKey="record => record.key"
+             :locale="{emptyText:'目前無資料'}"
     >
       <template
         v-for="col in edit_columns"

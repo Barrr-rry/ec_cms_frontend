@@ -24,6 +24,7 @@
                  :loading="loading"
                  :pagination="false"
                  :rowKey="record => record.id"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <div slot="operation" slot-scope="text, record">
             <a href="#" @click="openUpdateDrawer(record,()=>update_drawer=true,)">編輯</a>

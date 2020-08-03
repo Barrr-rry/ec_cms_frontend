@@ -24,6 +24,7 @@
     <a-table :columns="columns" :data-source="data"
              :pagination="false"
              :rowKey="record => record.key"
+             :locale="{emptyText:'目前無資料'}"
     >
       <template
         v-for="col in ['name', 'en_name']"

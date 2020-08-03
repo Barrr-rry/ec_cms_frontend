@@ -39,6 +39,7 @@
         <a-table :columns="columns" :dataSource="items"
                  :pagination="false"
                  :rowKey="record => record.id"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <div slot="status" slot-scope="text">
             <span v-if="text">是</span>

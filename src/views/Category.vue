@@ -52,6 +52,7 @@
                  :pagination="false"
                  :rowKey="record => record.fake_id"
                  :rowSelection="{selectedRowKeys: selected_row_keys, onChange: onSelectChange}"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <div slot="status" slot-scope="text">
             <c-badge :status="text?'success':'error'"/>

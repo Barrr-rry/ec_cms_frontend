@@ -65,8 +65,8 @@
         <div class="pb-24px d-flex">
           <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 建</a-button>
           <a-button type="primary" @click="export_member_email(false)" class="ml-12px"
-        >匯 出 訂 閱 電 子 報 使 用 者 mail
-        </a-button>
+          >匯 出 訂 閱 電 子 報 使 用 者 mail
+          </a-button>
           <a-button type="primary" @click="export_member(false)" class="ml-12px"
                     :disabled="!selected_row_keys.length"
           >匯 出 已 選 擇 會 員
@@ -86,6 +86,7 @@
                  @change="handleChangePage"
                  :rowKey="record => record.id"
                  :rowSelection="{selectedRowKeys: selected_row_keys, onChange: onSelectChange}"
+                 :locale="{emptyText:'目前無資料'}"
 
         >
 

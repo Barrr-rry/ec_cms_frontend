@@ -22,6 +22,7 @@
                  :loading="loading"
                  :pagination="false"
                  :rowKey="record => record.fake_id"
+                 :locale="{emptyText:'目前無資料'}"
         >
           <div slot="status" slot-scope="text">
             <c-badge :status="text?'success':'error'"/>
