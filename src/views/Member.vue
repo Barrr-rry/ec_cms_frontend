@@ -20,22 +20,20 @@
             layout="inline"
             @submit="submit"
           >
-            <div class="col-5">
-              <a-form-item label="快速查詢會員">
+            <div class="col-4">
+              <a-form-item label="快速查詢會員" class="search-input">
                 <a-input
                   v-decorator="['keywords', { rules: [
             ]}]"
                   placeholder="請輸入會員編號、電話、信箱、姓名"
-                  style="width: 250px"
                 />
               </a-form-item>
             </div>
             <div class="col-4">
-              <a-form-item label="帳號狀態">
+              <a-form-item label="帳號狀態" class="w-100 d-flex l-form-select">
                 <a-select
                   v-decorator="['status', { rules: [] }]"
                   placeholder="請選擇狀態"
-                  style="width: 110px"
                 >
                   <a-select-option :value="1">
                     啟用中
@@ -47,7 +45,7 @@
               </a-form-item>
             </div>
             <!--button-->
-            <div class="col-3 d-flex justify-content-end">
+            <div class="col-4 d-flex justify-content-end">
               <a-form-item>
                 <a-button type="primary" html-type="submit" block>
                   查 詢

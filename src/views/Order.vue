@@ -21,21 +21,19 @@
             @submit="submit"
           >
             <div class="col-4">
-              <a-form-item label="快速查詢訂單">
+              <a-form-item label="快速查詢訂單" class="search-input">
                 <a-input
                   v-decorator="['keywords', { rules: [
               ]}]"
                   placeholder="請輸入訂單編號、收件人"
-                  style="width: 200px"
                 />
               </a-form-item>
             </div>
-            <div class="col-5">
-              <a-form-item label="物流狀態">
+            <div class="col-3">
+              <a-form-item label="物流狀態" class="w-100 d-flex l-form-select">
                 <a-select
                   v-decorator="['to_store', { rules: [] }]"
                   placeholder="請選擇物流方式"
-                  style="width: 140px"
                 >
                   <a-select-option :value="1">
                     超商取貨
@@ -45,11 +43,12 @@
                   </a-select-option>
                 </a-select>
               </a-form-item>
-              <a-form-item label="訂單狀態">
+            </div>
+            <div class="col-3">
+              <a-form-item label="訂單狀態" class="w-100 d-flex l-form-select">
                 <a-select
                   v-decorator="['simple_status', { rules: [] }]"
                   placeholder="請選擇訂單狀態"
-                  style="width: 140px"
                 >
                   <a-select-option :value="2">
                     付款失敗
@@ -63,7 +62,7 @@
                 </a-select>
               </a-form-item>
             </div>
-            <div class="col-3 d-flex justify-content-end">
+            <div class="col-2 d-flex justify-content-end">
               <a-form-item>
                 <a-button type="primary" html-type="submit" block>
                   查 詢

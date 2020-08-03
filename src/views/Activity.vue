@@ -20,12 +20,11 @@
             @submit="submit"
             class="row fill-width"
           >
-            <a-form-item label="快速查詢活動" class="col-6 mr-0px">
+            <a-form-item label="快速查詢活動" class="col-6 mr-0px search-input">
               <a-input
                 v-decorator="['keywords', { rules: [
             ]}]"
                 placeholder="請輸入活動中文或英文名稱"
-                style="width: 250px"
               />
             </a-form-item>
 
