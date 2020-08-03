@@ -36,7 +36,7 @@
         </div>
       </a-form>
       <div class="flex-grow-1">
-        <a-table :columns="columns" :dataSource="items"
+        <a-table :locale="{emptyText:'目前無資料'}" :columns="columns" :dataSource="items"
                  :pagination="false"
                  :rowKey="record => record.id"
         >

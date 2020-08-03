@@ -18,7 +18,7 @@
           <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 增 品 牌 分 類
           </a-button>
         </div>
-        <a-table :columns="columns" :dataSource="items"
+        <a-table :locale="{emptyText:'目前無資料'}" :columns="columns" :dataSource="items"
                  :loading="loading"
                  :pagination="false"
                  :rowKey="record => record.fake_id"

@@ -21,7 +21,7 @@
               class="mb-3 ml-1">
       + 新 增 項 目
     </a-button>
-    <a-table :columns="columns" :data-source="data"
+    <a-table :locale="{emptyText:'目前無資料'}" :columns="columns" :data-source="data"
              :pagination="false"
              :rowKey="record => record.key"
     >

@@ -5,7 +5,7 @@
             v-if="item"
   >
     <h3>歷史訂單</h3>
-    <a-table :columns="columns" :dataSource="item.order"
+    <a-table :locale="{emptyText:'目前無資料'}" :columns="columns" :dataSource="item.order"
              :rowKey="record => record.id"
              :pagination="false"
              :showHeader="false"

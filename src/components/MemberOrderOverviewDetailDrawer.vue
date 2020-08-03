@@ -84,7 +84,7 @@
     </div>
     <a-divider/>
     <h3>訂單資料</h3>
-    <a-table :columns="columns" :dataSource="products"
+    <a-table :locale="{emptyText:'目前無資料'}" :columns="columns" :dataSource="products"
              :rowKey="record => record.id"
              :pagination="false"
              :showHeader="false"

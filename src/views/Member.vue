@@ -77,7 +77,7 @@
             </span>
           </a-alert>
         </div>
-        <a-table :columns="columns" :dataSource="items"
+        <a-table :locale="{emptyText:'目前無資料'}" :columns="columns" :dataSource="items"
                  :loading="loading"
                  :pagination="pagination"
                  @change="handleChangePage"

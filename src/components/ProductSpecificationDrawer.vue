@@ -4,7 +4,7 @@
   >
     <a-form :form="form" @submit="submitHandler">
       <div class="flex-grow-1">
-        <a-table :columns="computed_columns" :dataSource="temp_items"
+        <a-table :locale="{emptyText:'目前無資料'}" :columns="computed_columns" :dataSource="temp_items"
                  :pagination="false"
                  :rowKey="record => record.id"
         >

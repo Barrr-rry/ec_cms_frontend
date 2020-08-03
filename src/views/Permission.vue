@@ -20,7 +20,7 @@
             + 新 增 管 理 角 色
           </a-button>
         </div>
-        <a-table :columns="columns" :dataSource="items"
+        <a-table :locale="{emptyText:'目前無資料'}" :columns="columns" :dataSource="items"
                  :loading="loading"
                  :pagination="false"
                  :rowKey="record => record.id"

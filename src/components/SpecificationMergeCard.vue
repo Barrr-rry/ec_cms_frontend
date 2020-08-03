@@ -1,6 +1,6 @@
 <template>
   <a-card title="規格詳情">
-    <a-table :columns="computed_columns" :data-source="data"
+    <a-table :locale="{emptyText:'目前無資料'}" :columns="computed_columns" :data-source="data"
              :pagination="false"
              :rowKey="record => record.key"
     >
