@@ -126,7 +126,7 @@
                   :tree-data="treeData"
                   tree-checkable
                   :show-checked-strategy="SHOW_PARENT"
-                  search-placeholder="請選擇尺寸"
+                  placeholder="請選擇尺寸 (可多選)"
           />
         </a-form-item>
       </c-form-item>
@@ -206,14 +206,14 @@
 
   const treeData = [
     {
+      title: 'XS',
+      value: 'XS',
+      key: 'XS',
+    },
+    {
       title: 'S',
       value: 'S',
       key: 'S',
-    },
-    {
-      title: 'SM',
-      value: 'SM',
-      key: 'SM',
     },
     {
       title: 'M',
@@ -224,15 +224,20 @@
       title: 'L',
       value: 'L',
       key: 'L',
-    },    {
+    },
+    {
       title: 'XL',
       value: 'XL',
       key: 'XL',
+    },    {
+      title: 'XXL',
+      value: 'XXL',
+      key: 'XXL',
     },
     {
-      title: 'XX',
-      value: 'XX',
-      key: 'XX',
+      title: '3XL',
+      value: '3XL',
+      key: '3XL',
     },
   ];
 
