@@ -133,13 +133,7 @@
         />
       </c-form-item>
       <c-form-item label="會員生日">
-        <a-input
-          disabled="!editPermission()"
-          v-decorator="['birthday', { rules: [
-          { required: false, message: '請輸入資料' },
-            ]}]"
-          placeholder="請輸入生日"
-        />
+          <a href="#">{{item.birthday}}</a>
       </c-form-item>
       <c-form-item label="內部備註">
         <a-input
