@@ -19,21 +19,21 @@
                 :disabled="!editPermissioncheck()"
         />
       </c-form-item>
-      <c-form-item label="選擇品牌">
-        <a-select
-          v-decorator="['brand', {
-          initialValue:brands.length?brands[0].id:null,
-          rules: [
-            { required: true, message: '請選擇品牌' },
-            ] }]"
-          placeholder="請新增品牌"
-          :disabled="!editPermissioncheck()"
-        >
-          <a-select-option :value="brand.id" :key="brand.id" v-for="brand of brands">
-            {{brand.en_name}}
-          </a-select-option>
-        </a-select>
-      </c-form-item>
+<!--      <c-form-item label="選擇品牌">-->
+<!--        <a-select-->
+<!--          v-decorator="['brand', {-->
+<!--          initialValue:brands.length?brands[0].id:null,-->
+<!--          rules: [-->
+<!--            { required: true, message: '請選擇品牌' },-->
+<!--            ] }]"-->
+<!--          placeholder="請新增品牌"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        >-->
+<!--          <a-select-option :value="brand.id" :key="brand.id" v-for="brand of brands">-->
+<!--            {{brand.en_name}}-->
+<!--          </a-select-option>-->
+<!--        </a-select>-->
+<!--      </c-form-item>-->
       <c-form-item label="選擇活動">
         <a-select
           v-decorator="['activity', {
