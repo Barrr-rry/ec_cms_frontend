@@ -6,64 +6,64 @@
   >
     <h3>{{type==='create'?'新增首頁大圖':'修改首頁大圖'}}</h3>
     <a-form :form="form" @submit="submitHandler">
-      <c-form-item label="大標題">
-        <a-input
-          v-decorator="['title_1', { rules: [] }]"
-          placeholder="請輸入大標題 ， 如不輸入則隱藏文案"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="英文大標題">
-        <a-input
-          v-decorator="['title_2', { rules: [] }]"
-          placeholder="請輸入大標題 ， 如不輸入則隱藏文案"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="副標題">
-        <a-input
-          v-decorator="['subtitle_1', { rules: [] }]"
-          placeholder=" ( 標題上方小字 ) 請輸入副標題 ， 如不輸入則隱藏文案"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="英文副標題">
-        <a-input
-          v-decorator="['subtitle_2', { rules: [] }]"
-          placeholder=" ( 標題上方小字 ) 請輸入副標題 ， 如不輸入則隱藏文案"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="敘述">
-        <a-input
-          v-decorator="['description_1', { rules: [] }]" type="textarea"
-          :autosize="{ minRows: 2, maxRows: 6 }"
-          placeholder="請輸入描述 ， 如不輸入則隱藏文案"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="英文敘述">
-        <a-input
-          v-decorator="['description_2', { rules: [] }]" type="textarea"
-          :autosize="{ minRows: 2, maxRows: 6 }"
-          placeholder="請輸入描述 ， 如不輸入則隱藏文案"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="按鈕名稱">
-        <a-input
-          v-decorator="['button_1', { rules: [] }]"
-          placeholder=" 請輸入按鈕名稱 ， 如不輸入則隱藏按鈕"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
-      <c-form-item label="英文按鈕名稱">
-        <a-input
-          v-decorator="['button_2', { rules: [] }]"
-          placeholder=" 請輸入按鈕名稱 ， 如不輸入則隱藏按鈕"
-          :disabled="!editPermissioncheck()"
-        />
-      </c-form-item>
+<!--      <c-form-item label="大標題">-->
+<!--        <a-input-->
+<!--          v-decorator="['title_1', { rules: [] }]"-->
+<!--          placeholder="請輸入大標題 ， 如不輸入則隱藏文案"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
+<!--      <c-form-item label="英文大標題">-->
+<!--        <a-input-->
+<!--          v-decorator="['title_2', { rules: [] }]"-->
+<!--          placeholder="請輸入大標題 ， 如不輸入則隱藏文案"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
+<!--      <c-form-item label="副標題">-->
+<!--        <a-input-->
+<!--          v-decorator="['subtitle_1', { rules: [] }]"-->
+<!--          placeholder=" ( 標題上方小字 ) 請輸入副標題 ， 如不輸入則隱藏文案"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
+<!--      <c-form-item label="英文副標題">-->
+<!--        <a-input-->
+<!--          v-decorator="['subtitle_2', { rules: [] }]"-->
+<!--          placeholder=" ( 標題上方小字 ) 請輸入副標題 ， 如不輸入則隱藏文案"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
+<!--      <c-form-item label="敘述">-->
+<!--        <a-input-->
+<!--          v-decorator="['description_1', { rules: [] }]" type="textarea"-->
+<!--          :autosize="{ minRows: 2, maxRows: 6 }"-->
+<!--          placeholder="請輸入描述 ， 如不輸入則隱藏文案"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
+<!--      <c-form-item label="英文敘述">-->
+<!--        <a-input-->
+<!--          v-decorator="['description_2', { rules: [] }]" type="textarea"-->
+<!--          :autosize="{ minRows: 2, maxRows: 6 }"-->
+<!--          placeholder="請輸入描述 ， 如不輸入則隱藏文案"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
+<!--      <c-form-item label="按鈕名稱">-->
+<!--        <a-input-->
+<!--          v-decorator="['button_1', { rules: [] }]"-->
+<!--          placeholder=" 請輸入按鈕名稱 ， 如不輸入則隱藏按鈕"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
+<!--      <c-form-item label="英文按鈕名稱">-->
+<!--        <a-input-->
+<!--          v-decorator="['button_2', { rules: [] }]"-->
+<!--          placeholder=" 請輸入按鈕名稱 ， 如不輸入則隱藏按鈕"-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--        />-->
+<!--      </c-form-item>-->
       <c-form-item label="連結">
         <a-input
           v-decorator="['link', { rules: [] }]"
@@ -89,20 +89,20 @@
           ]"
         />
       </c-form-item>
-      <c-form-item label="中文小圖"
-                   extra="圖片建議上傳尺寸 576 px x 480 px ， 格式 .jpg .png .svg   如不顯示則不需上傳"
-      >
-        <c-upload
-          :disabled="!editPermissioncheck()"
-          ref="uploads_2"
-          :type="type"
-          v-decorator="[
-          'smallimage',
-          mixinUpload,
-          ]"
-        />
+<!--      <c-form-item label="中文小圖"-->
+<!--                   extra="圖片建議上傳尺寸 576 px x 480 px ， 格式 .jpg .png .svg   如不顯示則不需上傳"-->
+<!--      >-->
+<!--        <c-upload-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--          ref="uploads_2"-->
+<!--          :type="type"-->
+<!--          v-decorator="[-->
+<!--          'smallimage',-->
+<!--          mixinUpload,-->
+<!--          ]"-->
+<!--        />-->
 
-      </c-form-item>
+<!--      </c-form-item>-->
       <c-form-item label="英文大圖"
                    extra="圖片建議上傳尺寸 1920 px x 700 px ， 格式 .jpg .png .svg"
       >
@@ -121,20 +121,20 @@
           ]"
         />
       </c-form-item>
-      <c-form-item label="英文小圖"
-                   extra="圖片建議上傳尺寸 576 px x 480 px ， 格式 .jpg .png .svg   如不顯示則不需上傳"
-      >
-        <c-upload
-          :disabled="!editPermissioncheck()"
-          ref="uploads_2"
-          :type="type"
-          v-decorator="[
-          'en_smallimage',
-          mixinUpload,
-          ]"
-        />
+<!--      <c-form-item label="英文小圖"-->
+<!--                   extra="圖片建議上傳尺寸 576 px x 480 px ， 格式 .jpg .png .svg   如不顯示則不需上傳"-->
+<!--      >-->
+<!--        <c-upload-->
+<!--          :disabled="!editPermissioncheck()"-->
+<!--          ref="uploads_2"-->
+<!--          :type="type"-->
+<!--          v-decorator="[-->
+<!--          'en_smallimage',-->
+<!--          mixinUpload,-->
+<!--          ]"-->
+<!--        />-->
 
-      </c-form-item>
+<!--      </c-form-item>-->
       <c-form-item label="上架類型">
         <a-radio-group v-decorator="['display_type',{rules:[],initialValue:display_type}]"
                        @change="displayTypeHandler"
