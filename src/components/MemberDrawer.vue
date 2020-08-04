@@ -20,13 +20,28 @@
         />
       </c-form-item>
       <c-form-item label="會員所在地">
-        <a-input
-                :disabled="!editPermission()"
-                v-decorator="['local', { rules: [
+<!--        <a-input-->
+<!--                :disabled="!editPermission()"-->
+<!--                v-decorator="['local', { rules: [-->
+<!--            { required: true, message: '請輸入資料' },-->
+<!--            ]}]"-->
+<!--                placeholder="請輸入會員所在地"-->
+<!--        />-->
+        <a-select
+                v-decorator="['local', {
+          rules: [
             { required: true, message: '請輸入資料' },
-            ]}]"
+            ] }]"
                 placeholder="請輸入會員所在地"
-        />
+                :disabled="!editPermission()"
+        >
+          <a-select-option value="台灣" :key="1">
+            台灣
+          </a-select-option>
+          <a-select-option value="海外" :key="2">
+            海外
+          </a-select-option>
+        </a-select>
       </c-form-item>
       <c-form-item label="會員姓名">
         <a-input
