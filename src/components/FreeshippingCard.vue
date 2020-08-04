@@ -73,7 +73,7 @@
           :disabled="!editPermission()"
         />
       </c-form-item>
-      <c-form-item label="設定使用規則">
+      <c-form-item label="設定使用規則" v-if="configsetting.weight">
         出貨商品總重量高於
         <a-input
           v-decorator="['weight', { rules: [
@@ -107,9 +107,10 @@
 
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
+  import configsettingMixin from "@/mixins/configsettingMixin"
 
   export default {
-    mixins: [drawerMixin],
+    mixins: [drawerMixin, configsettingMixin],
     props: {
       title: {
         type: String,
