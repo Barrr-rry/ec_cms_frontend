@@ -75,7 +75,7 @@
         title: '帳號管理',
         link: '/manager'
       }, {
-        title: '權限管理',
+        title: '權限設定',
         link: '/permission'
       }]
     },
