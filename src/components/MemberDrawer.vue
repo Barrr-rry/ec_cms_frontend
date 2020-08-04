@@ -117,6 +117,15 @@
           placeholder="請輸入手機，格式（0912345678）"
         />
       </c-form-item>
+      <c-form-item label="會員生日">
+        <a-input
+          disabled="!editPermission()"
+          v-decorator="['birthday', { rules: [
+          { required: false, message: '請輸入資料' },
+            ]}]"
+          placeholder="請輸入生日"
+        />
+      </c-form-item>
       <c-form-item label="內部備註">
         <a-input
           :disabled="!editPermission()"
@@ -144,7 +153,7 @@
           ext: ''
         },
         update_field_keys: [
-          'member_number', 'name', 'account', 'local', 'line_id', 'phone', 'cellphone', 'status', 'remarks'],
+          'member_number', 'name', 'account', 'local', 'line_id', 'phone', 'cellphone', 'status', 'remarks', 'birthday'],
         default_api: this.$api.member,
         // for check to add
         // fake_data: {}

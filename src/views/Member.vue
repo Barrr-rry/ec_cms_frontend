@@ -182,6 +182,11 @@
       scopedSlots: {customRender: 'account'},
     },
     {
+      title: '年齡',
+      dataIndex: 'age',
+      sorter: true,
+    },
+    {
       title: '註冊時間',
       dataIndex: 'join_at',
       sorter: true,
