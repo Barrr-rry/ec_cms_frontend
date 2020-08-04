@@ -11,7 +11,7 @@ export default {
         callback()
         return
       }
-      if (/^[a-z A-Z,]+$/.test(value)) {
+      if (/^[a-z A-Z,.]+$/.test(value)) {
         callback()
       } else {
         callback('請輸入英文姓名')
