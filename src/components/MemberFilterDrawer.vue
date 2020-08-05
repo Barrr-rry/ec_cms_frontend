@@ -286,7 +286,6 @@
         this.submitValidate(e, (values) => {
           values = this.removeBlankValue(values)
           values = this.updateValueTransfer(values)
-          debugger
 
           this.vm.params = {offset: 0, limit: 10, ...values}
           this.vm.initData()

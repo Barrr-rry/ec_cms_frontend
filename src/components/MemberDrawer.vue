@@ -20,20 +20,20 @@
         />
       </c-form-item>
       <c-form-item label="會員所在地">
-<!--        <a-input-->
-<!--                :disabled="!editPermission()"-->
-<!--                v-decorator="['local', { rules: [-->
-<!--            { required: true, message: '請輸入資料' },-->
-<!--            ]}]"-->
-<!--                placeholder="請輸入會員所在地"-->
-<!--        />-->
+        <!--        <a-input-->
+        <!--                :disabled="!editPermission()"-->
+        <!--                v-decorator="['local', { rules: [-->
+        <!--            { required: true, message: '請輸入資料' },-->
+        <!--            ]}]"-->
+        <!--                placeholder="請輸入會員所在地"-->
+        <!--        />-->
         <a-select
-                v-decorator="['local', {
+          v-decorator="['local', {
           rules: [
             { required: true, message: '請輸入資料' },
             ] }]"
-                placeholder="請輸入會員所在地"
-                :disabled="!editPermission()"
+          placeholder="請輸入會員所在地"
+          :disabled="!editPermission()"
         >
           <a-select-option value="台灣" :key="1">
             台灣
@@ -133,21 +133,14 @@
         />
       </c-form-item>
       <c-form-item label="會員生日">
-<!--          <a-input-->
-<!--                  :disabled="!editPermission()"-->
-<!--                  v-decorator="['birthday', { rules: [-->
-<!--          { required: false, message: '請輸入資料' },-->
-<!--            ]}]"-->
-<!--                  placeholder="請輸入生日"-->
-<!--          />-->
-          <a-date-picker
-                  :format="dateFormat"
-                  :disabled="!editPermission()"
-                  v-decorator="['birthday', { rules: [
+        <a-date-picker
+          :format="dateFormat"
+          :disabled="!editPermission()"
+          v-decorator="['birthday', { rules: [
           { required: false, message: '請輸入資料' },
             ]}]"
-                  placeholder="請輸入生日"
-          />
+          placeholder="請輸入生日"
+        />
       </c-form-item>
       <c-form-item label="內部備註">
         <a-input
@@ -165,12 +158,13 @@
 
 <script>
   import drawerMixin from "@/mixins/drawerMixin"
+  import momentMixin from "@/mixins/momentMixin"
 
   export default {
-    mixins: [drawerMixin],
+    mixins: [drawerMixin, momentMixin],
     data() {
       return {
-        dateFormat: 'YYYY/MM/DD',
+        dateFormat: 'YYYY-MM-DD',
         phone: {
           area: '',
           local: '',
@@ -191,20 +185,17 @@
         let phone = ''
         if (this.phone.area && this.phone.local && this.phone.ext) {
           phone = `${this.phone.area}-${this.phone.local}#${this.phone.ext}`
-        }
-        else if (this.phone.area && this.phone.local){
+        } else if (this.phone.area && this.phone.local) {
           phone = `${this.phone.area}-${this.phone.local}`
-        }
-        else if (this.phone.ext && this.phone.local){
+        } else if (this.phone.ext && this.phone.local) {
           phone = `${this.phone.local}#${this.phone.ext}`
-        }
-        else if (this.phone.local){
+        } else if (this.phone.local) {
           phone = `${this.phone.local}`
-        }
-        else{
-          phone =''
+        } else {
+          phone = ''
         }
         values.phone = phone
+        values.birthday = this.toDateStr(values.birthday)
         return values
       },
       initFields() {
@@ -214,6 +205,7 @@
         }
         try {
           let other = this.item.phone.split('-')
+          obj.birthday = this.toMoment(obj.birthday)
           let area = other[0]
           other = other[1]
           other = other.split('#')
@@ -244,7 +236,6 @@
         this.submitValidate(e, (values) => {
           values = this.removeBlankValue(values)
           values = this.updateValueTransfer(values)
-            debugger
           return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
             this.$message.success('更新會員成功')
           }))
