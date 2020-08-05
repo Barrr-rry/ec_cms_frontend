@@ -133,7 +133,21 @@
         />
       </c-form-item>
       <c-form-item label="會員生日">
-          <a href="#">{{item.birthday}}</a>
+<!--          <a-input-->
+<!--                  :disabled="!editPermission()"-->
+<!--                  v-decorator="['birthday', { rules: [-->
+<!--          { required: false, message: '請輸入資料' },-->
+<!--            ]}]"-->
+<!--                  placeholder="請輸入生日"-->
+<!--          />-->
+          <a-date-picker
+                  :format="dateFormat"
+                  :disabled="!editPermission()"
+                  v-decorator="['birthday', { rules: [
+          { required: false, message: '請輸入資料' },
+            ]}]"
+                  placeholder="請輸入生日"
+          />
       </c-form-item>
       <c-form-item label="內部備註">
         <a-input
@@ -156,6 +170,7 @@
     mixins: [drawerMixin],
     data() {
       return {
+        dateFormat: 'YYYY/MM/DD',
         phone: {
           area: '',
           local: '',
@@ -229,6 +244,7 @@
         this.submitValidate(e, (values) => {
           values = this.removeBlankValue(values)
           values = this.updateValueTransfer(values)
+            debugger
           return this.defaultThenProcess(this.default_api.putData(this.item.id, values).then(() => {
             this.$message.success('更新會員成功')
           }))
