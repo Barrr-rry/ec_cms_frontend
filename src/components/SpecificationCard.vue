@@ -5,7 +5,7 @@
         <a-input
                 placeholder="規格中文名稱"
                 :disabled="!editPermissioncheck()"
-                v-model="cn_name"
+                v-model="name"
         />
       </c-form-item>
       <c-form-item label="規格英文名稱" class="col-5">
