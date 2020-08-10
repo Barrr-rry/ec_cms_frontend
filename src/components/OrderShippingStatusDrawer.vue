@@ -43,6 +43,8 @@
     methods: {
       updateValueTransfer(values) {
         values.shipping_status = 2
+        values.simple_status = 2
+        values.simple_status_display = '已出貨'
         return values
       },
     }
