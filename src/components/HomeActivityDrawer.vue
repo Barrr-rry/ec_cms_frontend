@@ -9,7 +9,7 @@
       <c-form-item label="首頁優惠中文文案">
         <a-input
           v-decorator="['ch_name', { rules: [
-            { required: true, message: '請輸入資料' },
+            { required: false, message: '請輸入資料' },
             ]}]"
           placeholder="建議 10 個字元內"
           :disabled="!editPermissioncheck()"
@@ -18,7 +18,7 @@
       <c-form-item label="首頁優惠英文文案">
         <a-input
           v-decorator="['en_name', { rules: [
-            { required: true, message: '請輸入資料' },
+            { required: false, message: '請輸入資料' },
             ]}]"
           placeholder="建議 10 個字元內"
           :disabled="!editPermissioncheck()"
