@@ -14,18 +14,30 @@
     <div class="container-fluid pt-24px">
       <a-card>
         <a-form :form="form" @submit="submitHandler">
-          <c-form-item label="忠誠獎勵規則">
+          <c-form-item label="回饋金規則">
             <a-radio-group v-decorator="['status',{rules:[],initialValue:1}]"
+                           v-model="status"
             >
               <a-radio :value="1" :disabled="!editPermission()">
-                滿 100 元 回饋 X 元
+                滿額回饋
               </a-radio>
               <a-radio :value="2" :disabled="!editPermission()">
-                折扣 % ( 請輸入0 ~ 100 數字 )
+                折扣
               </a-radio>
             </a-radio-group>
           </c-form-item>
-          <c-form-item label="忠誠獎勵單位">
+          <c-form-item label="回饋條件（元）" v-show="this.status==1">
+            <a-input
+              v-decorator="['pay_to', { rules: [
+              { required: true, message: '請輸入資料' },
+              ]}]"
+              placeholder=""
+              style="width: 100px"
+              type="number"
+              :disabled="!editPermission()"
+            />
+          </c-form-item>
+          <c-form-item label="回饋點數" v-if="status==1" >
             <a-input
               v-decorator="['discount', { rules: [
               { required: true, message: '請輸入資料' },
@@ -36,7 +48,18 @@
               :disabled="!editPermission()"
             />
           </c-form-item>
-          <c-form-item label="忠誠獎勵有效天數">
+          <c-form-item label="回饋比例" v-else>
+            <a-input
+              v-decorator="['discount', { rules: [
+              { required: true, message: '請輸入資料' },
+              ]}]"
+              placeholder=""
+              style="width: 100px"
+              type="number"
+              :disabled="!editPermission()"
+            />
+          </c-form-item>
+          <c-form-item label="回饋金有效天數">
             <a-input
               v-decorator="['still_day', { rules: [
               { required: true, message: '請輸入資料' },
@@ -47,7 +70,7 @@
               :disabled="!editPermission()"
             />
           </c-form-item>
-          <c-form-item label="忠誠獎勵發放天數">
+          <c-form-item label="回饋金生效天數">
             <a-input
                     v-decorator="['start_day', { rules: [
               { required: true, message: '請輸入資料' },
@@ -82,7 +105,7 @@
       return {
         table_name,
         form: this.$form.createForm(this),
-        update_field_keys: ['discount', 'status', 'still_day', 'start_day']
+        update_field_keys: ['discount', 'status', 'still_day', 'start_day', 'pay_to']
       }
     },
     computed: {
