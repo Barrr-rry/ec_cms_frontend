@@ -25,7 +25,7 @@
                 <a-input
                   v-decorator="['keywords', { rules: [
             ]}]"
-                  placeholder="請輸入商品編號、商品名稱、商品貨號"
+                  placeholder="請輸入商品貨號、商品名稱、商品貨號"
                 />
               </a-form-item>
             </div>
@@ -248,7 +248,7 @@
       dataIndex: 'name',
     },
     {
-      title: '商品編號',
+      title: '商品貨號',
       dataIndex: 'product_number',
     },
     {

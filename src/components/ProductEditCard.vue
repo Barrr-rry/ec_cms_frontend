@@ -207,6 +207,14 @@
           </a-tree-select-node>
         </a-tree-select>
       </c-form-item>
+      <c-form-item label="商品貨號"
+      >
+        <a-input
+                v-decorator="['product_number']"
+                placeholder="商品貨號"
+                :disabled="!editPermissioncheck()"
+        />
+      </c-form-item>
     </a-form>
   </a-card>
 </template>
@@ -221,7 +229,7 @@
     mixins: [configsettingMixin, drawerMixin, uploadMixin],
     data() {
       return {
-        update_field_keys: ['name', 'en_name', 'brand', 'order', 'sub_title', 'en_sub_title', 'tag', 'category', 'activity'],
+        update_field_keys: ['name', 'en_name', 'brand', 'order', 'sub_title', 'en_sub_title', 'tag', 'category', 'activity', 'product_number'],
         default_api: this.$api.product,
         // for check to add
         // fake_data: {}
