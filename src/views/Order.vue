@@ -79,7 +79,7 @@
         <div class="pb-24px d-flex">
           <a-button type="primary" @click="export_order(false)"
                     :disabled="!selected_row_keys.length"
-          >匯 出 已 選 擇 會 員
+          >匯 出 已 選 擇 訂 單
           </a-button>
           <a :href="export_link" ref="export_link" style="display: none">yo</a>
         </div>
