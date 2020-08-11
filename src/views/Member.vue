@@ -187,6 +187,10 @@
       sorter: true,
     },
     {
+      title: '回饋點數到期日',
+      dataIndex: 'reward_end_date',
+    },
+    {
       title: '註冊時間',
       dataIndex: 'join_at',
       sorter: true,
