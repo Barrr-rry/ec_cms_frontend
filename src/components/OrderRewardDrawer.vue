@@ -9,7 +9,7 @@
         <c-form-item label="編輯忠誠獎勵">
           <a-input
             v-decorator="['point', { rules: [
-            { required: false, message: '請輸入資料', },
+            { required: true, message: '請輸入資料', },
             ]}]"
             type="number"
 
