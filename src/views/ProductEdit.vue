@@ -63,11 +63,13 @@
         class="mb-24px"
         :item="item"
         ref="detail_info_card"
+        v-show="false"
       />
       <EnDetailInfoCard
               class="mb-24px"
               :item="item"
               ref="en_detail_info_card"
+              v-show="false"
       />
       <div class="d-flex justify-content-center align-items-center">
         <a-button @click="$router.go(-1)" class="mr-8px">
