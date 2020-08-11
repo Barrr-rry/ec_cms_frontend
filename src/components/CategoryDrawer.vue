@@ -85,6 +85,16 @@
       getName() {
         return '分類'
       },
+      deleteHandler(callback, err) {
+        return this.defaultThenProcess(
+                this.default_api.deleteData(this.item.id).then(() => {
+                  callback()
+                  this.$message.success('刪除分類成功')
+                })
+        )
+
+
+      },
     }
   }
 </script>
