@@ -8,4 +8,7 @@ export default mergeDeep(base, {
   category(values) {
     return axios.post(`/${this.table_name}/category/`, values)
   },
+  del_category(values) {
+    return axios.post(`/${this.table_name}/del_category/`, values)
+  },
 })

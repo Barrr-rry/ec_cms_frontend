@@ -46,6 +46,18 @@
               <a-button :disabled="!selected_row_keys.length">新 增 活 動</a-button>
             </div>
           </c-popover>
+          <c-popover
+            @ok="updatedelSelectedHandler($event)"
+          >
+            <template slot="content">
+              <p>
+                確定要移除套用活動嗎
+              </p>
+            </template>
+            <div class="ml-12px">
+              <a-button :disabled="!selected_row_keys.length">不 套 用 活 動</a-button>
+            </div>
+          </c-popover>
         </div>
         <a-table :columns="columns" :dataSource="items"
                  :loading="loading"
@@ -169,6 +181,26 @@
             callback()
             this.$message.success('更新成功')
             this.selected_row_keys = []
+            setTimeout(() => {
+              location.reload()
+            }, 500)
+          })
+        })
+      },
+      updatedelSelectedHandler(callback) {
+        this.activity_form.validateFields((err, values) => {
+          let ids = []
+          for (let key of this.selected_row_keys) {
+            ids.push(this.fake_id_mapping[key])
+          }
+          values.ids = ids
+          this.$api.activity.del_category(values).then(() => {
+            callback()
+            this.$message.success('更新成功')
+            this.selected_row_keys = []
+            setTimeout(() => {
+              location.reload()
+            }, 500)
           })
         })
       },
