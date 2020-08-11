@@ -2,8 +2,8 @@
   <a-card class="banner-card pointer" v-on="$listeners ">
     <img :src="img_path" class="banner-card-img">
     <div class="banner-card-content pa-24px">
-      <h3>{{normDataText('title')}}</h3>
-      <div class="gray-text">{{normDataText('subtitle')}}</div>
+<!--      <h3>{{normDataText('title')}}</h3>-->
+<!--      <div class="gray-text">{{normDataText('subtitle')}}</div>-->
       <div class="mt-24px primary-color">順序 : {{banner.queue}}</div>
       <div class="banner-card-content-footer flex-grow-1 d-flex align-items-end justify-content-between">
         <a-badge :status="banner.display_status?'success':'error'" :text="banner.display_text"></a-badge>
