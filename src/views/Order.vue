@@ -98,6 +98,23 @@
                  :rowSelection="{selectedRowKeys: selected_row_keys, onChange: onSelectChange}"
                  :locale="{emptyText:'目前無資料'}"
         >
+          <span slot="shipping_name" slot-scope="text, record">
+            {{text}}
+            <a-tag
+                    :color="'red'"
+                    class="mr-12px avoid-pointer"
+                    v-if="record.in_blacklist"
+            >
+              {{ '黑名單' }}
+            </a-tag>
+            <a-tag
+                    :color="'volcano'"
+                    class="mr-12px avoid-pointer"
+                    v-if="record.was_in_blacklist && !record.in_blacklist"
+            >
+              {{ '曾是黑名單' }}
+            </a-tag>
+          </span>
           <div slot="simple_status_display" slot-scope="text">
             <a-badge :status="statusBadge(text)" :text="text"></a-badge>
           </div>
@@ -164,6 +181,7 @@
     {
       title: '收件人',
       dataIndex: 'shipping_name',
+      scopedSlots: {customRender: 'shipping_name'},
     },
     {
       title: '訂單金額',
