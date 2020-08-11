@@ -25,11 +25,25 @@
         ]}]"
                        :disabled="!editPermission()"
         >
-          <a-radio :value="false">
+          <a-radio :value="true">
             是（綠界物流）
           </a-radio>
-          <a-radio :value="true">
+          <a-radio :value="false">
             否（賣家自行寄出）
+          </a-radio>
+        </a-radio-group>
+      </c-form-item>
+      <c-form-item label="是否開通取貨付款" v-if="!item.backstage_name.indexOf('超商取貨')">
+        <a-radio-group v-decorator="['cash_on_delivery',{rules:[
+        { required: true, message: '請輸入資料' },
+        ]}]"
+                       :disabled="!editPermission()"
+        >
+          <a-radio :value="1">
+            是
+          </a-radio>
+          <a-radio :value="0">
+            否（僅接受線上付款後超取）
           </a-radio>
         </a-radio-group>
       </c-form-item>
@@ -125,7 +139,7 @@
     data() {
       return {
         update_field_keys: [
-          'title', 'en_title', 'role', 'weight', 'price', 'enable', 'use_ecpay_delivery'
+          'title', 'en_title', 'role', 'weight', 'price', 'enable', 'use_ecpay_delivery', 'cash_on_delivery'
         ],
         default_api: this.$api.freeshipping,
         // for check to add
