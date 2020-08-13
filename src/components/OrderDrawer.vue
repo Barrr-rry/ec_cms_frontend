@@ -156,7 +156,7 @@
     <order-reward-drawer
       v-if="type==='update'"
       v-model="reward_drawer"
-      :item="item.rewrad[0]"
+      :item="item.rewrad_temp[0]"
       :okCallback="updateReward"
       ref="reward_drawer"
     ></order-reward-drawer>
