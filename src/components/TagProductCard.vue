@@ -4,7 +4,7 @@
     <div class="d-flex w-100">
       <div class="manage-card-image-box">
 <!--        <a-icon type="user"/>-->
-        <img :src="img_path(item.productimages)" alt="" style="width: auto; height: auto; max-width: 80%; max-height: 80%;">
+        <img :src="img_path(item.productimages)" alt="" style="width: auto; height: auto; max-height: 90px;">
       </div>
       <div class="manage-card-content to-flex-col">
         <div class="gray-text flex-grow-1">
