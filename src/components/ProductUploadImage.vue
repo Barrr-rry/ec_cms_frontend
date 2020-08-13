@@ -98,7 +98,6 @@
           let target = null
           let key = `specifications_image_${el.key}`
           // 第一次init 且有資料
-          debugger
           if (this.is_first_init && this.item) {
             target = this.item.productimages.filter(x => x.specification === el.id)[0]
           }
