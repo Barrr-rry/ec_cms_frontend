@@ -3,7 +3,8 @@
   >
     <div class="d-flex w-100">
       <div class="manage-card-image-box">
-        <a-icon type="user"/>
+<!--        <a-icon type="user"/>-->
+        <img :src="img_path(item.productimages)" alt="" style="width: auto; height: auto; max-width: 80%; max-height: 80%;">
       </div>
       <div class="manage-card-content to-flex-col">
         <div class="gray-text flex-grow-1">
@@ -12,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex d-center mt-24px">
+    <div class="d-flex d-center">
       <c-popover
         @ok="$emit('delete',$event)"
       >
@@ -44,7 +45,17 @@
       }
     },
     computed: {},
-    methods: {}
+    methods: {
+        img_path(images) {
+            let path = ''
+            for (let img of images) {
+                if (img.main_image) {
+                    path = img.image_url
+                }
+            }
+            return this.$axios.baseURL.replace('/api/', '/media/') + path
+        },
+    }
   }
 </script>
 
