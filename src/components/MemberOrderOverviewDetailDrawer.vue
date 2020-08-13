@@ -98,7 +98,7 @@
       </div>
       <div slot="price" slot-scope="text,record">
         <div>金額: {{record.specification_detail.price|commaFormat}}</div>
-        <div>重量: {{record.specification_detail.weight}}</div>
+        <div v-show="configsetting.weight">重量: {{record.specification_detail.weight}}</div>
       </div>
       <div slot="quantity" slot-scope="text,record">
         <div>數量: {{record.quantity}}</div>
@@ -109,7 +109,7 @@
     </a-table>
     <div class="mt-24px">
       <div class="d-flex d-center gray-text">
-        總重量: {{order.total_weight}} kg
+        <div v-show="configsetting.weight">總重量: {{order.total_weight}} kg</div>
       </div>
       <div class="d-flex d-center gray-text">
         商品總金額: ${{order.product_price}}
@@ -160,6 +160,7 @@
   import drawerMixin from "@/mixins/drawerMixin"
   import OrderRemarkDrawer from "@/components/OrderRemarkDrawer"
   import OrderRewardDrawer from "@/components/OrderRewardDrawer"
+  import configsettingMixin from "@/mixins/configsettingMixin"
 
   const columns = [
     {
@@ -191,7 +192,7 @@
 
 
   export default {
-    mixins: [drawerMixin],
+    mixins: [drawerMixin, configsettingMixin],
     components: {
       OrderRemarkDrawer,
       OrderRewardDrawer,
@@ -230,8 +231,8 @@
     },
     methods: {
       spec_name(record){
-        if(record.specification_detail.spec2_name){
-          return `${record.specification_detail.spec1_cn_name}/${record.specification_detail.spec2_name}`
+        if(record.specification_detail.spec2_cn_name){
+          return `${record.specification_detail.spec1_cn_name} / ${record.specification_detail.spec2_cn_name}`
         }
         return record.specification_detail.spec1_cn_name
       },

@@ -101,7 +101,7 @@
           ret = ret.filter(x => x.title !== '庫存數量')
         }
         if (this.configsetting.product_specifications_setting===1) {
-          ret = ret.filter(x => x.dataIndex !== 'spec2_name')
+          ret = ret.filter(x => x.dataIndex !== 'spec2_cn_name')
         }
         if (this.configsetting.product_stock_setting===3) {
           ret = ret.filter(x => x.title !== '庫存狀態')
