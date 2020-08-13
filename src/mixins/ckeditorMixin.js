@@ -7,7 +7,14 @@ export default {
       editor: ClassicEditor,
       editor_data: ``,
       editorConfig: {
-        toolbar: ['heading', 'insertTable'],
+        toolbar: ['heading', 'insertTable', '|', 'imageUpload', 'undo', 'redo'],
+        ckfinder: {
+          uploadUrl: this.$axios.baseURL + 'file/',
+          options: {
+            resourceType: "Images"
+            // 限定類型為圖片
+          }
+        },
         heading: {
           // 設定 Heading 內的樣式，可新增多個
           options: [
