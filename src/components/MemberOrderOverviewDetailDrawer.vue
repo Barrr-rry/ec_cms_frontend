@@ -90,7 +90,7 @@
              :showHeader="false"
     >
       <div slot="image" slot-scope="text,record">
-        <img :src="img_path(record.productimages)" alt="" width="100" height="100">
+        <img :src="img_path(record.productimages)" alt="" style="width: auto; height: auto; max-height: 150px">
       </div>
       <div slot="name" slot-scope="text,record">
         <h3>{{record.name}}</h3>
