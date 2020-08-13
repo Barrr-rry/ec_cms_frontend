@@ -105,7 +105,8 @@
       return {
         table_name,
         form: this.$form.createForm(this),
-        update_field_keys: ['discount', 'status', 'still_day', 'start_day', 'pay_to']
+        update_field_keys: ['discount', 'status', 'still_day', 'start_day', 'pay_to'],
+        status: 0
       }
     },
     computed: {
@@ -120,6 +121,7 @@
         for (let key of this.update_field_keys) {
           obj[key] = this.item[key]
         }
+        this.status = obj.status
         this.$nextTick(() => {
           this.form.setFieldsValue(obj)
         })
