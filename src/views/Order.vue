@@ -12,7 +12,7 @@
       <h3>訂單查詢</h3>
     </div>
     <div class="container-fluid pt-24px">
-      <a-card>
+      <a-card class="mb-20px">
         <div class="pb-24px d-flex">
           <a-form
             :form="search_form"
@@ -76,6 +76,8 @@
             </div>
           </a-form>
         </div>
+      </a-card>
+      <a-card>
         <div class="pb-24px d-flex">
           <a-button type="primary" @click="export_order(false)"
                     :disabled="!selected_row_keys.length"
