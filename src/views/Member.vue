@@ -191,6 +191,7 @@
     {
       title: '回饋點數到期日',
       dataIndex: 'reward_end_date',
+      sorter: true
     },
     {
       title: '註冊時間',
