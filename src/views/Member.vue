@@ -12,7 +12,7 @@
       <h3>會員資料查詢</h3>
     </div>
     <div class="container-fluid pt-24px">
-      <a-card>
+      <a-card class="mb-20px">
         <div class="pb-24px d-flex">
           <a-form
             :form="search_form"
@@ -62,6 +62,8 @@
 
           </a-form>
         </div>
+      </a-card>
+      <a-card>
         <div class="pb-24px d-flex">
           <a-button type="primary" @click="callbackCheck(()=>create_drawer=true,editPermission())">+ 新 建</a-button>
           <a-button type="primary" @click="export_member(false)" class="ml-12px"
