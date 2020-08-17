@@ -142,6 +142,23 @@
           placeholder="請輸入生日"
         />
       </c-form-item>
+      <c-form-item label="會員身材" class="row">
+        身高:<a href="#">{{item.hheight}}</a>公分 /
+        體重:<a href="#">{{item.wweight}}</a>公斤 /
+        BMI:<a href="#">{{item.bbmi}}</a>
+      </c-form-item>
+      <c-form-item label="性別">
+        <a-radio-group v-decorator="['gender',{rules:[],initialValue:true}]"
+                       :disabled="!editPermission()"
+        >
+          <a-radio :value="1">
+            男
+          </a-radio>
+          <a-radio :value="2">
+            女
+          </a-radio>
+        </a-radio-group>
+      </c-form-item>
       <c-form-item label="內部備註">
         <a-input
           :disabled="!editPermission()"
@@ -171,7 +188,7 @@
           ext: ''
         },
         update_field_keys: [
-          'member_number', 'name', 'account', 'local', 'line_id', 'phone', 'cellphone', 'status', 'remarks', 'birthday'],
+          'member_number', 'name', 'account', 'local', 'line_id', 'phone', 'cellphone', 'status', 'remarks', 'birthday', 'wweight', 'hheight', 'bbmi', 'gender'],
         default_api: this.$api.member,
         // for check to add
         // fake_data: {}
