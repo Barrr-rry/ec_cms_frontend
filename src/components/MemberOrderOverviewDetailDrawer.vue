@@ -128,7 +128,7 @@
         總計: ${{order.total_price}}
       </div>
       <div class="d-flex d-center gray-text" v-if="getSpec(order)">
-        本次消費金額可獲得忠誠獎勵: <a href="">{{order.rewrad_temp[0].point}}</a> 點
+        本次消費金額可獲得回饋金: <a href="">{{order.rewrad_temp[0].point}}</a> 點
       </div>
       <div class="d-flex d-center gray-text" v-if="getSpec(order)">
         預計於 <a href="">{{order.rewrad_temp[0].start_date}}</a> 發放

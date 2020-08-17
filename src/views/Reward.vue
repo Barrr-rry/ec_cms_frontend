@@ -6,10 +6,10 @@
           <span>優惠管理</span>
         </a-breadcrumb-item>
         <a-breadcrumb-item :key="2">
-          <span>忠誠獎勵管理</span>
+          <span>回饋金管理</span>
         </a-breadcrumb-item>
       </a-breadcrumb>
-      <h3>忠誠獎勵管理</h3>
+      <h3>回饋金管理</h3>
     </div>
     <div class="container-fluid pt-24px">
       <a-card>

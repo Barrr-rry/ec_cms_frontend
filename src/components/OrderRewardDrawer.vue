@@ -1,18 +1,18 @@
 <template>
-  <c-drawer v-model="input" title="編輯忠誠獎勵"
+  <c-drawer v-model="input" title="編輯回饋金"
             @ok="okCallback"
             :displayDelete="false"
             @delete="$emit('delete')"
   >
     <div class="h-100 to-flex-col">
       <a-form :form="form" @submit="okCallback">
-        <c-form-item label="編輯忠誠獎勵">
+        <c-form-item label="編輯回饋金">
           <a-input
             v-decorator="['point', { rules: [
             { required: true, message: '請輸入資料', },
             ]}]"
             type="number"
-            placeholder="請輸入忠誠獎勵"
+            placeholder="請輸入回饋金"
 
           />
         </c-form-item>

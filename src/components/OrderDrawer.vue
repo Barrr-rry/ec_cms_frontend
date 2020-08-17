@@ -132,7 +132,7 @@
         總計: ${{item.total_price}}
       </div>
       <div class="d-flex d-center gray-text" v-if="getSpec(item)">
-        本次消費金額可獲得忠誠獎勵: <a href="">{{reward_target.point}}</a> 點
+        本次消費金額可獲得回饋金: <a href="">{{reward_target.point}}</a> 點
       </div>
       <div class="d-flex d-center gray-text" v-if="getSpec(item)">
         預計於 <a href="">{{reward_target.start_date}}</a> 發放
