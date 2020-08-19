@@ -19,7 +19,7 @@
           </a-radio>
         </a-radio-group>
       </c-form-item>
-      <c-form-item label="是否串接物流" v-if="item.backstage_name.indexOf('海外')">
+      <c-form-item label="是否串接物流" v-if="!item.backstage_name.indexOf('超商取貨')">
         <a-radio-group v-decorator="['use_ecpay_delivery',{rules:[
         { required: true, message: '請輸入資料' },
         ]}]"
