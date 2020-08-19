@@ -168,6 +168,7 @@
     {
       title: '會員編號',
       dataIndex: 'member_number',
+      sorter: true,
     },
     {
       title: '姓名',
@@ -178,6 +179,7 @@
       title: '會員帳號',
       dataIndex: 'account',
       scopedSlots: {customRender: 'account'},
+      sorter: true,
     },
     {
       title: '註冊時間',
