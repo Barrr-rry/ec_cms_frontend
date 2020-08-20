@@ -39,7 +39,7 @@
                     超商取貨
                   </a-select-option>
                   <a-select-option :value="0">
-                    宅配
+                    宅配到府
                   </a-select-option>
                 </a-select>
               </a-form-item>
@@ -308,7 +308,7 @@
       },
       getStore(obj) {
         if (!obj.to_store) {
-          return '宅配'
+          return '宅配到府'
         }
         let mapping = {
           'FAMI': '全家',
