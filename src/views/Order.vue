@@ -130,7 +130,7 @@
           <div slot="operation" slot-scope="text, record">
             <a href="#" @click="openUpdateDrawer(record)">訂單總覽</a>
             <a href="#" class="ml-24px" @click="openUpdateDrawer(record,()=>update_shipping_drawer=true)"
-               v-if="(record.pay_status===1||record.pay_type===1)&&(!record.use_ecpay_delivery)&&record.shipping_status===1"
+               v-if="(record.pay_status===1||record.pay_type===1)&&(!record.use_ecpay_delivery||!record.to_store)&&record.shipping_status===1"
             >自行出貨</a>
             <!--            <c-popover-->
             <!--              @ok="changeStatus(record,$event)"-->
@@ -148,7 +148,7 @@
             <c-popover
                     @ok="changeStatus(record,$event)"
                     class="ml-24px"
-                    v-if="(record.pay_status===1||record.pay_type===1)&&(record.use_ecpay_delivery)&&record.shipping_status===1"
+                    v-if="(record.pay_status===1||record.pay_type===1)&&(record.use_ecpay_delivery&&record.to_store)&&record.shipping_status===1"
             >
               <template slot="content">
                 <p>
