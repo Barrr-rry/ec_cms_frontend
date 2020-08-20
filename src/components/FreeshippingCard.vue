@@ -19,11 +19,12 @@
           </a-radio>
         </a-radio-group>
       </c-form-item>
-      <c-form-item label="是否串接物流" v-if="item.backstage_name.indexOf('海外')">
+        <c-form-item label="是否串接物流" v-if="item.backstage_name.indexOf('海外')">
         <a-radio-group v-decorator="['use_ecpay_delivery',{rules:[
         { required: true, message: '請輸入資料' },
         ]}]"
                        :disabled="!editPermission()"
+                        v-model="use_ecpay_delivery"
         >
           <a-radio :value="true">
             是（綠界物流）
@@ -33,13 +34,14 @@
           </a-radio>
         </a-radio-group>
       </c-form-item>
-      <c-form-item label="是否開通取貨付款" v-if="!item.backstage_name.indexOf('超商取貨')">
+      <c-form-item label="是否開通取貨付款" v-if="item.backstage_name.indexOf('海外')">
         <a-radio-group v-decorator="['cash_on_delivery',{rules:[
         { required: true, message: '請輸入資料' },
         ]}]"
                        :disabled="!editPermission()"
+                       v-model="cash_on_delivery"
         >
-          <a-radio :value="1">
+          <a-radio :value="1" :disabled="(item.backstage_name==='郵寄'||item.backstage_name==='宅配到府') && this.use_ecpay_delivery">
             是
           </a-radio>
           <a-radio :value="0">
@@ -144,6 +146,8 @@
         default_api: this.$api.freeshipping,
         // for check to add
         // fake_data: {}
+        use_ecpay_delivery: false,
+        cash_on_delivery: false
       }
     },
     methods: {
