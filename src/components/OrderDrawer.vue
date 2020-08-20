@@ -306,7 +306,7 @@
       },
       getStore(obj) {
         if (!obj.to_store) {
-          return '宅配'
+          return '宅配到府'
         }
         let mapping = {
           'FAMI': '全家',
