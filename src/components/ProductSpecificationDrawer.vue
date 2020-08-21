@@ -31,12 +31,12 @@
       dataIndex: 'product_code',
     },
     {
-      title: '尺寸',
+      title: '顏色',
       align: 'center',
       dataIndex: 'spec1_name',
     },
     {
-      title: '顏色',
+      title: '尺寸',
       align: 'center',
       dataIndex: 'spec2_name',
     },
