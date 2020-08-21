@@ -102,7 +102,7 @@
       </div>
       <div slot="price" slot-scope="text,record">
         <div>金額: {{record.specification_detail.price|commaFormat}}</div>
-        <div>重量: {{record.specification_detail.weight}}</div>
+        <div v-show="configsetting.weight">重量: {{record.specification_detail.weight}}</div>
       </div>
       <div slot="quantity" slot-scope="text,record">
         <div>數量: {{record.quantity}}</div>
@@ -113,7 +113,7 @@
     </a-table>
 
     <div class="mt-24px">
-      <div class="d-flex d-center gray-text">
+      <div class="d-flex d-center gray-text" v-show="configsetting.weight">
         總重量: {{item.total_weight}} kg
       </div>
       <div class="d-flex d-center gray-text">
@@ -169,6 +169,7 @@
   import drawerMixin from "@/mixins/drawerMixin"
   import OrderRemarkDrawer from "@/components/OrderRemarkDrawer"
   import OrderRewardDrawer from "@/components/OrderRewardDrawer"
+  import configsettingMixin from "@/mixins/configsettingMixin"
 
   const columns = [
     {
@@ -200,7 +201,7 @@
 
 
   export default {
-    mixins: [drawerMixin],
+    mixins: [drawerMixin, configsettingMixin],
     components: {
       OrderRemarkDrawer,
       OrderRewardDrawer,
