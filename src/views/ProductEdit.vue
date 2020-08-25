@@ -144,7 +144,6 @@
       },
       initImages() {
         let spec1_table = this.$refs.spec_level1.cacheData
-        debugger
         this.specifications_image = spec1_table
       },
       initTable() {
