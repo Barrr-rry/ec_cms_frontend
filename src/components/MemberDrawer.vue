@@ -142,7 +142,7 @@
           placeholder="請輸入生日"
         />
       </c-form-item>
-      <c-form-item label="會員身材" class="row">
+      <c-form-item label="會員身材" class="row" v-show="item.hheight">
         身高:<a href="#">{{item.hheight}}</a>公分 /
         體重:<a href="#">{{item.wweight}}</a>公斤 /
         BMI:<a href="#">{{item.bbmi}}</a>
