@@ -66,6 +66,7 @@
       <div class="flex-grow-1">
         <a-table :columns="columns" :dataSource="items"
                  :pagination="false"
+                 :scroll="{ x: 600, y: 500 }"
                  :rowKey="record => record.id"
                  :locale="{emptyText:'目前無資料'}"
         >
@@ -89,22 +90,26 @@
       title: '更新日期',
       align: 'center',
       dataIndex: 'created_at',
+      width: 150
     },
     {
       title: '摘要',
       align: 'center',
       dataIndex: 'desc',
+      width: 150
     },
     {
       title: '回饋點數變動',
       align: 'center',
       dataIndex: 'point',
       scopedSlots: {customRender: 'point'},
+      width: 150
     },
     {
       title: '回饋點數餘額',
       align: 'center',
       dataIndex: 'total_point',
+      width: 150
     },
   ]
 

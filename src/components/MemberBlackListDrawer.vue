@@ -38,6 +38,7 @@
       <div class="flex-grow-1">
         <a-table :columns="columns" :dataSource="items"
                  :pagination="false"
+                 :scroll="{ x: 600, y: 500 }"
                  :rowKey="record => record.id"
                  :locale="{emptyText:'目前無資料'}"
         >
@@ -61,17 +62,20 @@
       title: '更新日期',
       align: 'center',
       dataIndex: 'create_at',
+      width: 200
     },
     {
       title: '摘要',
       align: 'center',
       dataIndex: 'description',
+      width: 200
     },
     {
       title: '是否為黑名單',
       align: 'center',
       dataIndex: 'status',
       scopedSlots: {customRender: 'status'},
+      width: 200
     },
   ]
 
