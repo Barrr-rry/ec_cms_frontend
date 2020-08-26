@@ -113,7 +113,7 @@
     </a-table>
 
     <div class="mt-24px">
-      <div class="d-flex d-center gray-text" v-show="configsetting.weight">
+      <div class="d-flex d-center gray-text" v-if="configsetting.weight">
         總重量: {{item.total_weight}} kg
       </div>
       <div class="d-flex d-center gray-text">
