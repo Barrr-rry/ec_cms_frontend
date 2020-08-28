@@ -47,14 +47,14 @@
       dataIndex: 'product_code',
     },
     {
-      title: '尺寸',
-      align: 'center',
-      dataIndex: 'spec1_cn_name',
-    },
-    {
       title: '顏色',
       align: 'center',
       dataIndex: 'spec2_cn_name',
+    },
+    {
+      title: '尺寸',
+      align: 'center',
+      dataIndex: 'spec1_cn_name',
     },
     {
       title: '原價（NTD）',

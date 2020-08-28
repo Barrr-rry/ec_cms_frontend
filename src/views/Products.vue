@@ -359,7 +359,7 @@
       getProductSpecificationsName(item) {
         let ret = []
         for (let el of item.specifications) {
-          if (el.level !== 1) {
+          if (el.level !== 2 ) {
             continue
           }
           ret.push(el.cn_name)
